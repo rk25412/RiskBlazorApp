@@ -1,0 +1,215 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name",
+                              "component": "NAME",
+                              "name": "NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${referencedlegislation.NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NAMERequiredValidator",
+                              "component": "NAME",
+                              "text": "NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Legislation Value",
+                              "component": "LEGISLATION_VALUE",
+                              "name": "LEGISLATION_VALUELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "LEGISLATION_VALUE",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${referencedlegislation.LEGISLATION_VALUE}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "LEGISLATION_VALUERequiredValidator",
+                              "component": "LEGISLATION_VALUE",
+                              "text": "LEGISLATION_VALUE is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update ReferencedLegislation",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateReferencedLegislation",
+                        "parameters": [
+                          {
+                            "name": "LEGISLATION_ID",
+                            "value": "${parameters.LEGISLATION_ID}"
+                          },
+                          {
+                            "name": "ReferencedLegislation",
+                            "value": "${referencedlegislation}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${referencedlegislation}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.ReferencedLegislation",
+                  "data": "${referencedlegislation}",
+                  "visible": "${referencedlegislation != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getReferencedLegislationByLEGISLATION_ID",
+        "parameters": [
+          {
+            "name": "LEGISLATION_ID",
+            "value": "${parameters.LEGISLATION_ID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "referencedlegislation",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.ReferencedLegislation"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Referenced Legislation",
+  "access": "Authenticated",
+  "layout": "Main"
+}

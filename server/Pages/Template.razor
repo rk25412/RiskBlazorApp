@@ -1,0 +1,102 @@
+﻿@page "/template"
+@layout MainLayout
+@inherits Clear.Risk.Pages.TemplateComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Template</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right;" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-right:5px; margin-bottom: 10px; float:right" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                                <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getTemplatesResult" TItem="Clear.Risk.Models.ClearConnection.Template" RowDoubleClick="@Grid0RowDoubleClick" RowSelect="@Grid0RowSelect">
+                                    <Columns>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" Property="TEMPLATENAME" Title="Template">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" Property="VERSONNUMBER" Title="Version">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" Property="REFERENCENUMBER" Title="Reference No.">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" FilterProperty="TradeCategory.TRADE_NAME" Property="TRADECATEGORYID" SortProperty="TradeCategory.TRADE_NAME" Title="Trade Category">
+                                            <Template Context="data">
+                                                @(data.TradeCategory?.TRADE_NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" FilterProperty="Person.COMPANY_NAME" Property="COMPANYID" SortProperty="Person.COMPANY_NAME" Title="Company">
+                                            <Template Context="data">
+                                                @(data.Person?.COMPANY_NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" FilterProperty="SwmsTemplateCategory.NAME" Property="TYPEFORID" SortProperty="SwmsTemplateCategory.NAME" Title="Template Category">
+                                            <Template Context="data">
+                                                @(data.SwmsTemplateCategory?.NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" FilterProperty="Country.COUNTRYNAME" Property="COUNTRY_ID" SortProperty="Country.COUNTRYNAME" Title="Country">
+                                            <Template Context="data">
+                                                @(data.Country?.COUNTRYNAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" FilterProperty="State.STATENAME" Property="STATEID" SortProperty="State.STATENAME" Title="State">
+                                            <Template Context="data">
+                                                @(data.State?.STATENAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Template" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                            <Template Context="clearCovidModelsClearConnectionTemplate">
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionTemplate))" @onclick:stopPropagation="true">
+                                                </RadzenButton>
+                                            </Template>
+                                        </RadzenGridColumn>
+                                    </Columns>
+                                </RadzenGrid>
+                                <RadzenHeading Size="H2" Text="Attachments">
+                                </RadzenHeading>
+                                <RadzenButton Disabled="@(this.master == null)" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@TemplateattachmentAddButtonClick">
+                                </RadzenButton>
+                                <RadzenGrid @ref="grid1" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@Templateattachments" TItem="Clear.Risk.Models.ClearConnection.Templateattachment" RowSelect="@Grid1RowSelect">
+                                    <Columns>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Templateattachment" FilterProperty="TemplateType.NAME" Property="TEMPLATETYPEID" SortProperty="TemplateType.NAME" Title="Template Type">
+                                            <Template Context="data">
+                                                @(data.TemplateType?.NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Templateattachment" Property="ATTACHEMENTNAME" Title="Attachement Title">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Templateattachment" Property="DOCUMENTURL" Title="Document Name">
+                                        </RadzenGridColumn>
+
+
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Templateattachment" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                            <Template Context="clearCovidModelsClearConnectionTemplateattachment">
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>TemplateattachmentDeleteButtonClick(args, clearCovidModelsClearConnectionTemplateattachment))" @onclick:stopPropagation="true">
+                                                </RadzenButton>
+                                            </Template>
+                                        </RadzenGridColumn>
+                                    </Columns>
+                                </RadzenGrid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

@@ -1,0 +1,53 @@
+﻿ 
+@namespace Clear.Risk.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Radzen
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        Clear Risk Assessment
+    </title>
+    <base href="/" />
+    @*<base href="/crm/" />*@
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="@Url.Content("~/assets/plugins/fontawesome-free/css/all.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css")" />
+    <link rel="stylesheet" href="@Url.Content("~/assets/dist/css/adminlte.min.css")" />
+    <link href="@Url.Content("~/assets/css/styles.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/default.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/quill.snow.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/quill.bubble.css")" rel="stylesheet" />
+    <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <app>@(await Html.RenderComponentAsync<App>(RenderMode.Server))</app>
+    </div>
+
+
+    <script src="@Url.Content("~/assets/plugins/jquery/jquery.min.js")"></script>
+    <script src="@Url.Content("~/assets/plugins/jquery-ui/jquery-ui.min.js")"></script>
+    <script src="@Url.Content("~/assets/plugins/bootstrap/js/bootstrap.bundle.min.js")"></script>
+    <script src="@Url.Content("~/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js")"></script>
+    <script src="@Url.Content("~/assets/dist/js/adminlte.js")"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    @*<script src="/crm/_framework/blazor.server.js"></script>*@
+    <script src="_framework/blazor.server.js"></script>
+    <script src="@Url.Content("~/assets/dist/js/quill.js")"></script>
+    <link href="_content/BlazorPro.Spinkit/spinkit.min.css" rel="stylesheet" />
+    <script src="_content/BlazorTable/BlazorTable.min.js"></script>
+    <script src="_content/Blazored.TextEditor/quill-blot-formatter.min.js"></script>
+    <script src="_content/Blazored.TextEditor/Blazored-BlazorQuill.js"></script>
+    <script src="@Url.Content("~/assets/Map/GoogleMapInterop.js")" async defer></script>
+    <script src="@Url.Content("~/assets/Map/GoogleMapMarkerInterop.js")" async defer></script>
+  
+    <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
+
+</body>
+</html>

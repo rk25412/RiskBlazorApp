@@ -1,0 +1,58 @@
+﻿@page "/edit-survey-type/{SURVEY_TYPE_ID}"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+            <div class="loading">Loading&#8230;</div>}
+        else
+        {
+                            <RadzenTemplateForm TItem="SurveyType" Data="@surveytype" Visible="@(surveytype != null)" Submit="@Form0Submit">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Name" Component="NAME" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(surveytype.NAME)" Name="NAME">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="NAME" Text="NAME is required" style="position: absolute">
+                </RadzenRequiredValidator>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenTemplateForm>
+        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+

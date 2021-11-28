@@ -1,0 +1,379 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Template",
+          "type": "heading"
+        },
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-template",
+                        "then": [
+                          {
+                            "code": "grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ],
+                        "type": "popup"
+                      }
+                    ]
+                  },
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button"
+                },
+                {
+                  "allowFiltering": true,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "columns": [
+                    {
+                      "property": "TEMPLATENAME",
+                      "title": "TEMPLATENAME"
+                    },
+                    {
+                      "property": "VERSONNUMBER",
+                      "title": "VERSONNUMBER"
+                    },
+                    {
+                      "property": "REFERENCENUMBER",
+                      "title": "REFERENCENUMBER"
+                    },
+                    {
+                      "filterProperty": "TradeCategory.TRADE_NAME",
+                      "property": "TRADECATEGORYID",
+                      "sortProperty": "TradeCategory.TRADE_NAME",
+                      "template": "${data.TradeCategory?.TRADE_NAME}",
+                      "title": "Trade Category"
+                    },
+                    {
+                      "filterProperty": "Person.COMPANY_NAME",
+                      "property": "COMPANYID",
+                      "sortProperty": "Person.COMPANY_NAME",
+                      "template": "${data.Person?.COMPANY_NAME}",
+                      "title": "Company Name"
+                    },
+                    {
+                      "filterProperty": "SwmsTemplateCategory.NAME",
+                      "property": "TYPEFORID",
+                      "sortProperty": "SwmsTemplateCategory.NAME",
+                      "template": "${data.SwmsTemplateCategory?.NAME}",
+                      "title": "Swms Template Category"
+                    },
+                    {
+                      "filterProperty": "Country.COUNTRYNAME",
+                      "property": "COUNTRY_ID",
+                      "sortProperty": "Country.COUNTRYNAME",
+                      "template": "${data.Country?.COUNTRYNAME}",
+                      "title": "Country"
+                    },
+                    {
+                      "filterProperty": "State.STATENAME",
+                      "property": "STATEID",
+                      "sortProperty": "State.STATENAME",
+                      "template": "${data.State?.STATENAME}",
+                      "title": "State"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Template",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ClearConnection.deleteTemplate",
+                                "parameters": [
+                                  {
+                                    "name": "ID",
+                                    "value": "${data.ID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          },
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "size": "sm",
+                          "text": "",
+                          "type": "button"
+                        }
+                      ],
+                      "textAlign": "center",
+                      "width": "70px"
+                    }
+                  ],
+                  "data": "${getTemplatesResult}",
+                  "events": {
+                    "loadData": [],
+                    "rowDoubleClick": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "ID",
+                            "value": "${event.ID}"
+                          }
+                        ],
+                        "path": "edit-template",
+                        "type": "popup"
+                      }
+                    ],
+                    "rowSelect": [
+                      {
+                        "name": "master",
+                        "type": "set",
+                        "value": "${event}",
+                        "valueType": "ClearCovid.Models.ClearConnection.Template"
+                      },
+                      {
+                        "name": "ClearConnection.getTemplateattachments",
+                        "parameters": [
+                          {
+                            "name": "$filter",
+                            "value": "i => i.TEMPLATEID == ${event.ID}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "name": "Templateattachments",
+                            "type": "set",
+                            "value": "${result}",
+                            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Templateattachment>"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Template",
+                  "name": "grid0",
+                  "title": "",
+                  "type": "grid"
+                },
+                {
+                  "name": "heading1",
+                  "size": "H1",
+                  "text": "Templateattachments",
+                  "type": "heading"
+                },
+                {
+                  "disabled": "${this.master == null}",
+                  "events": {
+                    "click": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "TEMPLATEID",
+                            "type": "integer",
+                            "value": "${master.ID}"
+                          }
+                        ],
+                        "path": "add-templateattachment",
+                        "then": [
+                          {
+                            "code": "grid1.Reload();",
+                            "type": "execute"
+                          }
+                        ],
+                        "type": "popup"
+                      }
+                    ]
+                  },
+                  "icon": "add_circle_outline",
+                  "name": "TemplateattachmentAddButton",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button"
+                },
+                {
+                  "allowFiltering": true,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "columns": [
+                    {
+                      "property": "ID",
+                      "title": "ID"
+                    },
+                    {
+                      "property": "ATTACHEMENTNAME",
+                      "title": "ATTACHEMENTNAME"
+                    },
+                    {
+                      "property": "DOCUMENTURL",
+                      "title": "DOCUMENTURL"
+                    },
+                    {
+                      "property": "ISDELETED",
+                      "title": "ISDELETED"
+                    },
+                    {
+                      "property": "STATUS",
+                      "title": "STATUS"
+                    },
+                    {
+                      "filterProperty": "Template.DOCUMENTURL",
+                      "property": "TEMPLATEID",
+                      "sortProperty": "Template.DOCUMENTURL",
+                      "template": "${data.Template?.DOCUMENTURL}",
+                      "title": "Template"
+                    },
+                    {
+                      "filterProperty": "TemplateType.NAME",
+                      "property": "TEMPLATETYPEID",
+                      "sortProperty": "TemplateType.NAME",
+                      "template": "${data.TemplateType?.NAME}",
+                      "title": "Template Type"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "events": {
+                            "click": [
+                              {
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Template",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ClearConnection.deleteTemplateattachment",
+                                "parameters": [
+                                  {
+                                    "name": "ID",
+                                    "value": "${data.ID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "grid1.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          },
+                          "icon": "close",
+                          "name": "TemplateattachmentDeleteButton",
+                          "size": "sm",
+                          "text": "",
+                          "type": "button"
+                        }
+                      ],
+                      "textAlign": "center",
+                      "width": "70px"
+                    }
+                  ],
+                  "data": "${Templateattachments}",
+                  "events": {
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "ID",
+                            "value": "${event.ID}"
+                          }
+                        ],
+                        "path": "edit-templateattachment",
+                        "then": [
+                          {
+                            "code": "grid1.Reload();",
+                            "type": "execute"
+                          }
+                        ],
+                        "type": "popup"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Templateattachment",
+                  "name": "grid1",
+                  "type": "grid"
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getTemplates",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getTemplatesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Template>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Template"
+}

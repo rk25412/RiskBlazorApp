@@ -1,0 +1,134 @@
+﻿@page "/manage-currency"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Currency Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Currency List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Manage Currency</h4>
+                        <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right" Text="Help" Click="@HelpClick">
+                        </RadzenButton>
+                    </div>
+                    <div class="card-body">
+                        <RadzenContent @ref="content1" Container="main">
+                            <ChildContent>
+
+                                <div style="height: 100%" class="row">
+                                    <div class="col-md-6">
+                                        <RadzenCard @ref="card1" style="height: 100%">
+                                            <ChildContent>
+                                                <RadzenButton @ref="button0" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+                                                </RadzenButton>
+                                                <Table TableItem="Clear.Risk.Models.ClearConnection.Currency" Items="@(getCurrenciesResult)" PageSize="15" ColumnReorder="true">
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Currency" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                                        <Template>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                            </RadzenButton>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                            </RadzenButton>
+
+                                                        </Template>
+                                                    </Column>
+
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Currency" Title="ISO Code" Field="@(x => x.ISO_CODE)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Currency" Title="Currency Symbol" Field="@(x => x.CURSYMBOL)" Sortable="true" Filterable="true" Width="20%">
+
+                                                    </Column>
+
+
+                                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                                </Table>
+                                            </ChildContent>
+                                        </RadzenCard>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <RadzenCard @ref="card2" style="height: 100%">
+                                            <ChildContent>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        @if (IsLoading)
+                                                        {
+                                                            <div class="loading">Loading&#8230;</div> }
+                                                        else
+                                                        {
+                                                            <RadzenTemplateForm @ref="form0" TItem="Currency" Data="@currency" Visible="@(currency != null)" Submit="@Form0Submit">
+                                                                <ChildContent>
+                                                                    <div style="margin-bottom: 1rem" class="row">
+                                                                        <div class="col-md-3">
+                                                                            <RadzenLabel @ref="isoCodeLabel" Text="ISO Code" Component="ISO_CODE" style="width: 100%">
+                                                                            </RadzenLabel>
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <RadzenTextBox @ref="isoCode" MaxLength="50" style="display: block; width: 100%" @bind-Value="@(currency.ISO_CODE)" Name="ISO_CODE">
+                                                                            </RadzenTextBox>
+                                                                            <RadzenRequiredValidator @ref="isoCodeRequiredValidator" Component="ISO_CODE" Text="ISO_CODE is required" style="position: absolute">
+                                                                            </RadzenRequiredValidator>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div style="margin-bottom: 1rem" class="row">
+                                                                        <div class="col-md-3">
+                                                                            <RadzenLabel @ref="cursymbolLabel" Text="CurrencySymbol" Component="CURSYMBOL" style="width: 100%">
+                                                                            </RadzenLabel>
+                                                                        </div>
+                                                                        <div class="col-md-9">
+                                                                            <RadzenTextBox @ref="cursymbol" MaxLength="50" style="display: block; width: 100%" @bind-Value="@(currency.CURSYMBOL)" Name="CURSYMBOL">
+                                                                            </RadzenTextBox>
+                                                                            <RadzenRequiredValidator @ref="cursymbolRequiredValidator" Component="CURSYMBOL" Text="CURSYMBOL is required" style="position: absolute">
+                                                                            </RadzenRequiredValidator>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="col offset-sm-3">
+                                                                            <RadzenButton @ref="button2" ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                                                            </RadzenButton>
+                                                                        </div>
+                                                                    </div>
+                                                                </ChildContent>
+                                                            </RadzenTemplateForm>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </ChildContent>
+                                        </RadzenCard>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenContent>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

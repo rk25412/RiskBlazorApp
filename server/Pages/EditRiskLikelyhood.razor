@@ -1,0 +1,68 @@
+﻿@page "/edit-risk-likelyhood/{RISK_VALUE_ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditRiskLikelyhoodComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                    <div class="loading">Loading&#8230;</div>}
+                else
+                {
+                    <RadzenTemplateForm TItem="Clear.Risk.Models.ClearConnection.RiskLikelyhood" Data="@risklikelyhood" Visible="@(risklikelyhood != null)" Submit="@Form0Submit">
+                        <ChildContent>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Name" Component="NAME" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(risklikelyhood.NAME)" Name="NAME">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="NAME" Text="NAME is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Risk Value" Component="RISK_VALUE" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(risklikelyhood.RISK_VALUE)" Name="RISK_VALUE">
+                                    </RadzenNumeric>
+                                    <RadzenRequiredValidator Component="RISK_VALUE" Text="RISK_VALUE is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col offset-sm-3">
+                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+                        </ChildContent>
+                    </RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+

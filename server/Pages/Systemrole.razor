@@ -1,0 +1,41 @@
+﻿@page "/systemrole"
+@layout MainLayout
+@inherits Clear.Risk.Pages.SystemroleComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Systemrole">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getSystemrolesResult" TItem="Clear.Risk.Models.ClearConnection.Systemrole" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Systemrole" Property="ROLE_NAME" Title="ROLE NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Systemrole" Property="ROLE_DESC" Title="ROLE DESC">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Systemrole" Property="ROLE_LEVEL" Title="ROLE LEVEL">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Systemrole" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="clearCovidModelsClearConnectionSystemrole">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionSystemrole))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,119 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H2",
+          "text": "MANAGE RISK ASSESSMENT",
+          "type": "heading"
+        },
+        {
+          "events": {
+            "click": [
+              {
+                "path": "new-assesment",
+                "type": "navigate"
+              }
+            ]
+          },
+          "name": "button0",
+          "style": {
+            "width": "208px"
+          },
+          "text": "New Assesment",
+          "type": "button"
+        },
+        {
+          "allowFiltering": true,
+          "allowPaging": true,
+          "allowSorting": true,
+          "columns": [
+            {
+              "property": "REFERENCENUMBER",
+              "title": "REFERENCENUMBER"
+            },
+            {
+              "property": "RISKASSESSMENTNO",
+              "title": "RISKASSESSMENTNO"
+            },
+            {
+              "formatString": "{0:d}",
+              "property": "ASSESMENTDATE",
+              "title": "ASSESMENT DATE"
+            },
+            {
+              "filterProperty": "TradeCategory.TRADE_NAME",
+              "property": "TRADECATEGORYID",
+              "sortProperty": "TradeCategory.TRADE_NAME",
+              "template": "${data.TradeCategory?.TRADE_NAME}",
+              "title": "Trade Category"
+            },
+            {
+              "filterProperty": "IndustryType.NAME",
+              "property": "INDUSTRY_ID",
+              "sortProperty": "IndustryType.NAME",
+              "template": "${data.IndustryType?.NAME}",
+              "title": "Industry"
+            },
+            {
+              "filterProperty": "ScheduleType.NAME",
+              "property": "SCHEDULE_TYPE_ID",
+              "sortProperty": "ScheduleType.NAME",
+              "template": "${data.ScheduleType?.NAME}",
+              "title": "Schedule"
+            },
+            {
+              "property": "SCHEDULE_TIME",
+              "title": "SCHEDULE TIME"
+            },
+            {
+              "filterProperty": "StatusMaster.NAME",
+              "filterValue": "",
+              "property": "STATUS",
+              "sortProperty": "StatusMaster.NAME",
+              "template": "${data.StatusMaster?.NAME}",
+              "title": "Status"
+            },
+            {
+              "property": "ISCOMPLETED",
+              "title": "Completed"
+            }
+          ],
+          "data": "${getAssesmentsResult}",
+          "itemType": "ClearCovid.Models.ClearConnection.Assesment",
+          "name": "grid0",
+          "pageSize": 10,
+          "type": "grid"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getAssesments",
+        "parameters": [
+          {
+            "name": "$expand",
+            "value": "StatusMaster,TradeCategory,PersonSite,IndustryType,ScheduleType,Person,Person1"
+          }
+        ],
+        "then": [
+          {
+            "name": "getAssesmentsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Assesment>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Manage Assesments"
+}

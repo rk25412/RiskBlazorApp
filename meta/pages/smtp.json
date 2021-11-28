@@ -1,0 +1,179 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "SMTP"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-smtp",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getSmtpsetupsResult}",
+                  "events": {
+                    "loadData": [],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "SMTP_SETUP_ID",
+                            "value": "${event.SMTP_SETUP_ID}"
+                          }
+                        ],
+                        "path": "edit-smtp",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "SMTP_SERVER_STRING",
+                      "title": "SMTP SERVER STRING"
+                    },
+                    {
+                      "property": "SMTP_USER_ACCOUNT",
+                      "title": "SMTP USER ACCOUNT"
+                    },
+                    {
+                      "property": "SMTP_ACCOUNT_PASSWORD",
+                      "title": "SMTP ACCOUNT PASSWORD"
+                    },
+                    {
+                      "property": "SMTP_MAIL_FROM",
+                      "title": "SMTP MAIL FROM"
+                    },
+                    {
+                      "property": "SMTP_PORT",
+                      "title": "SMTP PORT"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Smtpsetup",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ClearConnection.deleteSmtpsetup",
+                                "parameters": [
+                                  {
+                                    "name": "SMTP_SETUP_ID",
+                                    "value": "${data.SMTP_SETUP_ID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "grid",
+                  "itemType": "ClearCovid.Models.ClearConnection.Smtpsetup"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getSmtpsetups",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getSmtpsetupsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Smtpsetup>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "SMTP",
+  "access": "Authenticated",
+  "layout": "Main"
+}

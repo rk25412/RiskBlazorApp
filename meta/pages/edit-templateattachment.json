@@ -1,0 +1,327 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Attachementname",
+                              "component": "ATTACHEMENTNAME",
+                              "name": "ATTACHEMENTNAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "ATTACHEMENTNAME",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${templateattachment.ATTACHEMENTNAME}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Documenturl",
+                              "component": "DOCUMENTURL",
+                              "name": "DOCUMENTURLLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 256,
+                              "type": "textbox",
+                              "name": "DOCUMENTURL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${templateattachment.DOCUMENTURL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Isdeleted",
+                              "component": "ISDELETED",
+                              "name": "ISDELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "ISDELETED",
+                              "value": "${templateattachment.ISDELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Status",
+                              "component": "STATUS",
+                              "name": "STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "STATUS",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${templateattachment.STATUS}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "STATUSRequiredValidator",
+                              "component": "STATUS",
+                              "text": "STATUS is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Templatetypeid",
+                              "component": "TEMPLATETYPEID",
+                              "name": "TEMPLATETYPEIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "TEMPLATETYPEID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${templateattachment.TEMPLATETYPEID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TEMPLATETYPEIDRequiredValidator",
+                              "component": "TEMPLATETYPEID",
+                              "text": "TEMPLATETYPEID is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update Templateattachment",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateTemplateattachment",
+                        "parameters": [
+                          {
+                            "name": "ID",
+                            "value": "${parameters.ID}"
+                          },
+                          {
+                            "name": "Templateattachment",
+                            "value": "${templateattachment}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${templateattachment}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Templateattachment",
+                  "data": "${templateattachment}",
+                  "visible": "${templateattachment != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getTemplateattachmentByID",
+        "parameters": [
+          {
+            "name": "ID",
+            "value": "${parameters.ID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "templateattachment",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.Templateattachment"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Templateattachment",
+  "access": "Authenticated",
+  "layout": "Main"
+}

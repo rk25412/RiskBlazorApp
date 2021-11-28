@@ -1,0 +1,75 @@
+﻿@page "/help"
+
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">How To</h4>
+                                @if (Security.IsInRole("System Administrator"))
+                                {
+                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@Button0Click">
+                </RadzenButton>}
+                            </div>
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                <div class="loading">Loading&#8230;</div>}
+                                <div class="row">
+                                    <div class="col-12">
+
+                                        <Table TableItem="Clear.Risk.Models.ClearConnection.HowToUse" Items="@(getHowToUse)" PageSize="15" ColumnReorder="true">
+
+                                            @if (Security.IsInRole("System Administrator"))
+                                            {
+                        <Column TableItem="Clear.Risk.Models.ClearConnection.HowToUse" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                            <Template>
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) => GridDeleteButtonClick(args, context.HowToUseId))" @onclick:stopPropagation="true">
+                                </RadzenButton>
+                                <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) => GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                </RadzenButton>
+                            </Template>
+                        </Column>}
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.HowToUse" Title="Subject" Field="@(x => x.Subject)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.HowToUse" Title="Pdf Name" Field="@(x => x.PdfName)" Sortable="true" Filterable="true" Width="20%">
+                                                <Template>
+                                                    <a href="Upload/HowTo/pdf/@context.PdfPath" target="_blank">@context.PdfName</a>
+                                                </Template>
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.HowToUse" Title="Video Name" Field="@(x =>x.VideoName)" Sortable="true" Filterable="true" Width="20%">
+                                                <Template>
+                                                    <a href="/Upload/HowTo/Video/@context.VideoPath" target="_blank">@context.VideoName</a>
+                                                </Template>
+                                            </Column>
+
+                                            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                        </Table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

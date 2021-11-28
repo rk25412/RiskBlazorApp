@@ -1,0 +1,173 @@
+﻿@page "/view-survey/{SURVEY_ID}"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (isLoading)
+                {
+                    <div class="loading">Loading&#8230;</div>
+                }
+
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Survey Template</h4>
+
+                    </div>
+                    <div class="card-body">
+
+                        <RadzenTemplateForm Data="@survey" Visible="@(survey != null)"
+                                            TItem="Clear.Risk.Models.ClearConnection.Survey" Submit="@Form0Submit">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Edit Survey</h4>
+                                                <RadzenButton ButtonType="ButtonType.Submit" Icon="update" Text="Update" ButtonStyle="ButtonStyle.Primary" Style="float:right;">
+                                                </RadzenButton>
+                                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right; margin-right:5px">
+                                                </RadzenButton>
+
+                                            </div>
+                                            <div class="card-body">
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Type" Component="SURVEY_TYPE_ID" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenDropDown Data="@getSurveyTypesResult" TextProperty="NAME" ValueProperty="SURVEY_TYPE_ID" Placeholder="Choose SurveyType" style="display: block; width: 100%" @bind-Value="@(survey.SURVEY_TYPE_ID)" Name="SURVEY_TYPE_ID">
+                                                        </RadzenDropDown>
+                                                        <RadzenRequiredValidator Component="SURVEY_TYPE_ID" Text="SURVEY_TYPE_ID is required" DefaultValue="0">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Title" Component="SURVEY_TITLE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(survey.SURVEY_TITLE)" Name="SURVEY_TITLE">
+                                                        </RadzenTextBox>
+                                                        <RadzenRequiredValidator Component="SURVEY_TITLE" Text="SURVEY_TITLE is required" >
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+
+                                                    <div class="col-md-3">
+
+                                                        <RadzenLabel Text="Base Survey" Component="ISBASED" style="width: 100%" Visible="@(Security.IsInRole("System Administrator"))">
+                                                        </RadzenLabel>
+                                                        <RadzenCheckBox style="display: block;" @bind-Value="@(survey.ISBASED)" Name="ISBASED" Visible="@(Security.IsInRole("System Administrator"))">
+                                                        </RadzenCheckBox>
+
+                                                    </div>
+
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Yes No Score" Component="YES_NO_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.YES_NO_SCORE)" Name="YES_NO_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Choice Score" Component="CHOICE_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.CHOICE_SCORE)" Name="CHOICE_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Text Score" Component="TEXT_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.TEXT_SCORE)" Name="TEXT_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Desc" Component="SURVEY_DESC" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenTextArea style="width: 100%" Cols="5" Rows="3" @bind-Value="@(survey.SURVEY_DESC)" Name="SURVEY_DESC">
+                                                        </RadzenTextArea>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenTemplateForm>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-success">
+                                    <div class="card-header">
+                                        <h4 class="card-title">Survey Question</h4>
+                                        <RadzenButton Icon="add_circle_outline" style="float:right" Text="Add Question" Click="@((args) =>SurveyQuestionAddButtonClick(args, survey))">
+                                        </RadzenButton>
+                                    </div>
+                                    <div class="card-body">
+                                        <Table TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Items="@getSurveyQuestionResult" PageSize="15" ColumnReorder="true">
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Action" Sortable="false" Filterable="false" Width="15%">
+                                                <Template>
+                                                    <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridSelectButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                    </RadzenButton>
+                                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) => GridSelectDeleteButton(args, context))" @onclick:stopPropagation="true">
+                                                    </RadzenButton>
+                                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="arrow_upward" Size="ButtonSize.Small" Visible="@(context.SURVEYQ_ORDER > 1 && getSurveyQuestionResult.Count() > 1)" Click="@((args) => MoveQuestionUp(args, context))" @onclick:stopPropagation="true" />
+                                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Icon="arrow_downward" Size="ButtonSize.Small" Visible="@(context.SURVEYQ_ORDER < getSurveyQuestionResult.Count() && getSurveyQuestionResult.Count() > 1)" Click="@((args) => MoveQuestionDown(args, context))" @onclick:stopPropagation="true" />
+                                                </Template>
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Q.No." Field="@(x => x.SURVEYQ_ORDER)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Question Type" Field="@(x => x.QuestionType.NAME)" Sortable="true" Filterable="true" Width="20%">
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Question" Field="@(x => x.QUESTION_TITLE)" Sortable="true" Filterable="true" Width="20%">
+
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Description" Field="@(x => x.QUESTION_DESC)" Sortable="true" Filterable="true" Width="10%">
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Score" Field="@(x => x.SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Parent Question" Field="@(x => x.ParentQuestion.QUESTION_TITLE)" Sortable="true" Filterable="true" Width="10%">
+
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.SurveyQuestion" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                            </Column>
+
+                                            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,63 @@
+﻿@page "/resposnsible-type"
+@layout MainLayout
+@inherits Clear.Risk.Pages.ResposnsibleTypeComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Resposnsible Type</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>                               
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right; margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                                @if (IsLoading)
+                                {
+                            <div class="loading">Loading&#8230;</div>}
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.ResposnsibleType" Items="@(getResposnsibleTypesResult)" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.ResposnsibleType" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.ResposnsibleType" Title="Name" Field="@(x => x.NAME)" Sortable="true" Filterable="true" Width="40%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.ResposnsibleType" Title="Responsible Value" Field="@(x => x.RESPONSIBLE_VALUE)" Sortable="true" Filterable="true" Width="30%">
+
+                                    </Column>
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+

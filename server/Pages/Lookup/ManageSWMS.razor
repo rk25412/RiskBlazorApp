@@ -1,0 +1,91 @@
+﻿@page "/swms-template"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Template Management </h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Assessment Templates</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Assessment Templates Management</h4>
+
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right;" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right; margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+
+                            </div>
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                                    <div class="loading">Loading&#8230;</div>
+                                }
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Items="@getSwmsTemplatesResult" PageSize="15" ColumnReorder="true">
+                                    <EmptyDataTemplate>
+                                        <h1>No Data Available</h1>
+                                    </EmptyDataTemplate>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Action" Sortable="false" Filterable="false" Width="3%">
+                                        <Template>
+
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Assessment ID" Field="@(x => x.SWMSID)" Sortable="true" Filterable="true" Width="7%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Person" Field="@(x => x.Person.COMPANY_NAME)" Sortable="true" Filterable="true" Width="20%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Template Type" Field="@(x => x.TemplateType.NAME)" Sortable="true" Filterable="true" Width="9%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Template Name" Field="@(x => x.TEMPLATENAME)" Sortable="true" Filterable="true" Width="9%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Title="Version" Field="@(x => x.VERSION)" Sortable="true" Filterable="true" Width="4%" />
+
+                                    <Column TableItem="SwmsTemplate" Title="Is Draft" Field="@(x => x.IS_DRAFT)" Sortable="false" Filterable="false" Width="5%" />
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

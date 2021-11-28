@@ -1,0 +1,309 @@
+﻿@page "/add-how-to"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using Blazored.TextEditor
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+@using Microsoft.JSInterop;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Web;
+
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        else
+                        {
+                            <RadzenTemplateForm Data="@getHowTo" TItem="HowToUse" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Subject" Component="Subject" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(getHowTo.Subject)" Name="Subject">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="Subject" Text="Subject is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Pdf Name" Component="Pdf_Name" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(getHowTo.PdfName)" Name="Pdf_Name">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="Pdf_Name" Text="Pdf Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Upload Pdf" Component="FILENAME" Style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @if (string.IsNullOrEmpty(getHowTo.PdfPath))
+                                            {
+
+                                                <RadzenUpload @ref="upload1" Auto="false" Url="api/upload/HowToAddPdf" Style="margin-bottom: 20px;width:100%;"
+                                                              Progress=@(args => OnProgress1(args, "Manual Upload")) Accept=".pdf" ChooseText="Select pdf" />
+                                                <br />
+                                                <RadzenButton Text="Upload" Click=@(args => upload1.Upload()) Size="ButtonSize.Small" />
+
+                                            }
+                                            else
+                                            {
+                                                <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                                    <span style="width:90%;overflow:hidden;display:inline-block">@getHowTo.PdfPath</span>
+                                                    <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div><br />
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Video Name" Component="Video_Name" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(getHowTo.VideoName)" Name="Video_Name">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="Video_Name" Text="Video Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Upload Video" Component="ChooseVideo" Style="width: 100%"></RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @if (string.IsNullOrEmpty(getHowTo.VideoPath))
+                                            {
+                                                <RadzenUpload @ref="upload" Auto="false" Url="api/upload/HowToAddVideo" Style="margin-bottom: 20px;width:100%;"
+                                                              Progress=@(args => OnProgress(args, "Manual Upload")) Accept="video/*" ChooseText="Select Video" />
+                                                <br />
+                                                <RadzenButton Text="Upload" Click=@(args => upload.Upload()) Size="ButtonSize.Small" />
+                                            }
+                                            else
+                                            {
+
+                                                <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                                    <span style="width:90%;overflow:hidden;display:inline-block">@getHowTo.VideoPath</span>
+                                                    <button type="button" @onclick="@RemoveDoc1" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                            </RadzenButton>
+                                        </div>
+                                    </div>
+                                </ChildContent>
+                            </RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+
+    [Parameter(CaptureUnmatchedValues = true)]
+    public IReadOnlyDictionary<string, dynamic> Attributes { get; set; }
+
+    public void Reload()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void OnPropertyChanged(PropertyChangedEventArgs args)
+    {
+    }
+
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
+    [Inject]
+    protected NavigationManager UriHelper { get; set; }
+
+    [Inject]
+    protected DialogService DialogService { get; set; }
+
+
+
+    [Inject]
+    protected NotificationService NotificationService { get; set; }
+
+    [Inject]
+    protected SecurityService Security { get; set; }
+
+
+    [Inject]
+    protected ClearConnectionService ClearRisk { get; set; }
+    protected bool IsLoading { get; set; }
+
+    HowToUse _getHowTo;
+    protected HowToUse getHowTo
+    {
+        get
+        {
+            return _getHowTo;
+        }
+        set
+        {
+            if (!object.Equals(_getHowTo, value))
+            {
+                var args = new PropertyChangedEventArgs() { Name = "getHowTo", NewValue = value, OldValue = _getHowTo };
+                _getHowTo = value;
+                OnPropertyChanged(args);
+                Reload();
+            }
+        }
+    }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        if (!Security.IsAuthenticated())
+        {
+            UriHelper.NavigateTo("Login", true);
+        }
+        else
+        {
+            await Load();
+        }
+
+    }
+
+    protected async System.Threading.Tasks.Task Load()
+    {
+        getHowTo = new HowToUse();
+    }
+
+    protected bool fileLength = true;
+
+    protected async System.Threading.Tasks.Task Form0Submit(HowToUse args)
+    {
+        IsLoading = true;
+        StateHasChanged();
+        await Task.Delay(1);
+        try
+        {
+
+            var fileExt = getHowTo.PdfPath.Substring(getHowTo.PdfPath.LastIndexOf('.'));
+            if (fileExt == ".pdf")
+            {
+                //var clearRiskCreateProcessTypeResult = await ClearRisk.CreateHowToUse(getHowTo);
+                IsLoading = false;
+                StateHasChanged();
+                var fileExt1 = getHowTo.VideoPath.Substring(getHowTo.VideoPath.LastIndexOf('.'));
+                if (fileExt1 == ".mp4" || fileExt1 == ".ts" || fileExt1 == ".mov" || fileExt1 == ".flv" || fileExt1 == ".wmv" || fileExt1 == ".avi" || fileExt1 == ".avchd" || fileExt1 == ".omg" || fileExt1 == ".mpeg" || fileExt1 == ".mpg" || fileExt1 == ".ovg" || fileExt1 == ".asx" || fileExt1 == ".m4v" || fileExt1 == ".webm")
+                {
+                    var clearRiskCreateProcessTypeResult = await ClearRisk.CreateHowToUse(getHowTo);
+                    NotificationService.Notify(NotificationSeverity.Success, $"Success", $"Added Successfully!", 180000);
+                    IsLoading = false;
+                    StateHasChanged();
+                    DialogService.Close(getHowTo);
+                }
+                else
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, $"Error", $"File Extension Is InValid - Only Upload Video!", 180000);
+                    IsLoading = false;
+                    StateHasChanged();
+                }
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, $"Error", $"File Extension Is InValid - Only Upload PDF!", 180000);
+                IsLoading = false;
+                StateHasChanged();
+            }
+
+
+
+        }
+        catch (System.Exception clearRiskCreateProcessTypeException)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, $"Error", $"Something went Wrong. Unable to Add!", 180000);
+            IsLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    protected async System.Threading.Tasks.Task Button2Click(MouseEventArgs args)
+    {
+        DialogService.Close(null);
+    }
+
+    public async Task RemoveDoc()
+    {
+        getHowTo.PdfPath = null;
+    }
+
+    public async Task RemoveDoc1()
+    {
+        getHowTo.VideoPath = null;
+    }
+
+
+    protected Clear.Risk.Models.ClearConnection.HowToUse howToUse { get; set; }
+
+    RadzenUpload upload;
+    int progress;
+    protected void OnProgress(UploadProgressArgs args, string name)
+    {
+        this.progress = args.Progress;
+
+        if (args.Progress == 100)
+        {
+            foreach (var file in args.Files)
+            {
+                getHowTo.VideoPath = file.Name;
+            }
+        }
+    }
+
+    RadzenUpload upload1;
+    int progress1;
+    protected void OnProgress1(UploadProgressArgs args, string name)
+    {
+        this.progress1 = args.Progress;
+
+        if (args.Progress == 100)
+        {
+            foreach (var file in args.Files)
+            {
+                getHowTo.PdfPath = file.Name;
+            }
+        }
+    }
+
+
+}

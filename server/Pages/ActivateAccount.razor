@@ -1,0 +1,133 @@
+﻿@page "/activate/{personId}/{ActCode}"
+
+@layout EmptyLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using System;
+@using System.Linq;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+@using Microsoft.JSInterop;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Web;
+@using Microsoft.EntityFrameworkCore;
+@using System.Security.Cryptography;
+@using System.Text;
+@using MimeKit;
+@using MailKit.Net.Smtp;
+@using System.Net.Http;
+@using System.Runtime.CompilerServices;
+@using System.Text.RegularExpressions;
+
+
+<div class="text-center">
+    <p>Your Account has been activated</p>
+    <p>You will be redirected automatically to login page, if not please click <a href="Login?@MessageType=@Message">here</a></p>
+</div>
+
+
+
+@code {
+
+    [Parameter]
+    public dynamic personId { get; set; }
+
+    [Parameter]
+    public dynamic ActCode { get; set; }
+
+    [Inject]
+    protected UserManager<ApplicationUser> userManager { get; set; }
+    [Inject]
+    protected RoleManager<IdentityRole> roleManager { get; set; }
+
+    [Inject]
+    protected SecurityService Security { get; set; }
+
+    [Inject]
+    protected IJSRuntime JSRuntime { get; set; }
+
+    [Inject]
+    protected NavigationManager UriHelper { get; set; }
+
+    [Inject]
+    protected DialogService DialogService { get; set; }
+
+    [Inject]
+    protected NotificationService NotificationService { get; set; }
+
+    [Inject]
+    protected ClearConnectionService ClearConnection { get; set; }
+
+    protected string MessageType = "";
+    protected string Message = "";
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        await Load();
+        UriHelper.NavigateTo($@"Login/?{MessageType}={Message}");
+    }
+
+
+
+    protected async System.Threading.Tasks.Task Load()
+    {
+        if (personId == null || ActCode == null)
+        {
+            MessageType = "error";
+            Message = "Invalid Request";
+            return;
+        }
+        else
+        {
+            var person = await ClearConnection.GetPersonByPersonId(Convert.ToInt32(personId));
+
+            if (person == null)
+            {
+                MessageType = "error";
+                Message = "Invalid Request";
+                return;
+            }
+
+            if (person.ACTIVATED)
+            {
+                MessageType = "error";
+                Message = "This Account is already activated";
+                return;
+            }
+            else
+            {
+                if (person.ACTCODE != Convert.ToInt32(ActCode))
+                {
+                    MessageType = "error";
+                    Message = "Invalid Request";
+                    return;
+                }
+                else
+                {
+                    person.ACTIVATED = true;
+                    var updatePerson = await ClearConnection.UpdatePerson(person.PERSON_ID, person);
+                    if (updatePerson != null)
+                    {
+                        MessageType = "success";
+                        Message = "Account Successfully activated, you can login now.";
+                        await Task.Delay(10000);
+                        return;
+                    }
+                    else
+                    {
+                        MessageType = "error";
+                        Message = "Error Occured, Please try again later";
+                        return;
+                    }
+                }
+            }
+        }
+
+        //await Task.Delay(2000);
+
+    }
+}

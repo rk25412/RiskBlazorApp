@@ -1,0 +1,62 @@
+﻿@page "/features"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage System Features</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                <div class="loading">Loading&#8230;</div>}
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.SystemFeatures" Items="@(getSystemFeatures)" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SystemFeatures" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>DeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>EditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SystemFeatures" Title="Feature Id" Field="@(x => x.Feature_ScreenID)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SystemFeatures" Title="Feature Name" Field="@(x => x.Features_ScreenName)" Sortable="true" Filterable="true" Width="20%">
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SystemFeatures" Title="Html Content" Field="@(x =>x.Html_Content)" Sortable="true" Filterable="true" Width="20%">
+                                        <Template>
+                                            @((MarkupString)context.Html_Content)
+                                        </Template>
+                                    </Column>
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+

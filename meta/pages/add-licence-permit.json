@@ -1,0 +1,198 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name",
+                              "component": "NAME",
+                              "name": "NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${licencepermit.NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NAMERequiredValidator",
+                              "component": "NAME",
+                              "text": "NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Permit Value",
+                              "component": "PERMIT_VALUE",
+                              "name": "PERMIT_VALUELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "PERMIT_VALUE",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${licencepermit.PERMIT_VALUE}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "PERMIT_VALUERequiredValidator",
+                              "component": "PERMIT_VALUE",
+                              "text": "PERMIT_VALUE is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new LicencePermit!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createLicencePermit",
+                        "parameters": [
+                          {
+                            "name": "LicencePermit",
+                            "value": "${licencepermit}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${licencepermit}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${licencepermit}",
+                  "visible": "${licencepermit != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.LicencePermit"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "licencepermit",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.LicencePermit(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.LicencePermit"
+      }
+    ]
+  },
+  "name": "Add Licence Permit",
+  "access": "Authenticated",
+  "layout": "Main"
+}

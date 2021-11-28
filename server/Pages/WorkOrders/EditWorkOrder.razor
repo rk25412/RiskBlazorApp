@@ -1,0 +1,589 @@
+﻿@page "/edit-work-order/{WorkOrderId}"
+@page "/edit-work-order/{WorkOrderId}/{tabNo}"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Work Order Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Work Order</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (isLoading)
+        {
+<div class="loading">Loading&#8230;</div>}
+        <RadzenContent Container="main">
+            <ChildContent>
+                <RadzenTabs>
+                    <Tabs>
+                        <RadzenTabsItem Text="Work Order Information">
+                            <RadzenTemplateForm Data="@workorder" Visible="@(workorder != null)" TItem="WorkOrder" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card card-success">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Work Order</h4>
+                                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="update" Text="Update" ButtonStyle="ButtonStyle.Primary" Style="float:right;">
+                                                    </RadzenButton>
+                                                    <RadzenButton ButtonType="ButtonType.Button" Icon="update" Text="Generate Risk Assessment" ButtonStyle="ButtonStyle.Primary" Style="float:right;margin-right:5px" Visible="@(workorder.STATUS_ID ==1 || workorder.STATUS_ID ==3)" Click="@ButtonAssesmentClick">
+                                                    </RadzenButton>
+                                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                                    </RadzenButton>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Work Order Number" Component="WORK_ORDER_NUMBER" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(workorder.WORK_ORDER_NUMBER)" Name="WORK_ORDER_NUMBER" ReadOnly="true">
+                                                            </RadzenTextBox>
+                                                            <RadzenRequiredValidator Component="WORK_ORDER_NUMBER" Text="WORK_ORDER_NUMBER is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Purchase Order Number" Component="PURCHASE_ORDER_NUMBER" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(workorder.PURCHASE_ORDER_NUMBER)" Name="PURCHASE_ORDER_NUMBER">
+                                                            </RadzenTextBox>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Date Raised" Component="DATE_RAISED" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDatePicker style="display: block; width: 100%" @bind-Value="@(workorder.DATE_RAISED)" Name="DATE_RAISED" DateFormat="dd/MM/yyyy">
+                                                            </RadzenDatePicker>
+                                                            <RadzenRequiredValidator Component="DATE_RAISED" Text="DATE_RAISED is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Due Date" Component="DUE_DATE" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDatePicker style="display: block; width: 100%" @bind-Value="@(workorder.DUE_DATE)" Name="DUE_DATE" DateFormat="dd/MM/yyyy">
+                                                            </RadzenDatePicker>
+                                                            <RadzenRequiredValidator Component="DUE_DATE" Text="DUE_DATE is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Internal/Client Order" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenCheckBox @bind-Value="@(workorder.ISINTERNAL)" Name="ISINTERNAL" Disabled="true">
+                                                            </RadzenCheckBox>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Work Order Type" Component="WORK_ORDER_TYPE" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getWorkOrderTypesResult" TextProperty="NAME" ValueProperty="WORK_ORDER_TYPE_ID"
+                                                                            Placeholder="Choose WorkOrderType" style="display: block; width: 100%"
+                                                                            @bind-Value="@(workorder.WORK_ORDER_TYPE)" Name="WORK_ORDER_TYPE" AllowFiltering="true" AllowClear="true">
+                                                            </RadzenDropDown>
+                                                            <RadzenRequiredValidator Component="WORK_ORDER_TYPE" Text="WORK_ORDER_TYPE is required" DefaultValue="0">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Priority" Component="PRIORITY_ID" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getPriorityMastersResult" TextProperty="NAME" ValueProperty="PRIORITY_ID" Placeholder="Choose Priority"
+                                                                            style="width: 100%" @bind-Value="@(workorder.PRIORITY_ID)" Name="PRIORITY_ID" AllowClear="true" AllowFiltering="true">
+                                                            </RadzenDropDown>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Warning Level" Component="WARNING_LEVEL_ID" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getWarningResult" TextProperty="NAME" ValueProperty="WARNING_LEVEL_ID"
+                                                                            Placeholder="Choose Warning Level" style="width: 100%" @bind-Value="@(workorder.WARNING_LEVEL_ID)" Name="WARNING_LEVEL_ID">
+                                                            </RadzenDropDown>
+                                                        </div>
+
+                                                        @*<div class="col-md-3">
+                                                                <RadzenLabel Text="Process Type" Component="PROCESSTYPE_ID" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Data="@getProcessTypesResult" TextProperty="NAME" ValueProperty="PROCESS_TYPE_ID"
+                                                                                Placeholder="Choose ProcessType" style="display: block; width: 100%"
+                                                                                @bind-Value="@(workorder.PROCESSTYPE_ID)" Name="PROCESSTYPE_ID" AllowClear="true" AllowFiltering="true">
+                                                                </RadzenDropDown>
+                                                                <RadzenRequiredValidator Component="PROCESSTYPE_ID" Text="PROCESSTYPE_ID is required" style="position: absolute" DefaultValue="0">
+                                                                </RadzenRequiredValidator>
+                                                            </div>*@
+                                                        @*<div class="col-md-3">
+                                                                <RadzenLabel Text="Reactive Criticality" Component="REACTIVECRITICALITY_ID" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Data="@getCriticalityMastersResult" TextProperty="NAME" ValueProperty="CRITICALITY_ID"
+                                                                                Placeholder="Choose Reactive Criticality" style="width: 100%"
+                                                                                @bind-Value="@(workorder.REACTIVECRITICALITY_ID)" Name="REACTIVECRITICALITY_ID" AllowClear="true" AllowFiltering="true">
+                                                                </RadzenDropDown>
+                                                            </div>*@
+
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Order Status" Component="STATUS_ID" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getOrderStatusesResult" TextProperty="NAME"
+                                                                            ValueProperty="ORDER_STATUS_ID" Placeholder="Choose Order Status"
+                                                                            style="display: block; width: 100%" @bind-Value="@(workorder.STATUS_ID)"
+                                                                            Name="STATUS_ID" AllowFiltering="true" AllowClear="true">
+                                                            </RadzenDropDown>
+                                                            <RadzenRequiredValidator Component="STATUS_ID" Text="STATUS is required"
+                                                                                     DefaultValue="0">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Manager" Component="ASSIGNED_TO_ID" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getFacilitesResult" TextProperty="FullName"
+                                                                            ValueProperty="PERSON_ID" Placeholder="Choose Manager"
+                                                                            style="width: 100%" @bind-Value="@(workorder.ASSIGNED_TO_ID)"
+                                                                            Name="ASSIGNED_TO_ID" AllowClear="true" AllowFiltering="true">
+                                                            </RadzenDropDown>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <RadzenLabel Text="Description" Component="DESCRIPTION" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextArea MaxLength="500" Rows="3" style="display: block; width: 100%" @bind-Value="@(workorder.DESCRIPTION)" Name="DESCRIPTION">
+                                                            </RadzenTextArea>
+                                                            <RadzenRequiredValidator Component="DESCRIPTION" Text="DESCRIPTION is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <RadzenCard Style="width:100%" Visible="@(!workorder.ISINTERNAL)">
+                                                <ChildContent>
+                                                    <div class="card card-success">
+                                                        <div class="card-header">
+                                                            <h4 class="card-title">Client  Information</h4>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <RadzenLabel Text="Client" Component="CLIENT_ID" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getPeopleResult" TextProperty="COMPANY_NAME"
+                                                                                    ValueProperty="PERSON_ID" Placeholder="Choose Client"
+                                                                                    style="width: 100%" @bind-Value="@(workorder.CLIENT_ID)" Name="CLIENT_ID"
+                                                                                    AllowFiltering="true" AllowClear="true">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <RadzenLabel Text="Client Contact" Component="CLIENT_CONTACT_ID" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getPersonContactsResult.Where(a=>a.PERSON_ID ==workorder.CLIENT_ID)" TextProperty="FullName"
+                                                                                    ValueProperty="PERSON_CONTACT_ID"
+                                                                                    Placeholder="Choose Client Contact"
+                                                                                    style="width: 100%"
+                                                                                    @bind-Value="@(workorder.CLIENT_CONTACT_ID)"
+                                                                                    Name="CLIENT_CONTACT_ID" AllowFiltering="true" AllowClear="true">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <RadzenLabel Text="Client Work Order Number" Component="CLIENT_WORK_ORDER_NUMBER" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(workorder.CLIENT_WORK_ORDER_NUMBER)" Name="CLIENT_WORK_ORDER_NUMBER">
+                                                                    </RadzenTextBox>
+                                                                    @*<RadzenRequiredValidator Component="CLIENT_WORK_ORDER_NUMBER" Text="CLIENT_WORK_ORDER_NUMBER is required">
+                                                                        </RadzenRequiredValidator>*@
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <RadzenLabel Text="Requested By" Component="REQUESTED_BY_ID" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getPersonContactsResult.Where(a=>a.PERSON_ID ==workorder.CLIENT_ID)" TextProperty="FullName"
+                                                                                    ValueProperty="PERSON_CONTACT_ID"
+                                                                                    Placeholder="Choose Requested By" style="width: 100%" @bind-Value="@(workorder.REQUESTED_BY_ID)"
+                                                                                    Name="REQUESTED_BY_ID" AllowFiltering="true" AllowClear="true">
+                                                                    </RadzenDropDown>
+                                                                </div>
+
+                                                            </div>
+
+
+                                                            <div class="row">
+                                                                <div class="col-md-3">
+                                                                    <RadzenLabel Text="Client Approval" Component="CLIENT_APPROVAL" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenCheckBox @bind-Value="@(workorder.CLIENT_APPROVAL)" Name="CLIENT_APPROVAL">
+                                                                    </RadzenCheckBox>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <RadzenLabel Text="Approval Date" Component="CLIENT_APPROVAL_DATE" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDatePicker style="width: 100%" @bind-Value="@(workorder.CLIENT_APPROVAL_DATE)" Name="CLIENT_APPROVAL_DATE">
+                                                                    </RadzenDatePicker>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <RadzenLabel Text="Approved By" Component="APPROVED_BY_ID" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getPersonContactsResult.Where(a=>a.PERSON_ID ==workorder.CLIENT_ID)" TextProperty="FullName" ValueProperty="PERSON_CONTACT_ID" Placeholder="Choose Contact" style="width: 100%" @bind-Value="@(workorder.APPROVED_BY_ID)" Name="APPROVED_BY_ID">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                </ChildContent>
+                                            </RadzenCard>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+
+                                        <div class="col-12">
+                                            <div class="card card-success">
+                                                <div class="card-header">
+                                                    <h4 class="card-title">Work Order</h4>
+                                                </div>
+                                                <div class="card-body">
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Site Name" Component="SiteName" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.SiteName)" Name="SiteName">
+                                                            </RadzenTextBox>
+                                                            <RadzenRequiredValidator Component="SiteName" Text="Site Name is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Building Name" Component="SiteName" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.BuildingName)" Name="BuildingName">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Floor" Component="Floor" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(workorder.Floor)" Name="Floor">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Room No" Component="Floor" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(workorder.RoomNo)" Name="RoomNo">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Address1" Component="Address1" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.Address1)" Name="Address1">
+                                                            </RadzenTextBox>
+                                                            <RadzenRequiredValidator Component="Address1" Text="Address1   is required">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Address2" Component="Address2" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.Address2)" Name="Address2">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="City" Component="City" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.City)" Name="City">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="PostCode" Component="PostCode" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(workorder.PostCode)" Name="PostCode">
+                                                            </RadzenTextBox>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Country" Component="CountryId" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getCountriesResult" AllowClear="true"
+                                                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                            TextProperty="COUNTRYNAME"
+                                                                            ValueProperty="ID" Placeholder="Choose Country"
+                                                                            style="display: block; width: 100%"
+                                                                            @bind-Value="@(workorder.CountryId)" Name="CountryId">
+                                                            </RadzenDropDown>
+                                                            <RadzenRequiredValidator Component="CountryId" Text="Country is required" DefaultValue="0">
+                                                            </RadzenRequiredValidator>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="State" Component="StateId" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == workorder.CountryId)" TextProperty="STATENAME" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                                            FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                            ValueProperty="ID" Placeholder="Choose State" style="width: 100%"
+                                                                            @bind-Value="@(workorder.StateId)" Name="StateId" Change="@(args => ChangeState(args, "DropDown"))">
+                                                            </RadzenDropDown>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Latitude" Component="Lat" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenNumeric style="width: 100%" @bind-Value="@(workorder.Lat)"
+                                                                           Name="Lat" ReadOnly="true">
+                                                            </RadzenNumeric>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <RadzenLabel Text="Longitude" Component="Lon" style="width: 100%">
+                                                            </RadzenLabel>
+                                                            <RadzenNumeric style="width: 100%" @bind-Value="@(workorder.Lon)"
+                                                                           Name="Lon" ReadOnly="true">
+                                                            </RadzenNumeric>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                @*<div class="card-header">
+                                                        <h4 class="card-title">
+                                                            Work Order Status
+                                                        </h4>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <RadzenLabel Text="Entity Status" Component="STATUS_LEVEL_ID" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Data="@getEntityResult" TextProperty="NAME" ValueProperty="ENTITY_STATUS_ID"
+                                                                                Placeholder="Choose Assessment Status" style="width: 100%" @bind-Value="@(workorder.STATUS_LEVEL_ID)" Name="STATUS_LEVEL_ID">
+                                                                </RadzenDropDown>
+                                                            </div>
+                                                        </div>
+                                                    </div>*@
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ChildContent>
+                            </RadzenTemplateForm>
+                        </RadzenTabsItem>
+
+                        <RadzenTabsItem Text="Assessment Information" width="100" Selected="@(tabNo != null ? (Convert.ToInt32(tabNo) == 2 ? true : false) : false)">
+
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title"></h4>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+
+                            <Table TableItem="Assesment" Items="@getAssesmentsResult" PageSize="15" ColumnReorder="true" TableRowClass="@(x => x.RowClass)" width="150">
+
+                                <Column TableItem="Assesment" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                    <Template>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridAssementViewButtonClick(args, context))" @onclick:stopPropagation="true">
+                                        </RadzenButton>
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="Assesment" Title="Assessment No" Field="@(x => x.RISKASSESSMENTNO)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                <Column TableItem="Assesment" Title="Assessment Date" Field="@(x => x.ASSESMENTDATE)" Sortable="true" Filterable="true" Width="17%">
+                                    <Template>
+                                        @string.Format("{0:dd/MM/yyyy H:mm:ss}", context.ASSESMENTDATE)
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="Assesment" Title="Project Name" Field="@(x => x.PROJECTNAME)" Sortable="true" Filterable="true" Width="34%">
+
+                                </Column>
+                                <Column TableItem="Assesment" Title="Trade Category" Field="@(x => x.TradeCategory.TRADE_NAME)" Sortable="true" Filterable="true" Width="10%">
+                                    <Template>
+                                        @context.TradeCategory?.TRADE_NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="Assesment" Title="Assessment Type" Field="@(x => x.TemplateType.NAME)" Sortable="true" Filterable="true" Width="10%">
+                                    <Template>
+                                        @context.TemplateType?.NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="Assesment" Title="Status" Field="@(x => x.EntityStatus.NAME)" Sortable="true" Filterable="true" Width="8%">
+                                    <Template>
+                                        @context.EntityStatus?.NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="Assesment" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" Width="8%">
+                                    <Template>
+                                        @context.WarningLevel?.NAME
+                                    </Template>
+                                </Column>
+
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Map View" Selected="@(tabNo != null ? (Convert.ToInt32(tabNo) == 3 ? true : false) : false)">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title">Work Order On Map View</h4>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        @if (workorder != null && workorder.WorkLocation != null)
+                                        {
+                <RadzenGoogleMap Zoom="@zoom" Style="height:600px" Center="@(new GoogleMapPosition() {  Lat = (double)workorder.Lat, Lng = (double)workorder.Lon  })"
+                                 MapClick="@MapClick" MarkerClick="@MarkerClick" ApiKey="AIzaSyAqp3wbBhtOg9f4hmxNbRZm_ZITPS8fQ8I">
+                    <Markers>
+                        <RadzenGoogleMapMarker Title="@workorder.SiteName" Label="@workorder.SiteName" Position="@(new GoogleMapPosition() { Lat = (double)workorder.Lat, Lng = (double)workorder.Lon })" />
+                    </Markers>
+
+
+                </RadzenGoogleMap>}
+
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Site Activity" Selected="@(tabNo != null ? (Convert.ToInt32(tabNo) == 4 ? true : false) : false)">
+
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title"></h4>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+
+                            <Table TableItem="SiteActivity" Items="@getSiteActivitiesResult" PageSize="15" ColumnReorder="true">
+                                <Column TableItem="SiteActivity" Title="Employee" Field="@(x => x.Worker.FIRST_NAME)" Sortable="true" Filterable="true" Width="10%">
+                                    <Template>
+                                        @context.Worker?.FIRST_NAME   @context.Worker?.LAST_NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="SiteActivity" Title="Assessment No" Field="@(x => x.Assesment.RISKASSESSMENTNO)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                <Column TableItem="SiteActivity" Title="Activity Date" Field="@(x => x.START_DATE)" Sortable="true" Filterable="true" Width="20%">
+                                    <Template>
+                                        @string.Format("{0:dd/MM/yyyy H:mm:ss}", context.START_DATE)
+                                    </Template>
+                                </Column>
+                                <Column TableItem="SiteActivity" Title="Status" Field="@(x => x.STATUS)" Sortable="true" Filterable="true" Width="20%">
+
+                                </Column>
+
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+
+                        </RadzenTabsItem>
+                        <RadzenTabsItem Text="Survey Report" Selected="@(tabNo != null ? (Convert.ToInt32(tabNo) == 5 ? true : false) : false)">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title"></h4>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+
+                            <Table TableItem="SurveyReport" Items="@getSurveyReportsResult" PageSize="15" ColumnReorder="true" TableRowClass="@(x => x.RowClass)">
+
+                                <Column TableItem="SurveyReport" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                    <Template>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="pageview" Size="ButtonSize.Small" Click="@((args) =>GridSurveyButtonClick(args, context))" @onclick:stopPropagation="true">
+                                        </RadzenButton>
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="SurveyReport" Title="Survey Date/Time" Field="@(x => x.SURVEY_DATE)" Sortable="true" Filterable="true" Width="17%">
+                                    <Template>
+                                        @string.Format("{0:dd/MM/yyyy H:mm:ss}", context.SURVEY_DATE)
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="SurveyReport" Title="Survey" Field="@(x => x.Survey.SURVEY_TITLE)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                <Column TableItem="SurveyReport" Title="Assessment Id" Field="@(x => x.Assesment.RISKASSESSMENTNO)" Sortable="true" Filterable="true" Width="13%">
+                                    <Template>
+                                        @context.Assesment?.RISKASSESSMENTNO
+                                    </Template>
+                                </Column>
+                                <Column TableItem="SurveyReport" Title="Work Order No" Field="@(x => x.Order.WORK_ORDER_NUMBER)" Sortable="true" Filterable="true" Width="10%">
+                                    <Template>
+                                        @context.Order?.WORK_ORDER_NUMBER
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="SurveyReport" Title="Status" Field="@(x => x.EntityStatus.NAME)" Sortable="true" Filterable="true" Width="8%">
+                                    <Template>
+                                        @context.EntityStatus?.NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="SurveyReport" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" Width="8%">
+                                    <Template>
+                                        @context.WarningLevel?.NAME
+                                    </Template>
+                                </Column>
+                                <Column TableItem="SurveyReport" Title="Comments" Field="@(x => x.COMMENTS)" Sortable="true" Filterable="true" Width="40%" />
+
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+
+                        </RadzenTabsItem>
+                    </Tabs>
+                </RadzenTabs>
+
+
+
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

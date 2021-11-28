@@ -1,0 +1,31 @@
+﻿@page "/single-blog/{Blog_Id}"
+@layout WebLayout
+
+
+    <section class="breadcrumb"></section>
+    <section class="mt-3 mb-3">
+        <div class="container">
+            <div class="card mb-3">
+                <img src="/Blog/@getBlog.BgImgPath" class="img-fluid card-img-top" alt="Card image cap" />
+
+                <div class="card-body">
+                    <ul>
+                        <li class="float-left">
+                            <i class="fa fa-clock"></i>
+                            <span>@getBlog.CreatedDate</span>
+                        </li>
+
+                        <li class="float-left ml-3">
+                            <i class="fa fa-user"></i>
+                            <span>@getBlog.CreatedBy</span>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+
+                    <h3 class="card-title mt-3">@getBlog.BgTittle</h3>
+                    <p class="card-text"><h4>@((MarkupString)getBlog.BgLongDetails)</h4></p>
+
+                </div>
+            </div>
+        </div>
+    </section>

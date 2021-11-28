@@ -1,0 +1,216 @@
+﻿@page "/view-company"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using  Clear.Risk.Data
+@attribute [Authorize]
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Account Information">
+            <RadzenCard Style="width:100%; margin-bottom: 20px; height:800px;">
+                <div class="row">
+                    <div class="col">
+                        <div>Company:</div>
+                        <b>@person.COMPANY_NAME</b>
+                        <div style="margin-top:20px">Contact Person:</div>
+                        <b>@(person.FIRST_NAME + " " + person.LAST_NAME)</b>
+                        <br />
+                        <div>Current Balance:</div>
+                        <b>@String.Format(new System.Globalization.CultureInfo("en-US"), "{0:C}", person.CURRENT_BALANCE)</b>
+                    </div>
+                    <div class="col"> </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <h3 class="col-3">Personal Address:</h3>
+                    <h3 class="col-3">Business Address:</h3>
+                    <h3 class="col-3">Availability:</h3>
+                    <h3 class="col-3">App License Information:</h3>
+                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <div>Address 1:</div>
+                        <b>@person.PERSONALADDRESS1</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Address 1:</div>
+                        <b>@person.BUSINESS_ADDRESS1</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Out of hours Availability:</div>
+                        <b>@person.OUTOFHOUR.ToString()</b>
+                    </div>
+                    <div class="col-3">
+                        <div>License ID:</div>
+                        <b>@person.APPLICENCEID</b>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>Address 2:</div>
+                        <b>@person.PERSONALADDRESS2</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Address 2:</div>
+                        <b>@person.BUSINESS_ADDRESS2</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Contact Name:</div>
+                        <b>@person.OUTOFHOURCONTACT</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Start Date:</div>
+                        <b>@person.APPLICENCE_STARTDATE</b>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>City:</div>
+                        <b>@person.PERSONAL_CITY</b>
+                    </div>
+                    <div class="col-3">
+                        <div>City:</div>
+                        <b>@person.BUSINESS_CITY</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Email:</div>
+                        <b>@person.OUTOFHOUREMAIL</b>
+                    </div>
+                    <div class="col-3">
+                        <div>End Date:</div>
+                        <b>@person.APPLICENCE_ENDDATE</b>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>State:</div>
+                        <b>@person.State.STATENAME</b>
+                    </div>
+                    <div class="col-3">
+                        <div>State:</div>
+                        <b>@person.State1.STATENAME</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Start Time:</div>
+                        <b>@person.OUTOFSTART</b>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>Country:</div>
+                        <b>@person.Country.COUNTRYNAME</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Country:</div>
+                        <b>@person.Country1.COUNTRYNAME</b>
+                    </div>
+                    <div class="col-3">
+                        <div>End Time:</div>
+                        <b>@person.OUTOFEND</b>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>Mobile No.:</div>
+                        <b>@person.PERSONAL_MOBILE</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Mobile No.:</div>
+                        <b>@person.BUSINESS_MOBILE</b>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>Phone No.:</div>
+                        <b>@person.PERSONAL_PHONE</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Phone No.:</div>
+                        <b>@person.BUSINESS_PHONE</b>
+                    </div>
+                    <div class="col-3"></div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row" style="margin-top:20px">
+                    <div class="col-3">
+                        <div>Email:</div>
+                        <b>@person.PERSONAL_EMAIL</b>
+                    </div>
+                    <div class="col-3">
+                        <div>Email:</div>
+                        <b>@person.BUSINESS_EMAIL</b>
+                    </div>
+                </div>
+
+            </RadzenCard>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="License Information">
+
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Purchase History">
+
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Usage History">
+
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Warning Level History">
+
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Audit History">
+
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>
+
+@code {
+
+    [Inject]
+    protected NavigationManager UriHelper { get; set; }
+
+    [Inject]
+    protected DialogService DialogService { get; set; }
+
+    [Inject]
+    protected NotificationService NotificationService { get; set; }
+
+    [Inject]
+    protected SecurityService Security { get; set; }
+
+
+    Clear.Risk.Models.ClearConnection.Person person;
+
+    [Inject]
+    protected ClearConnectionService ClearConnection { get; set; }
+
+    protected override async System.Threading.Tasks.Task OnInitializedAsync()
+    {
+        if (!Security.IsAuthenticated())
+        {
+            UriHelper.NavigateTo("Login", true);
+        }
+        else
+        {
+            await Load();
+        }
+
+    }
+
+    protected async System.Threading.Tasks.Task Load()
+    {
+        var result = await ClearConnection.GetPersonByPersonId(2);
+        person = result;
+
+
+    }
+
+}

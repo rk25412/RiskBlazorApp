@@ -1,0 +1,219 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Plant Equipment",
+                              "component": "PLANT_EQUIPMENT_ID",
+                              "name": "PLANT_EQUIPMENT_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPlantEquipmentsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "PLANT_EQUIPMENT_ID",
+                              "placeholder": "Choose PlantEquipment",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "PLANT_EQUIPMENT_ID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmsplantequipment.PLANT_EQUIPMENT_ID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "PLANT_EQUIPMENT_IDRequiredValidator",
+                              "component": "PLANT_EQUIPMENT_ID",
+                              "text": "PLANT_EQUIPMENT_ID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${swmsplantequipment.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update SwmsPlantequipment",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateSwmsPlantequipment",
+                        "parameters": [
+                          {
+                            "name": "PEID",
+                            "value": "${parameters.PEID}"
+                          },
+                          {
+                            "name": "SwmsPlantequipment",
+                            "value": "${swmsplantequipment}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmsplantequipment}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsPlantequipment",
+                  "data": "${swmsplantequipment}",
+                  "visible": "${swmsplantequipment != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getSwmsPlantequipmentByPEID",
+        "parameters": [
+          {
+            "name": "PEID",
+            "value": "${parameters.PEID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "swmsplantequipment",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.SwmsPlantequipment"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getPlantEquipments",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPlantEquipmentsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.PlantEquipment>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Swms Plantequipment",
+  "access": "Authenticated",
+  "layout": "Main"
+}

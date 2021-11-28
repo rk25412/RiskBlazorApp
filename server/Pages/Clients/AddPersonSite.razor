@@ -1,0 +1,230 @@
+﻿@page "/add-person-site/{ClientId}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddPersonSiteComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+
+        <RadzenContent Container="main">
+            <ChildContent>
+                @if (isLoading)
+                {
+                    <div class="loading">Loading&#8230;</div>
+                }
+                <div class="row">
+                    <div class="col-md-6">
+                        <RadzenTemplateForm Data="@personsite" Visible="@(personsite != null)" TItem="Clear.Risk.Models.ClearConnection.PersonSite" Submit="@Form0Submit">
+                            <ChildContent>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Site Name" Component="SITE_NAME" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(personsite.SITE_NAME)" Name="SITE_NAME">
+                                        </RadzenTextBox>
+                                        <RadzenRequiredValidator Component="SITE_NAME" Text="Site Name is required" style="position: absolute">
+                                        </RadzenRequiredValidator>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Building Name" Component="BUILDING_NAME" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(personsite.BUILDING_NAME)" Name="BUILDING_NAME">
+                                        </RadzenTextBox>
+
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Floor Number" Component="FLOOR" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(personsite.FLOOR)" Name="FLOOR">
+                                        </RadzenTextBox>
+
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Room Number" Component="ROOMNO" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(personsite.ROOMNO)" Name="ROOMNO">
+                                        </RadzenTextBox>
+
+                                    </div>
+                                </div>
+
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Address 1" Component="SITE_ADDRESS1" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="500" style="display: block; width: 100%" @bind-Value="@(personsite.SITE_ADDRESS1)" Name="SITE_ADDRESS1">
+                                        </RadzenTextBox>
+                                        <RadzenRequiredValidator Component="SITE_ADDRESS1" Text="SITE_ADDRESS1 is required" style="position: absolute">
+                                        </RadzenRequiredValidator>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Address 2" Component="SITE_ADDRESS2" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="500" style="width: 100%" @bind-Value="@(personsite.SITE_ADDRESS2)" Name="SITE_ADDRESS2">
+                                        </RadzenTextBox>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Address 3" Component="SITE_ADDRESS3" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="500" style="width: 100%" @bind-Value="@(personsite.SITE_ADDRESS3)" Name="SITE_ADDRESS3">
+                                        </RadzenTextBox>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="City" Component="CITY" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(personsite.CITY)" Name="CITY">
+                                        </RadzenTextBox>
+                                        <RadzenRequiredValidator Component="CITY" Text="CITY is required" style="position: absolute">
+                                        </RadzenRequiredValidator>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="State" Component="STATE_ID" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == personsite.COUNTRY_ID)" TextProperty="STATENAME" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                        FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                        ValueProperty="ID" Placeholder="Choose State" style="width: 100%"
+                                                        @bind-Value="@(personsite.STATE_ID)" Name="STATE_ID" Change="@(args => ChangeState(args, "DropDown"))">
+                                        </RadzenDropDown>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Post Code" Component="POST_CODE" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenTextBox MaxLength="100" style="width: 100%" @bind-Value="@(personsite.POST_CODE)" Name="POST_CODE">
+                                        </RadzenTextBox>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 1rem" class="row">
+                                    <div class="col-md-4">
+                                        <RadzenLabel Text="Country" Component="COUNTRY_ID" style="width: 100%">
+                                        </RadzenLabel>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <RadzenDropDown Data="@getCountriesResult" AllowClear="true"
+                                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                        TextProperty="COUNTRYNAME"
+                                                        ValueProperty="ID" Placeholder="Choose Country"
+                                                        style="display: block; width: 100%"
+                                                        @bind-Value="@(personsite.COUNTRY_ID)" Name="COUNTRY_ID">
+                                        </RadzenDropDown>
+                                        <RadzenRequiredValidator Component="COUNTRY_ID" Text="COUNTRY_ID is required" style="position: absolute" DefaultValue="0">
+                                        </RadzenRequiredValidator>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <RadzenLabel Text="Latitude" Component="LATITUDE" style="width: 100%">
+                                        </RadzenLabel>
+                                        <RadzenNumeric style="width: 100%" @bind-Value="@(personsite.LATITUDE)"
+                                                       Name="LATITUDE" ReadOnly="true">
+                                        </RadzenNumeric>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <RadzenLabel Text="Longitude" Component="LONGITUDE" style="width: 100%">
+                                        </RadzenLabel>
+                                        <RadzenNumeric style="width: 100%" @bind-Value="@(personsite.LONGITUDE)"
+                                                       Name="LONGITUDE" ReadOnly="true">
+                                        </RadzenNumeric>
+                                    </div>
+                                </div>
+
+
+
+                                @*<div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Site Area" Component="SITE_AREA" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(personsite.SITE_AREA)" Name="SITE_AREA">
+                </RadzenNumeric>
+            </div>
+        </div>*@
+
+                                <div class="row mt-3">
+                                    <div class="col offset-sm-3">
+                                        <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                        </RadzenButton>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenTemplateForm>
+                    </div>
+                    <div class="col-md-6">
+                        @*<RadzenGoogleMap Zoom="@zoom"
+                         Center="@(new GoogleMapPosition() { Lat = 42.6977, Lng = 23.3219 })"
+                         MapClick="@MapClick" MarkerClick="@MarkerClick" ApiKey="AIzaSyAqp3wbBhtOg9f4hmxNbRZm_ZITPS8fQ8I">
+
+        </RadzenGoogleMap>*@
+
+                        @if (personsite != null && personsite.LATITUDE != null && personsite.LONGITUDE != null)
+                        {
+                            <RadzenGoogleMap Zoom="@zoom" Center="@(new GoogleMapPosition() { Lat = (double)personsite.LATITUDE, Lng = (double)personsite.LONGITUDE })"
+                                             MapClick="@MapClick" MarkerClick="@MarkerClick" ApiKey="AIzaSyAqp3wbBhtOg9f4hmxNbRZm_ZITPS8fQ8I">
+                                <Markers>
+                                    <RadzenGoogleMapMarker Title="@personsite.SITE_NAME" Label="@personsite.SITE_NAME" Position="@(new GoogleMapPosition() { Lat = (double)personsite.LATITUDE, Lng = (double)personsite.LONGITUDE })" />
+                                </Markers>
+                            </RadzenGoogleMap>
+                        }
+                        else
+                        {
+                            <RadzenGoogleMap Zoom="@zoom"
+                                             Center="@(new GoogleMapPosition() { Lat = 42.6977, Lng = 23.3219 })"
+                                             MapClick="@MapClick" MarkerClick="@MarkerClick" ApiKey="AIzaSyAqp3wbBhtOg9f4hmxNbRZm_ZITPS8fQ8I">
+
+                            </RadzenGoogleMap>
+                        }
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+

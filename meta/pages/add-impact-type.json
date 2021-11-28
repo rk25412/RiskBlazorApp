@@ -1,0 +1,198 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name",
+                              "component": "NAME",
+                              "name": "NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${impacttype.NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NAMERequiredValidator",
+                              "component": "NAME",
+                              "text": "NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Impact Value",
+                              "component": "IMPACT_VALUE",
+                              "name": "IMPACT_VALUELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "IMPACT_VALUE",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${impacttype.IMPACT_VALUE}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "IMPACT_VALUERequiredValidator",
+                              "component": "IMPACT_VALUE",
+                              "text": "IMPACT_VALUE is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new ImpactType!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createImpactType",
+                        "parameters": [
+                          {
+                            "name": "ImpactType",
+                            "value": "${impacttype}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${impacttype}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${impacttype}",
+                  "visible": "${impacttype != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.ImpactType"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "impacttype",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.ImpactType(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.ImpactType"
+      }
+    ]
+  },
+  "name": "Add Impact Type",
+  "access": "Authenticated",
+  "layout": "Main"
+}

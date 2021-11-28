@@ -1,0 +1,75 @@
+﻿@page "/edit-trade-category/{TRADE_CATEGORY_ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditTradeCategoryComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@tradecategory" TItem="Clear.Risk.Models.ClearConnection.TradeCategory" Visible="@(tradecategory != null)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="TRADE_NAME" style="width: 100%" Text="Trade Name">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(tradecategory.TRADE_NAME)" Name="TRADE_NAME">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="TRADE_NAME" style="position: absolute" Text="TRADE_NAME is required">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="PARENT_ID" style="width: 100%" Text="Trade Category">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getTradeCategoriesResult" Placeholder="Choose TradeCategory" style="width: 100%" TextProperty="TRADE_NAME" @bind-Value="@(tradecategory.PARENT_ID)" ValueProperty="TRADE_CATEGORY_ID" Name="PARENT_ID">
+                </RadzenDropDown>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="DESCRIPTION" style="width: 100%" Text="Description">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(tradecategory.DESCRIPTION)" Name="DESCRIPTION">
+                </RadzenTextBox>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Component="HOURLY_COST" style="width: 100%" Text="Hourly Cost">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(tradecategory.HOURLY_COST)" Name="HOURLY_COST">
+                </RadzenNumeric>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

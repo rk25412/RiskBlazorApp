@@ -1,0 +1,112 @@
+﻿@page "/add-smtp"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddSmtpComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@smtpsetup" Visible="@(smtpsetup != null)" TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Submit="@Form0Submit">
+            <ChildContent>
+                @*<div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Is Deleted" Component="IS_DELETED" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenCheckBox @bind-Value="@(smtpsetup.IS_DELETED)" Name="IS_DELETED">
+                        </RadzenCheckBox>
+                    </div>
+                </div>*@
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Smtp Server String" Component="SMTP_SERVER_STRING" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(smtpsetup.SMTP_SERVER_STRING)" Name="SMTP_SERVER_STRING">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="SMTP_SERVER_STRING" Text="SMTP_SERVER_STRING is required" style="position: absolute">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Smtp User Account" Component="SMTP_USER_ACCOUNT" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(smtpsetup.SMTP_USER_ACCOUNT)" Name="SMTP_USER_ACCOUNT">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="SMTP_USER_ACCOUNT" Text="SMTP_USER_ACCOUNT is required" style="position: absolute">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Smtp Account Password" Component="SMTP_ACCOUNT_PASSWORD" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(smtpsetup.SMTP_ACCOUNT_PASSWORD)" Name="SMTP_ACCOUNT_PASSWORD">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="SMTP_ACCOUNT_PASSWORD" Text="SMTP_ACCOUNT_PASSWORD is required" style="position: absolute">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Smtp Mail From" Component="SMTP_MAIL_FROM" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(smtpsetup.SMTP_MAIL_FROM)" Name="SMTP_MAIL_FROM">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="SMTP_MAIL_FROM" Text="SMTP_MAIL_FROM is required" style="position: absolute">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Smtp Port" Component="SMTP_PORT" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(smtpsetup.SMTP_PORT)" Name="SMTP_PORT">
+                        </RadzenNumeric>
+                        <RadzenRequiredValidator Component="SMTP_PORT" Text="SMTP_PORT is required" style="position: absolute">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-3">
+                        <RadzenLabel Text="Is SSL" Component="SMTP_PORT" style="width: 100%">
+                        </RadzenLabel>
+                    </div>
+                    <div class="col-md-9">
+                        <RadzenCheckBox @bind-Value="@(smtpsetup.USE_SSL)" TValue="bool"  />                        
+                    </div>
+                </div>
+                    <div class="row">
+                        <div class="col offset-sm-3">
+                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                            </RadzenButton>
+                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                            </RadzenButton>
+                        </div>
+                    </div>
+            </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

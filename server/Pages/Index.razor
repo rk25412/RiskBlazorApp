@@ -1,0 +1,321 @@
+﻿@page "/"
+@page "/Index"
+@layout WebLayout
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+
+<!--::banner part start::-->
+<section class="banner_part">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-5">
+                <div class="banner_img d-none d-lg-block">
+                    <img src="front/img/banner_img.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="banner_text">
+                    <div class="banner_text_iner">
+                        <h1>
+                            £0.10 PAY PER USE
+                            RISK ASSESSMENT AND SURVEY .
+
+                        </h1>
+                        <p>
+                            Assure your Compliance with integrated Health & Safety
+                            Risk Assessments/Method Statements attached to the Work Orders
+                            that sends Job specific SWMS to the Workers to confirm
+                            their adherence by their signature before the Job starts.
+
+                        </p>
+                        <a href="Signup" class="btn_2">try for free</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="front/img/animate_icon/Ellipse_7.png" alt="" class="feature_icon_1 custom-animation1">
+    <img src="front/img/animate_icon/Ellipse_8.png" alt="" class="feature_icon_2 custom-animation2">
+    <img src="front/img/animate_icon/Ellipse_1.png" alt="" class="feature_icon_3 custom-animation3">
+    <img src="front/img/animate_icon/Ellipse_2.png" alt="" class="feature_icon_4 custom-animation4">
+    <img src="front/img/animate_icon/Ellipse_3.png" alt="" class="feature_icon_5 custom-animation5">
+    <img src="front/img/animate_icon/Ellipse_4.png" alt="" class="feature_icon_6 custom-animation6">
+</section>
+<!--::banner part start::-->
+<!--::use sasu part end::-->
+<section class="use_sasu padding_top">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-sm-6">
+                <div class="single_feature">
+                    <div class="single_feature_part">
+                        <img src="front/img/icon/feature_icon_1.png" alt="">
+                        <h4>Asset Based Work-Order</h4>
+                        <p>
+                            Work Order system that is Asset based with an integrated SWMS/RAMS system that conforms to current Health & Safety legislation. Work Orders driven from Asset Maintenance Schedules
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="single_feature">
+                    <div class="single_feature_part">
+                        <img src="front/img/icon/feature_icon_3.png" alt="">
+                        <h4>Mobile Apps</h4>
+                        <p>
+                            Supported by mobile apps for Android and Apple IOS. Enterprise ready capability that can be used to manage, maintain and control thousands of Assets and Work Orders or just a few for the smaller Contractor.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="single_feature">
+                    <div class="single_feature_part">
+                        <img src="front/img/icon/feature_icon_2.png" alt="">
+                        <h4>Custom Process Setup</h4>
+                        <p>
+                            Dynamic and integrated Workflow processing allows different process/workflow setup for different Clients and different Work Order types within a Client.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="front/img/animate_icon/Ellipse_1.png" alt="" class="feature_icon_1 custom-animation1">
+</section>
+<!--::use sasu part end::-->
+<!--::about_us part start::-->
+<section class="about_us section_padding">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-6 col-lg-5">
+                <div class="about_us_text">
+                    <img src="front/img/icon/Icon_1.png" alt="">
+                    <h2>
+                        Work order software  <br>
+                        to get everyone on the same page
+                    </h2>
+                    <p>
+                        From FM Manager & Contractor to workers and customers,Clear WORK-ORDER helps you to get work done!
+                        Asset flexibility - Work Orders raised automatically against assets pre-defined planned maintenance schedules or raised ad-hoc against undefined assets or locations.
+                        Full activity history against the Asset.Word Order costs matched back against Purchase Orders/Contracts
+                    </p>
+                    <button class="btn_2" disabled>learn more</button>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="learning_img">
+                    <img src="front/img/about_img.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="front/img/animate_icon/Ellipse_4.png" alt="" class="feature_icon_1 custom-animation1">
+</section>
+<!--::about_us part end::-->
+<!--::about_us part start::-->
+<section class="about_us right_time">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-6 col-lg-6">
+                <div class="learning_img">
+                    <img src="front/img/about_img_1.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="about_us_text">
+                    <img src="front/img/icon/Icon_2.png" alt="">
+                    <h2>
+                        Your Business - Your Process - Your Efficiency - Your Savings
+                    </h2>
+                    <p>
+                        Configure the system for your own workflow and processes
+                        ensuring your own Control and Compliance. Lock the Work Order/Job
+                        if the time or costs are exceeded or the process not followed.
+                        Dynamic alerts controlled by configurable rules shows you the
+                        Work Orders/Jobs that are having issues.
+                        Map and Track workers location and whether they are on-site or
+                        off-site and synchronise the on-site times to the Job timesheets.
+                        Validate your time spent to your Client.
+                        Map Work Order/Job locations showing status and warning alert status.App support for Apple IOS and Android Smart phones
+
+                    </p>
+
+                    <button class="btn_2" disabled>learn more</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <img src="front/img/animate_icon/Ellipse_5.png" alt="" class="feature_icon_2 custom-animation2">
+</section>
+
+<section class="about_us section_padding">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-6 col-lg-5">
+                <div class="about_us_text">
+
+                    <h2>
+                        Efficient & Powerful
+
+                    </h2>
+                    <p>
+                        Clear-View©™ - The ONLY one screen and view that you need to run your business.
+                        With all active Work Orders/Jobs linked to Clients, FM Managers, Contractors, Workers and Purchase Orders, Clear-View©™ shows all the escalations and alerts within the system. Updated in real-time the system highlights the immediate issues  that you need to focus on.
+                        All activity and all status across the system driven from the one graphical view. The only view needed showing the information in an expandable view, Clear-View©™.
+                        Automatically lock the Work Order/Job if the SWMS isn’t signed within a set time of the Worker going on-site.
+
+                    </p>
+                    <button class="btn_2" disabled>learn more</button>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <div class="learning_img">
+                    <img src="front/img/about_img.png" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="front/img/animate_icon/Ellipse_4.png" alt="" class="feature_icon_1 custom-animation1">
+</section>
+
+
+<!--::about_us part end::-->
+<!--::review_part start::-->
+
+<section class="review_part padding_bottom">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md-6 col-lg-6">
+                <div class="learning_img">
+                    <img src="front/img/review_bg.png" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-5">
+                <div class="review_part_text">
+
+                    <h2>
+                        Simple Pricing
+                        unlock more opportunities
+
+                    </h2>
+                    <p>
+                        Our pricing and charging system allows us to charge in a wide variety of ways to suit the needs and budgets of our customers.
+                        We can charge per user per month, per Work Order and/or Method Statement used on a pay-per-use basis,
+                        on an Asset basis or on any other combination. So that we can give you the best competitive price for you the best thing to do is
+                        to contact us by email via the Contact Us page and give us your contact details and a date/time when
+                        it would be convenient to talk and we shall call you back to discuss.
+
+                    </p>
+                    <div class="review_part_text">
+                        <h2>
+                            Alerts And Warning
+                        </h2>
+                        <p>
+                            One Dynamic Smart-View, Clear-View©™ shows a Hierarchical tree view of all ongoing work with those transactions requiring attention highlighted by dynamic Warning Alert indicators.
+                        </p>
+                        <h3><span></span> </h3>
+                    </div>
+                    <button class="btn_2" disabled>learn more</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <img src="front/img/animate_icon/Ellipse_4.png" alt="" class="feature_icon_2 custom-animation2">
+</section>
+<!--::review_part end::-->
+
+<!--::pricing part start::-->
+<section class="pricing_part section_padding home_page_pricing">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="section_tittle text-center">
+                    <h2> Risk Assessment</h2>
+                    <p>
+                        PAY PER USE   RISK ASSESSMENT AND SURVEY . EACH TIME A RISK ASSESSMENT AND SURVEY IS SENT IT COSTS £0.10.
+                    </p>
+                    <a href="Signup" class="btn_2">Sign Up Today </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-9">
+                <div class="section_tittle text-center">
+                    <h2>Our Pricing Plan</h2>
+                    <p>There is a set price for the first employee, which covers a sole trader, and then a subsequent price for every other employee that is being registered to use the system. This is an annual price as it is an annual service. This is discounted if paid in total when registering or it can be paid monthly.</p>
+                    <br />
+                    <a href="Signup" class="btn_2">SignUp Now</a>
+                    <br />
+                </div>
+            </div>
+
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md-4">
+                    <div class="single_pricing_part">
+                        <span>YEARLY</span>
+                        <br />
+                        <h3><b>INITIAL REGISTRATION</b></h3>
+                        <br />
+                        <br />
+                        <br />
+
+                        <p>Full Actual Price: $1,680.00</p>
+                        <p>Discount Available: 50.00 %</p>
+                        <p>Discount Price Available: $840.00</p>
+
+                        <a href="Signup" class="pricing_btn">Register Now</a>
+                        <br />
+
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="single_pricing_part">
+                        <span>MONTHLY RECURRING PLAN</span>
+                        <br />
+                        <h3><b>INITIAL REGISTRATION - PAYING MONTHLY</b></h3>
+                        <br />
+
+                        <p>Full Actual Price: $1,680.00</p>
+                        <p>Discount Available: 40.00 %</p>
+                        <p>Discount Price Available: $84.00</p>
+
+                        <a href="Signup" class="pricing_btn">Register Now</a>
+                        <br />
+
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="single_pricing_part">
+                        <span>MONTHLY RECURRING PLAN</span>
+                        <br />
+                        <h3><b>REGISTER ADDITIONAL EMPLOYEES</b></h3>
+                        <br />
+
+                        <p>Full Actual Price: $102.00</p>
+                        <p>Discount Available: 50.00 %</p>
+                        <p>Discount Price Available: $51.00</p>
+
+                        <a href="Signup" class="pricing_btn">Register Now</a>
+                        <br />
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <img src="front/img/animate_icon/Ellipse_2.png" alt="" class="feature_icon_2 custom-animation2">
+</section>
+<!--::pricing part end::-->

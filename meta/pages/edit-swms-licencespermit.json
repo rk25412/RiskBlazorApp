@@ -1,0 +1,219 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Licence Permit",
+                              "component": "LICENCE_PERMIT_ID",
+                              "name": "LICENCE_PERMIT_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getLicencePermitsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "PERMIT_ID",
+                              "placeholder": "Choose LicencePermit",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "LICENCE_PERMIT_ID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmslicencespermit.LICENCE_PERMIT_ID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "LICENCE_PERMIT_IDRequiredValidator",
+                              "component": "LICENCE_PERMIT_ID",
+                              "text": "LICENCE_PERMIT_ID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${swmslicencespermit.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update SwmsLicencespermit",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateSwmsLicencespermit",
+                        "parameters": [
+                          {
+                            "name": "LPID",
+                            "value": "${parameters.LPID}"
+                          },
+                          {
+                            "name": "SwmsLicencespermit",
+                            "value": "${swmslicencespermit}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmslicencespermit}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsLicencespermit",
+                  "data": "${swmslicencespermit}",
+                  "visible": "${swmslicencespermit != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getSwmsLicencespermitByLPID",
+        "parameters": [
+          {
+            "name": "LPID",
+            "value": "${parameters.LPID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "swmslicencespermit",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.SwmsLicencespermit"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getLicencePermits",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getLicencePermitsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.LicencePermit>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Swms Licencespermit",
+  "access": "Authenticated",
+  "layout": "Main"
+}

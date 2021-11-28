@@ -1,0 +1,206 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Referenced Legislation",
+                              "component": "REFERENCE_LEGISLATION_ID",
+                              "name": "REFERENCE_LEGISLATION_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getReferencedLegislationsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "LEGISLATION_ID",
+                              "placeholder": "Choose ReferencedLegislation",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "REFERENCE_LEGISLATION_ID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmsreferencedlegislation.REFERENCE_LEGISLATION_ID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "REFERENCE_LEGISLATION_IDRequiredValidator",
+                              "component": "REFERENCE_LEGISLATION_ID",
+                              "text": "REFERENCE_LEGISLATION_ID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${swmsreferencedlegislation.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "type": "execute",
+                        "code": "swmsreferencedlegislation.SWMSID = int.Parse($\"{SWMSID}\");"
+                      },
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new SwmsReferencedlegislation!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createSwmsReferencedlegislation",
+                        "parameters": [
+                          {
+                            "name": "SwmsReferencedlegislation",
+                            "value": "${swmsreferencedlegislation}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmsreferencedlegislation}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${swmsreferencedlegislation}",
+                  "visible": "${swmsreferencedlegislation != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsReferencedlegislation"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getReferencedLegislations",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getReferencedLegislationsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.ReferencedLegislation>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "swmsreferencedlegislation",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.SwmsReferencedlegislation(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.SwmsReferencedlegislation"
+      }
+    ]
+  },
+  "name": "Add Swms Referencedlegislation",
+  "access": "Authenticated",
+  "layout": "Main"
+}

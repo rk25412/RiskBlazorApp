@@ -1,0 +1,1250 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Person",
+                              "component": "COMPANYID",
+                              "name": "COMPANYIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPeopleResult}",
+                              "textProperty": "COMPANY_NAME",
+                              "valueProperty": "PERSON_ID",
+                              "placeholder": "Choose Person",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "COMPANYID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.COMPANYID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Created Date",
+                              "component": "CREATED_DATE",
+                              "name": "CREATED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "CREATED_DATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.CREATED_DATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Updated Date",
+                              "component": "UPDATED_DATE",
+                              "name": "UPDATED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "UPDATED_DATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.UPDATED_DATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Template Type",
+                              "component": "SWMSTYPE",
+                              "name": "SWMSTYPELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getTemplateTypesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "TEMPLATE_TYPE_ID",
+                              "placeholder": "Choose TemplateType",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "SWMSTYPE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.SWMSTYPE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Templatename",
+                              "component": "TEMPLATENAME",
+                              "name": "TEMPLATENAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "TEMPLATENAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.TEMPLATENAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TEMPLATENAMERequiredValidator",
+                              "component": "TEMPLATENAME",
+                              "text": "TEMPLATENAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Version",
+                              "component": "VERSION",
+                              "name": "VERSIONLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "VERSION",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.VERSION}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Status Master",
+                              "component": "STATUS",
+                              "name": "STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatusMastersResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "STATUS_ID",
+                              "placeholder": "Choose StatusMaster",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "STATUS",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.STATUS}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool?",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "triState": true,
+                              "value": "${swmstemplate.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Createdby",
+                              "component": "CREATEDBY",
+                              "name": "CREATEDBYLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "CREATEDBY",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.CREATEDBY}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Docpath",
+                              "component": "DOCPATH",
+                              "name": "DOCPATHLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 500,
+                              "type": "textbox",
+                              "name": "DOCPATH",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.DOCPATH}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Swmstemplatenumber",
+                              "component": "SWMSTEMPLATENUMBER",
+                              "name": "SWMSTEMPLATENUMBERLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 20,
+                              "type": "textbox",
+                              "name": "SWMSTEMPLATENUMBER",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.SWMSTEMPLATENUMBER}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Swms Template Category",
+                              "component": "TEMPLATEQUESTION",
+                              "name": "TEMPLATEQUESTIONLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getSwmsTemplateCategoriesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "TEMPLATE_CATEGORY_ID",
+                              "placeholder": "Choose SwmsTemplateCategory",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "TEMPLATEQUESTION",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.TEMPLATEQUESTION}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "TEMPLATEQUESTIONRequiredValidator",
+                              "component": "TEMPLATEQUESTION",
+                              "text": "TEMPLATEQUESTION is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Country",
+                              "component": "COUNTRY_ID",
+                              "name": "COUNTRY_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getCountriesResult}",
+                              "textProperty": "COUNTRYNAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose Country",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "COUNTRY_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.COUNTRY_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Creator Id",
+                              "component": "CREATOR_ID",
+                              "name": "CREATOR_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "CREATOR_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.CREATOR_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Updater Id",
+                              "component": "UPDATER_ID",
+                              "name": "UPDATER_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "UPDATER_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.UPDATER_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Deleted Date",
+                              "component": "DELETED_DATE",
+                              "name": "DELETED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "DELETED_DATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.DELETED_DATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Deleter Id",
+                              "component": "DELETER_ID",
+                              "name": "DELETER_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "DELETER_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.DELETER_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Escalation Level",
+                              "component": "ESCALATION_LEVEL_ID",
+                              "name": "ESCALATION_LEVEL_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getEscalationLevelsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "ESCALATION_LEVEL_ID",
+                              "placeholder": "Choose EscalationLevel",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "ESCALATION_LEVEL_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.ESCALATION_LEVEL_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Warning Level",
+                              "component": "WARNING_LEVEL_ID",
+                              "name": "WARNING_LEVEL_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getWarningLevelsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "WARNING_LEVEL_ID",
+                              "placeholder": "Choose WarningLevel",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "WARNING_LEVEL_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.WARNING_LEVEL_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Status Level",
+                              "component": "STATUS_LEVEL_ID",
+                              "name": "STATUS_LEVEL_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatusLevelsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "STATUS_LEVEL_ID",
+                              "placeholder": "Choose StatusLevel",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "STATUS_LEVEL_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.STATUS_LEVEL_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "State",
+                              "component": "STATEID",
+                              "name": "STATEIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatesResult}",
+                              "textProperty": "STATENAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose State",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "STATEID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.STATEID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Trade Category",
+                              "component": "TRADECATEGORYID",
+                              "name": "TRADECATEGORYIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getTradeCategoriesResult}",
+                              "textProperty": "TRADE_NAME",
+                              "valueProperty": "TRADE_CATEGORY_ID",
+                              "placeholder": "Choose TradeCategory",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "TRADECATEGORYID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.TRADECATEGORYID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Siteid",
+                              "component": "SITEID",
+                              "name": "SITEIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "SITEID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.SITEID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Person",
+                              "component": "FM_MANAGER_ID",
+                              "name": "FM_MANAGER_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPeopleResult}",
+                              "textProperty": "COMPANY_NAME",
+                              "valueProperty": "PERSON_ID",
+                              "placeholder": "Choose Person",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "FM_MANAGER_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.FM_MANAGER_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Authorization Status",
+                              "component": "AUTHORIZATION_STATUS",
+                              "name": "AUTHORIZATION_STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "AUTHORIZATION_STATUS",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplate.AUTHORIZATION_STATUS}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new SwmsTemplate!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createSwmsTemplate",
+                        "parameters": [
+                          {
+                            "name": "SwmsTemplate",
+                            "value": "${swmstemplate}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmstemplate}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${swmstemplate}",
+                  "visible": "${swmstemplate != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsTemplate"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getTemplateTypes",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getTemplateTypesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.TemplateType>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStatusMasters",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatusMastersResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.StatusMaster>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getSwmsTemplateCategories",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getSwmsTemplateCategoriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.SwmsTemplateCategory>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getCountries",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getCountriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Country>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getEscalationLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getEscalationLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.EscalationLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getWarningLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getWarningLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.WarningLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStatusLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatusLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.StatusLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStates",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.State>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getTradeCategories",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getTradeCategoriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.TradeCategory>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "swmstemplate",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.SwmsTemplate(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.SwmsTemplate"
+      }
+    ]
+  },
+  "name": "Add Swms Template",
+  "access": "Authenticated",
+  "layout": "Main"
+}

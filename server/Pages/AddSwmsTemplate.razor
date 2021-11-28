@@ -1,0 +1,130 @@
+﻿@page "/addswmstemplate"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddSwmsTemplateComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <RadzenTemplateForm Data="@swmstemplate" Visible="@(swmstemplate != null)" TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Submit="@Form0Submit">
+                            <ChildContent>
+                                <RadzenCard Style="width:100%;">
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Company Name" Component="COMPANYID" style="width: 100%">
+                                            </RadzenLabel>
+
+                                            <RadzenDropDown Data="@getPeopleResult" TextProperty="COMPANY_NAME" ValueProperty="PERSON_ID" Placeholder="Please Select" style="width: 100%" @bind-Value="@(swmstemplate.COMPANYID)" Name="COMPANYID" Disabled="false">
+                                            </RadzenDropDown>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Created Date" Component="CREATED_DATE" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDatePicker style="width: 100%" @bind-Value="@(swmstemplate.CREATED_DATE)" Name="CREATED_DATE" Disabled="true">
+                                            </RadzenDatePicker>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Template For" Component="TEMPLATEQUESTION" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getSwmsTemplateCategoriesResult" TextProperty="NAME" ValueProperty="TEMPLATE_CATEGORY_ID" Placeholder="Please Select" style="display: block; width: 100%" @bind-Value="@(swmstemplate.TEMPLATEQUESTION)" Name="TEMPLATEQUESTION" Change="@OnSectionChange">
+                                            </RadzenDropDown>
+                                            <RadzenRequiredValidator Component="TEMPLATEQUESTION" Text="TEMPLATEQUESTION is required" style="position: absolute" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Company Name" Component="FM_MANAGER_ID" style="width: 100%" Visible="@(hidecompany)">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getPeopleResult" TextProperty="COMPANY_NAME" ValueProperty="PERSON_ID" Placeholder="Select FM Manager" style="width: 100%" @bind-Value="@(swmstemplate.FM_MANAGER_ID)" Name="FM_MANAGER_ID" Visible="@(hidecompany)">
+                                            </RadzenDropDown>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Country" Component="COUNTRY_ID" style="width: 100%" Visible="@(hideCountry)">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getCountriesResult" TextProperty="COUNTRYNAME" ValueProperty="ID" Placeholder="Choose Country" style="width: 100%" @bind-Value="@(swmstemplate.COUNTRY_ID)" Name="COUNTRY_ID" Visible="@(hideCountry)">
+                                            </RadzenDropDown>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="State" Component="STATEID" style="width: 100%" Visible="@(hideCountry)">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == swmstemplate.COUNTRY_ID)" TextProperty="STATENAME" ValueProperty="ID" Placeholder="Choose State" style="width: 100%" @bind-Value="@(swmstemplate.STATEID)" Name="STATEID" Visible="@(hideCountry)">
+                                            </RadzenDropDown>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="SWMS Type" Component="SWMSTYPE" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getTemplateTypesResult" TextProperty="NAME" ValueProperty="TEMPLATE_TYPE_ID" Placeholder="Please Select SWMS Type" style="width: 100%" @bind-Value="@(swmstemplate.SWMSTYPE)" Name="SWMSTYPE">
+                                            </RadzenDropDown>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Trade Category" Component="TRADECATEGORYID" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getTradeCategoriesResult" TextProperty="TRADE_NAME" ValueProperty="TRADE_CATEGORY_ID" Placeholder="Select Trade Category" style="width: 100%" @bind-Value="@(swmstemplate.TRADECATEGORYID)" Name="TRADECATEGORYID">
+                                            </RadzenDropDown>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Template name" Component="TEMPLATENAME" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(swmstemplate.TEMPLATENAME)" Name="TEMPLATENAME">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="TEMPLATENAME" Text="TEMPLATENAME is required" style="position: absolute">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                        
+                                    </div>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Version" Component="VERSION" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(swmstemplate.VERSION)" Name="VERSION">
+                                            </RadzenTextBox>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Status" Component="STATUS" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@getStatusMastersResult" TextProperty="NAME" ValueProperty="STATUS_ID" Placeholder="Select Status" style="width: 100%" @bind-Value="@(swmstemplate.STATUS)" Name="STATUS">
+                                            </RadzenDropDown>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <RadzenLabel Text="Select a SWMS to base new entry on" Component="TEMPLATE_ID" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenDropDown Data="@swmstobasenew" TextProperty="TEMPLATENAME" ValueProperty="SWMSID" Placeholder="Select Template" style="width: 100%" @bind-Value="@(swmstemplate.TEMPLATE_ID)" Name="TEMPLATE_ID">
+                                            </RadzenDropDown>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                            </RadzenButton>
+                                        </div>
+                                    </div>
+                                </RadzenCard>
+                        </ChildContent>
+                        </RadzenTemplateForm>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

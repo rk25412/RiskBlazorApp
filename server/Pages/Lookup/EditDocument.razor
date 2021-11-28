@@ -1,0 +1,88 @@
+﻿@page "/EditDocument/{DOCUMENTID}"
+@layout MainLayout
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>}
+                        else
+                        {
+                            <RadzenTemplateForm Data="@companyDocumentFile" Visible="@(companyDocumentFile != null)" TItem="CompanyDocumentFile" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Document Name" Component="DOCUMENTNAME" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(companyDocumentFile.DOCUMENTNAME)" Name="DOCUMENTNAME">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="DOCUMENTNAME" Text="Document Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Version Number" Component="VERSION_NUMBER" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" style="width: 100%" ReadOnly="true" @bind-Value="@(companyDocumentFile.VERSION_NUMBER)" Name="VERSION_NUMBER">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="VERSION_NUMBER" Text="Version Number is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Upload document" Component="FILENAME" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            @if (string.IsNullOrEmpty(companyDocumentFile.FILENAME))
+                                            {
+                                                <div class="text-center">
+                                                    <RadzenUpload Url="api/upload/single" Auto="false" Style="width:100%;margin-bottom:20px"
+                                                                  Progress="@((args) => OnProgress(args, "Single file upload"))" @ref="upload" ChooseText="Select a Document" Accept=".pdf,.xlsx,.doc,.docx,jpg,jpeg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document/" />
+                                                    <RadzenButton Style="width:100%" Text="Upload" Click=@(args => upload.Upload()) />
+
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                                    <span style="width:90%;overflow:hidden;display:inline-block">@companyDocumentFile.FILENAME</span>
+                                                    <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                            </RadzenButton>
+                                        </div>
+                                    </div>
+                                </ChildContent>
+                            </RadzenTemplateForm>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

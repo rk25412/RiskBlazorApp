@@ -1,0 +1,70 @@
+﻿@page "/company-transaction"
+@layout MainLayout
+@inherits Clear.Risk.Pages.CompanyTransactionComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H2" Text="Order History">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getCompanyTransactionsResult" TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="TRANSACTIONID" Title="Order No">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" FormatString="{0:d}" Property="TRANSACTIONDATE" Title="Order Date">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="TRANSACTIONREFNO" Title="Trans. Ref. No">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="PERSON_ID" Title="Company">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="AMOUNTPAID" Title="Order Amount">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="TAXAMOUNT" Title="Tax Amount">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" Property="TOTALAMOUNT" Title="Order Total">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" FilterProperty="Currency.ISO_CODE" Property="CURRENCY_ID" SortProperty="Currency.ISO_CODE" Title="Currency">
+              <Template Context="data">
+              @(data.Currency?.ISO_CODE)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransaction" FilterProperty="TransactionStatus.NAME" Property="TRANSACTION_STATUS_ID" SortProperty="TransactionStatus.NAME" Title="Status">
+              <Template Context="data">
+              @(data.TransactionStatus?.NAME)
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+        <RadzenHeading Size="H2" Text="Order Details">
+        </RadzenHeading>
+        <RadzenGrid @ref="grid1" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@CompanyTransactionDetails" TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail">
+          <Columns>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail" Property="TransactionDetailID" Title="ID">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail" FilterProperty="Applicence.LICENCE_NAME" Property="PRODUCT_ID" SortProperty="Applicence.LICENCE_NAME" Title="Product Name">
+              <Template Context="data">
+              @(data.Applicence?.LICENCE_NAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail" Property="PRICE" Title="Price">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail" Property="TAX_AMT" Title="Tax">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.CompanyTransactionDetail" Property="PRICE_TOTAL" Title="Total">
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,78 @@
+﻿@page "/blog"
+@layout WebLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using BlazorTable
+
+<section class="breadcrumb"></section>
+<section class="container mt-3">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+
+            <hr style="margin:auto">
+            <h2 class="display-4">Blog</h2>
+            <hr width:40%>
+            <p class="lead">This is the page of Company Blogs.</p>
+        </div>
+    </div>
+</section>
+
+<style>
+    .ui-datalist-data > li, .ui-g > div {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background-color: transparent !important;
+        margin: 0 !important;
+        margin-bottom:20px !important;
+    }
+
+    .jumbotron-fluid{
+        background-image: url(https://demos.creative-tim.com/material-kit-pro/assets/img/bg7.jpg);
+        background-position: bottom;
+        background-size: cover;
+    }
+</style>
+<section class="container">
+    @if (isLoading)
+    {
+        <div class="loading">Loading&#8230;</div>}
+    <div class="row">
+        <div class="col-12">
+            <RadzenDataList @ref="datalist0" AllowPaging="true" Data="@getBlog" TItem="BlogTable" PageSize="10" WrapItems="true">
+                <Template Context="order">
+                    <div class="card mb-3">
+                        <img src="/Blog/@order.BgImgPath" class="img-fluid card-img-top" alt="Card image cap"/>
+
+                        <div class="card-body">
+                            <ul>
+                                <li class="float-left">
+                                    <i class="fa fa-clock"></i>
+                                    <span>@order.CreatedDate</span>
+                                </li>
+
+                                <li class="float-left ml-3">
+                                    <i class="fa fa-user"></i>
+                                    <span>@order.CreatedBy</span>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+
+                            <h3 class="card-title mt-3">@order.BgTittle</h3>
+                            <p class="card-text">@(order.BgShortDetails)</p>
+
+                            <div class="text-right">
+                                <a href="/single-blog/@order.Blog_Id" class="btn btn-sm btn-outline-primary" target="_blank">Read more...</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </Template>
+            </RadzenDataList>
+        </div>
+    </div>
+</section>

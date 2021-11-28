@@ -1,0 +1,497 @@
+﻿@page "/view-assesment/{ASSESMENTID}"
+@page "/view-assesment/{ASSESMENTID}/{RETURNURL}"
+@page "/view-assesment/{ASSESMENTID}/{RETURNURL}/{ServayID}"
+
+
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+    <ChildContent>
+        <div style="margin: 5px;">
+            <RadzenHeading Size="H3" Text="ASSESSMENT DETAILS" Style="display:inline-block">
+            </RadzenHeading>
+            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@ButtonBackToListClick" Style="float:right">
+            </RadzenButton>
+
+
+        </div>
+        <hr />
+        @*<span>Select one or more Risk Assessment(s) by entering the required data and then selecting the tick box(s) for the Risk Assessment(s) required for the Work Order from the 'Please Select Templates' box. The Templates selected will appear in the 'Selected Templates' box. Selecting the Generate button will then generate each template, send each template to each worker assigned and assign a task to each worker assigned.</span>*@
+        <RadzenCard Style="width:100%;">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <RadzenFieldset AllowCollapse="false" Text="Assessment Information">
+                        <ChildContent>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Assessment No.">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.RISKASSESSMENTNO)</b>
+
+
+                                </div>
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Assessment Date.">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(string.Format("{0:d}",assesment.ASSESMENTDATE))</b>
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Work Site">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.PersonSite?.SITE_ADDRESS1)</b>
+                                    <br />
+                                    @(assesment.PersonSite?.SITE_ADDRESS2)
+                                    <br />
+                                    @(assesment.PersonSite?.CITY)   @(assesment.PersonSite?.State?.STATENAME)
+                                    <br />
+                                    @(assesment.PersonSite?.POST_CODE)
+                                    <br />
+                                    @(assesment.PersonSite?.Country?.COUNTRYNAME)
+
+                                </div>
+
+                            </div>
+                        </ChildContent>
+                    </RadzenFieldset>
+
+                    <RadzenFieldset AllowCollapse="false" Text="Survey/Schedule Information">
+                        <ChildContent>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Include 5-Minute Survey?">
+                                    </RadzenLabel>
+                                    @(assesment.ISCOVIDSURVEY ? "Yes" :"N0")
+
+                                </div>
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Survey" Component="COVID_SURVEY_ID" style="width: 100%" Visible="@(assesment.ISCOVIDSURVEY)">
+                                    </RadzenLabel>
+                                    <br />
+                                    @(assesment.Survey?.SURVEY_TITLE)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Repeat this Risk Assessment on a schedule?">
+                                    </RadzenLabel>
+                                    @(assesment.ISSCHEDULE ? "Yes" :"No")
+
+                                </div>
+                            </div>
+
+
+                        </ChildContent>
+                    </RadzenFieldset>
+
+
+                </div>
+                <div class="col-md-6">
+                    <RadzenFieldset AllowCollapse="false" Text="Work Order Information">
+                        <ChildContent>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Work Order No.">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.WORKORDERNUMBER)</b>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Purchase Order No.">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.PURCHASEORDER)</b>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Project Name">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.PROJECTNAME)</b>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Work Order Start">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(string.Format("{0:d}",assesment.WORKSTARTDATE))</b>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Work Order End">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(string.Format("{0:d}",assesment.WORKENDDATE))</b>
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <RadzenLabel Text="Work Location">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.ORDERLOCATION)</b>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <RadzenLabel Text="Scope of Work">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(assesment.SCOPEOFWORK)</b>
+
+                                </div>
+
+
+                            </div>
+                        </ChildContent>
+
+                    </RadzenFieldset>
+
+                    <RadzenFieldset AllowCollapse="false" Text="Assesment Schedule Information" Visible="@(assesment.ISSCHEDULE)">
+                        <ChildContent>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Schedule">
+                                    </RadzenLabel>
+                                    <br />
+                                    @*@(assesment.ScheduleType?.NAME)*@
+                                </div>
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Schedule Time">
+                                    </RadzenLabel>
+                                    <br />
+                                    @(assesment.SCHEDULE_TIME)
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Mon" Component="MON" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.MON ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="TUE" Component="TUE" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.TUE ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="WED" Component="WED" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.WED ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="THUS" Component="THUS" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.THUS ? "Yes" :"N0")
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="FRI" Component="FRI" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.FRI ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="SAT" Component="SAT" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.SAT ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="SUN" Component="SUN" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.SUN ? "Yes" :"N0")
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Run On Holiday" Component="HOLIDAY" style="width: 100%">
+                                    </RadzenLabel>
+                                    @(assesment.HOLIDAY ? "Yes" :"N0")
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+                        </ChildContent>
+                    </RadzenFieldset>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <RadzenTabs>
+                        <Tabs>
+                            <RadzenTabsItem Text="ASSESSMENT TEMPLATE" Selected="true">
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.AssesmentAttachement" Items="@AssesmentAttachements" PageSize="5" ColumnReorder="true">
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentAttachement" Title="Attachment Date" Field="@(x => x.ATTACHEMENTDATE)" Sortable="true" Filterable="true" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentAttachement" Title="File Name" Field="@(x => x.DOCUMENTTEMPLATEURL)" Sortable="true" Filterable="true">
+                                        <Template>
+                                            <a href="@(context.Attachments.FirstOrDefault().DOCUMENT_URL + "/" + context.Attachments.FirstOrDefault().DOCUMENTNAME)">@context.Attachments.FirstOrDefault().DOCUMENTNAME</a>
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentAttachement" Title="Assessment Template" Field="@(x => x.SwmsTemplate.TEMPLATENAME)" Sortable="true" Filterable="true">
+                                        <Template>
+                                            @(context.SwmsTemplate?.TEMPLATENAME)
+                                        </Template>
+                                    </Column>
+
+
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+
+                            </RadzenTabsItem>
+
+
+                            <RadzenTabsItem Text="EMPLOYEE ASSIGNED">
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Items="@AssesmentEmployees" PageSize="5" ColumnReorder="true">
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Title="Employee Name" Field="@(x => x.Employee.FIRST_NAME)" Sortable="true" Filterable="true" DefaultSortColumn="true">
+                                        <Template>
+                                            @(context.Employee?.FIRST_NAME)   @(context.Employee?.LAST_NAME)
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" DefaultSortColumn="true" Width="12">
+                                        <Template>
+                                            @(context.WarningLevel?.NAME)
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Field="@(x => x.FileName)" Title="File Name" Sortable="true" Filterable="true" DefaultSortColumn="true">
+                                        <Template>
+                                            @if (!string.IsNullOrEmpty(context.FileName))
+                                            {
+                                                @foreach (var item in context.FileName.Split(','))
+                                                {
+                                                    @item
+                                                    <br />
+                                                }
+                                            }
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Title="Signature Image" Field="@(x => x.SignatureImageUrl)">
+                                        <Template>
+                                            @if (context.SignatureImageUrl != null)
+                                            {
+                                                <img src="@context.SignatureImageUrl" height="100" />
+                                            }
+                                            else { }
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployee" Title="Status" Field="@(x => x.isSigned)" Sortable="true" Filterable="true">
+                                        <Template>
+                                            @if (context.isSigned)
+                                            {
+                                                <p>Signed</p>
+                                            }
+                                            else
+                                            {
+                                                <p>Not Signed Yet</p>
+                                            }
+                                        </Template>
+                                    </Column>
+
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+                            </RadzenTabsItem>
+
+
+                            <RadzenTabsItem Text="DOCUMENT HISTORY">
+
+
+
+
+
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Items="@getAssesmentEmployeeAttachementsResult" PageSize="10" ColumnReorder="true">
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Field="@(x => x.AssignedEmployee)" Title="NAME" Width="17%">
+                                        <Template Context="data">
+                                            @(data.AssignedEmployee.Employee?.FIRST_NAME)  @(data.AssignedEmployee.Employee?.LAST_NAME)
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Title="DOCUMENT NAME" Field="@(x => x.DOCUMENTNAME)" Filterable="true" Width="17%">
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Title="ASSIGNED DATE" Field="@(x => x.ASSIGNED_DATE)" Filterable="true" Width="15%">
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Title="SIGNATURE DATE" Field="@(x => x.SINGNATURE_DATE)" Filterable="true" Width="17%">
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Title="STATUS" Field="@(x => x.EMPLOYEE_STATUS)" Filterable="true" Width="10%">
+                                        <Template Context="data">
+                                            @(data.AssesmentEmployeeStatus?.NAME)
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.AssesmentEmployeeAttachement" Title="DOCUMENT URL" Field="@(x => x.DOCUMENT_URL)" Filterable="true" Width="15%">
+                                        <Template Context="data">
+                                            <a href="/@data.DOCUMENT_URL/@data.DOCUMENTNAME" target="_blank">@data.DOCUMENTNAME</a>
+                                        </Template>
+                                    </Column>
+
+                                </Table>
+
+
+
+                            </RadzenTabsItem>
+
+                            <RadzenTabsItem Text="SURVEY HISTORY" Visible="assesment.ISCOVIDSURVEY">
+
+                                <Table TableItem="SurveyReport" Items="@getSurveyReportsResult" PageSize="10" ColumnReorder="true" TableRowClass="@(x => x.RowClass)">
+                                    <Column TableItem="SurveyReport" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="pageview" Size="ButtonSize.Small" Click="@((args) =>GridSurveyButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="SurveyReport" Title="Survey Date/Time" Field="@(x => x.SURVEY_DATE)" Sortable="true" Filterable="true" Width="15%">
+
+                                    </Column>
+                                    <Column TableItem="SurveyReport" Title="Survey" Field="@(x => x.Survey.SURVEY_TITLE)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="SurveyReport" Title="Assessment No" Field="@(x => x.Assesment.RISKASSESSMENTNO)" Sortable="true" Filterable="true" Width="13%">
+                                        <Template>
+                                            @context.Assesment?.RISKASSESSMENTNO
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="SurveyReport" Title="Work Order No" Field="@(x => x.Order.WORK_ORDER_NUMBER)" Sortable="true" Filterable="true" Width="13%">
+                                        <Template>
+                                            @context.Order?.WORK_ORDER_NUMBER
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="SurveyReport" Title="Entity Status" Field="@(x => x.EntityStatus.NAME)" Sortable="true" Filterable="true" Width="13%">
+                                        <Template>
+                                            @context.EntityStatus?.NAME
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="SurveyReport" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" Width="13%">
+                                        <Template>
+                                            @context.WarningLevel?.NAME
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="SurveyReport" Title="Comments" Field="@(x => x.COMMENTS)" Sortable="true" Filterable="true" Width="13%" />
+
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+                            </RadzenTabsItem>
+
+                            <RadzenTabsItem Text="SCHEDULE HISTORY" Visible="@(assesment != null && assesment.ISSCHEDULE)">
+                                <Table TableItem="AssesmentSchedule" Items="@AssesmentSchedules" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="AssesmentSchedule" Title="Schedule Type" Field="@(x => x.ScheduleType.NAME)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="AssesmentSchedule" Title="Schdule AT (PM)" Field="@(x => x.SCHEDULE_AT)" Sortable="true" Filterable="true" Width="20%">
+
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Schedule Interval(Hourly)" Field="@(x => x.INTERVAL)" Sortable="true" Filterable="true" Width="20%">
+
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Schedule Time" Field="@(x => x.SCHEDULE_TIME)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @if (context.SCHEDULE_TIME != null)
+                                            {
+                                                string.Format("{0:t}", context.SCHEDULE_TIME);
+                                            }
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Mon" Field="@(x => x.MON)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.MON
+
+
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Tus" Field="@(x => x.TUE)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.TUE
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Wed" Field="@(x => x.WED)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.WED
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Thus" Field="@(x => x.THUS)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.THUS
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Fri" Field="@(x => x.FRI)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.FRI
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Sat" Field="@(x => x.SAT)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.SAT
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="AssesmentSchedule" Title="Sun" Field="@(x => x.SUN)" Sortable="true" Filterable="true" Width="10%">
+                                        <Template>
+                                            @context.SUN
+                                        </Template>
+                                    </Column>
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+                            </RadzenTabsItem>
+                        </Tabs>
+                    </RadzenTabs>
+                </div>
+
+
+            </div>
+
+        </RadzenCard>
+
+    </ChildContent>
+</RadzenContent>
+

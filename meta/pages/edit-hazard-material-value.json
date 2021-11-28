@@ -1,0 +1,215 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Name",
+                              "component": "NAME",
+                              "name": "NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${hazardmaterialvalue.NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "NAMERequiredValidator",
+                              "component": "NAME",
+                              "text": "NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Material Value",
+                              "component": "MATERIAL_VALUE",
+                              "name": "MATERIAL_VALUELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "MATERIAL_VALUE",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${hazardmaterialvalue.MATERIAL_VALUE}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "MATERIAL_VALUERequiredValidator",
+                              "component": "MATERIAL_VALUE",
+                              "text": "MATERIAL_VALUE is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update HazardMaterialValue",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateHazardMaterialValue",
+                        "parameters": [
+                          {
+                            "name": "HAZARD_MATERIAL_ID",
+                            "value": "${parameters.HAZARD_MATERIAL_ID}"
+                          },
+                          {
+                            "name": "HazardMaterialValue",
+                            "value": "${hazardmaterialvalue}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${hazardmaterialvalue}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.HazardMaterialValue",
+                  "data": "${hazardmaterialvalue}",
+                  "visible": "${hazardmaterialvalue != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getHazardMaterialValueByHAZARD_MATERIAL_ID",
+        "parameters": [
+          {
+            "name": "HAZARD_MATERIAL_ID",
+            "value": "${parameters.HAZARD_MATERIAL_ID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "hazardmaterialvalue",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.HazardMaterialValue"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Hazard Material Value",
+  "access": "Authenticated",
+  "layout": "Main"
+}

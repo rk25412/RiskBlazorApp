@@ -1,0 +1,2259 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Add Mange Users"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Created Date",
+                              "component": "CREATED_DATE",
+                              "name": "CREATED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime",
+                              "type": "datepicker",
+                              "name": "CREATED_DATE",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${person.CREATED_DATE}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "CREATED_DATERequiredValidator",
+                              "component": "CREATED_DATE",
+                              "text": "CREATED_DATE is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Creator Id",
+                              "component": "CREATOR_ID",
+                              "name": "CREATOR_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "CREATOR_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.CREATOR_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Updated Date",
+                              "component": "UPDATED_DATE",
+                              "name": "UPDATED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "UPDATED_DATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.UPDATED_DATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Updater Id",
+                              "component": "UPDATER_ID",
+                              "name": "UPDATER_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "UPDATER_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.UPDATER_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Deleted Date",
+                              "component": "DELETED_DATE",
+                              "name": "DELETED_DATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "DELETED_DATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.DELETED_DATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Deleter Id",
+                              "component": "DELETER_ID",
+                              "name": "DELETER_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "DELETER_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.DELETER_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool?",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "triState": true,
+                              "value": "${person.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Title",
+                              "component": "TITLE",
+                              "name": "TITLELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "TITLE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.TITLE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Company Name",
+                              "component": "COMPANY_NAME",
+                              "name": "COMPANY_NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "COMPANY_NAME",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.COMPANY_NAME}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "First Name",
+                              "component": "FIRST_NAME",
+                              "name": "FIRST_NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "FIRST_NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${person.FIRST_NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "FIRST_NAMERequiredValidator",
+                              "component": "FIRST_NAME",
+                              "text": "FIRST_NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Middle Name",
+                              "component": "MIDDLE_NAME",
+                              "name": "MIDDLE_NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 50,
+                              "type": "textbox",
+                              "name": "MIDDLE_NAME",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.MIDDLE_NAME}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Last Name",
+                              "component": "LAST_NAME",
+                              "name": "LAST_NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "LAST_NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${person.LAST_NAME}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "LAST_NAMERequiredValidator",
+                              "component": "LAST_NAME",
+                              "text": "LAST_NAME is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Gender",
+                              "component": "GENDER",
+                              "name": "GENDERLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "Int64?",
+                              "type": "numeric",
+                              "name": "GENDER",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.GENDER}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Dob",
+                              "component": "DOB",
+                              "name": "DOBLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "DOB",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.DOB}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personaladdress 1",
+                              "component": "PERSONALADDRESS1",
+                              "name": "PERSONALADDRESS1Label",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "PERSONALADDRESS1",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONALADDRESS1}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personaladdress 2",
+                              "component": "PERSONALADDRESS2",
+                              "name": "PERSONALADDRESS2Label",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "PERSONALADDRESS2",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONALADDRESS2}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal City",
+                              "component": "PERSONAL_CITY",
+                              "name": "PERSONAL_CITYLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "PERSONAL_CITY",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_CITY}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "State",
+                              "component": "PERSONAL_STATE_ID",
+                              "name": "PERSONAL_STATE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatesResult}",
+                              "textProperty": "STATENAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose State",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "PERSONAL_STATE_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_STATE_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Country",
+                              "component": "PERSONAL_COUNTRY_ID",
+                              "name": "PERSONAL_COUNTRY_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getCountriesResult}",
+                              "textProperty": "COUNTRYNAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose Country",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "PERSONAL_COUNTRY_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_COUNTRY_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal Phone",
+                              "component": "PERSONAL_PHONE",
+                              "name": "PERSONAL_PHONELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "PERSONAL_PHONE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_PHONE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal Mobile",
+                              "component": "PERSONAL_MOBILE",
+                              "name": "PERSONAL_MOBILELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "PERSONAL_MOBILE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_MOBILE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal Email",
+                              "component": "PERSONAL_EMAIL",
+                              "name": "PERSONAL_EMAILLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "PERSONAL_EMAIL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_EMAIL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal Fax",
+                              "component": "PERSONAL_FAX",
+                              "name": "PERSONAL_FAXLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "PERSONAL_FAX",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_FAX}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Personal Web Add",
+                              "component": "PERSONAL_WEB_ADD",
+                              "name": "PERSONAL_WEB_ADDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "PERSONAL_WEB_ADD",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSONAL_WEB_ADD}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Address 1",
+                              "component": "BUSINESS_ADDRESS1",
+                              "name": "BUSINESS_ADDRESS1Label",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "BUSINESS_ADDRESS1",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_ADDRESS1}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Address 2",
+                              "component": "BUSINESS_ADDRESS2",
+                              "name": "BUSINESS_ADDRESS2Label",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 250,
+                              "type": "textbox",
+                              "name": "BUSINESS_ADDRESS2",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_ADDRESS2}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business City",
+                              "component": "BUSINESS_CITY",
+                              "name": "BUSINESS_CITYLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 150,
+                              "type": "textbox",
+                              "name": "BUSINESS_CITY",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_CITY}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "State",
+                              "component": "BUSINESS_STATE_ID",
+                              "name": "BUSINESS_STATE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatesResult}",
+                              "textProperty": "STATENAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose State",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "BUSINESS_STATE_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_STATE_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Country",
+                              "component": "BUSINESS_COUNTRY_ID",
+                              "name": "BUSINESS_COUNTRY_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getCountriesResult}",
+                              "textProperty": "COUNTRYNAME",
+                              "valueProperty": "ID",
+                              "placeholder": "Choose Country",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "BUSINESS_COUNTRY_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_COUNTRY_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Phone",
+                              "component": "BUSINESS_PHONE",
+                              "name": "BUSINESS_PHONELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "BUSINESS_PHONE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_PHONE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Mobile",
+                              "component": "BUSINESS_MOBILE",
+                              "name": "BUSINESS_MOBILELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "BUSINESS_MOBILE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_MOBILE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Email",
+                              "component": "BUSINESS_EMAIL",
+                              "name": "BUSINESS_EMAILLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "BUSINESS_EMAIL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_EMAIL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Fax",
+                              "component": "BUSINESS_FAX",
+                              "name": "BUSINESS_FAXLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "BUSINESS_FAX",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_FAX}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Business Web Add",
+                              "component": "BUSINESS_WEB_ADD",
+                              "name": "BUSINESS_WEB_ADDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 40,
+                              "type": "textbox",
+                              "name": "BUSINESS_WEB_ADD",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.BUSINESS_WEB_ADD}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Escalation Level",
+                              "component": "ESCALATION_LEVEL",
+                              "name": "ESCALATION_LEVELLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "ESCALATION_LEVEL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.ESCALATION_LEVEL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Warning Level",
+                              "component": "WARNING_LEVEL",
+                              "name": "WARNING_LEVELLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "WARNING_LEVEL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.WARNING_LEVEL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Status Level",
+                              "component": "STATUS_LEVEL",
+                              "name": "STATUS_LEVELLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "STATUS_LEVEL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.STATUS_LEVEL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Parent Person Id",
+                              "component": "PARENT_PERSON_ID",
+                              "name": "PARENT_PERSON_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "PARENT_PERSON_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PARENT_PERSON_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Person Type",
+                              "component": "COMPANYTYPE",
+                              "name": "COMPANYTYPELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPersonTypesResult}",
+                              "textProperty": "TYPE_NAME",
+                              "valueProperty": "PERSON_TYPE_ID",
+                              "placeholder": "Choose PersonType",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "COMPANYTYPE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.COMPANYTYPE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Outofhour",
+                              "component": "OUTOFHOUR",
+                              "name": "OUTOFHOURLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool?",
+                              "type": "checkbox",
+                              "name": "OUTOFHOUR",
+                              "triState": true,
+                              "value": "${person.OUTOFHOUR}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Outofhourcontact",
+                              "component": "OUTOFHOURCONTACT",
+                              "name": "OUTOFHOURCONTACTLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "OUTOFHOURCONTACT",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.OUTOFHOURCONTACT}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Outofhouremail",
+                              "component": "OUTOFHOUREMAIL",
+                              "name": "OUTOFHOUREMAILLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "OUTOFHOUREMAIL",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.OUTOFHOUREMAIL}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Outofstart",
+                              "component": "OUTOFSTART",
+                              "name": "OUTOFSTARTLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "${person.OUTOFSTART}",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Outofend",
+                              "component": "OUTOFEND",
+                              "name": "OUTOFENDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "${person.OUTOFEND}",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Designation",
+                              "component": "DESIGNATION",
+                              "name": "DESIGNATIONLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 150,
+                              "type": "textbox",
+                              "name": "DESIGNATION",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.DESIGNATION}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Person Status",
+                              "component": "PERSON_STATUS",
+                              "name": "PERSON_STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "PERSON_STATUS",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PERSON_STATUS}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Upload Profile",
+                              "component": "UPLOAD_PROFILE",
+                              "name": "UPLOAD_PROFILELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 500,
+                              "type": "textbox",
+                              "name": "UPLOAD_PROFILE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.UPLOAD_PROFILE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Applicence",
+                              "component": "APPLICENCEID",
+                              "name": "APPLICENCEIDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getApplicencesResult}",
+                              "textProperty": "LICENCE_NAME",
+                              "valueProperty": "APPLICENCEID",
+                              "placeholder": "Choose Applicence",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "APPLICENCEID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.APPLICENCEID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Applicence Startdate",
+                              "component": "APPLICENCE_STARTDATE",
+                              "name": "APPLICENCE_STARTDATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "APPLICENCE_STARTDATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.APPLICENCE_STARTDATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Applicence Enddate",
+                              "component": "APPLICENCE_ENDDATE",
+                              "name": "APPLICENCE_ENDDATELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "DateTime?",
+                              "type": "datepicker",
+                              "name": "APPLICENCE_ENDDATE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.APPLICENCE_ENDDATE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Termandcondition",
+                              "component": "TERMANDCONDITION",
+                              "name": "TERMANDCONDITIONLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 256,
+                              "type": "textbox",
+                              "name": "TERMANDCONDITION",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.TERMANDCONDITION}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Current Balance",
+                              "component": "CURRENT_BALANCE",
+                              "name": "CURRENT_BALANCELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "decimal",
+                              "type": "numeric",
+                              "name": "CURRENT_BALANCE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.CURRENT_BALANCE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Passwordhash",
+                              "component": "PASSWORDHASH",
+                              "name": "PASSWORDHASHLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "PASSWORDHASH",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${person.PASSWORDHASH}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "path": "mange-users",
+                                    "type": "navigate"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new Person!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createPerson",
+                        "parameters": [
+                          {
+                            "name": "Person",
+                            "value": "${person}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "path": "mange-users",
+                            "type": "navigate"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${person}",
+                  "visible": "${person != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.Person"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStates",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.State>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getCountries",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getCountriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Country>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getPersonTypes",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPersonTypesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.PersonType>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getApplicences",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getApplicencesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Applicence>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "person",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.Person(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.Person"
+      }
+    ]
+  },
+  "name": "Add Mange Users",
+  "access": "Authenticated",
+  "layout": "Main"
+}

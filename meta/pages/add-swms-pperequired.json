@@ -1,0 +1,206 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Ppevalue",
+                              "component": "PPE_VALUE_ID",
+                              "name": "PPE_VALUE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPpevaluesResult}",
+                              "textProperty": "KEY_DISPLAY",
+                              "valueProperty": "PPE_ID",
+                              "placeholder": "Choose Ppevalue",
+                              "valueType": "int",
+                              "type": "dropdown",
+                              "name": "PPE_VALUE_ID",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${swmspperequired.PPE_VALUE_ID}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "PPE_VALUE_IDRequiredValidator",
+                              "component": "PPE_VALUE_ID",
+                              "text": "PPE_VALUE_ID is required",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "defaultValue": "0"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${swmspperequired.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "type": "execute",
+                        "code": "swmspperequired.SWMSID = int.Parse($\"{SWMSID}\");"
+                      },
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new SwmsPperequired!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createSwmsPperequired",
+                        "parameters": [
+                          {
+                            "name": "SwmsPperequired",
+                            "value": "${swmspperequired}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmspperequired}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${swmspperequired}",
+                  "visible": "${swmspperequired != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsPperequired"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPpevalues",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPpevaluesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Ppevalue>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "swmspperequired",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.SwmsPperequired(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.SwmsPperequired"
+      }
+    ]
+  },
+  "name": "Add Swms Pperequired",
+  "access": "Authenticated",
+  "layout": "Main"
+}

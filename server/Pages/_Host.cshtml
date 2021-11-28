@@ -1,0 +1,15 @@
+﻿@page "/"
+@namespace Clear.Risk.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Radzen
+
+@if(User.Identity.IsAuthenticated)
+{
+    await Html.RenderPartialAsync("_AdminHost.cshtml");
+    return;
+}
+else
+{
+    await Html.RenderPartialAsync("_frontHost.cshtml");
+    return;
+}

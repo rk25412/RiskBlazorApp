@@ -1,0 +1,131 @@
+﻿@page "/edit-assesment-schedule/{SCHEDULEID}"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        else
+                        {
+
+                            <RadzenTemplateForm TItem="AssesmentSchedule" Data="@assesmentScheduleResult" Visible="@(assesmentScheduleResult != null)" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="Schedule" />
+                                            <RadzenDropDown Data="@getScheduleTypesResult" TextProperty="NAME" ValueProperty="SCHEDULE_TYPE_ID"
+                                                            Placeholder="Choose Schedule Type" style="width: 100%"
+                                                            @bind-Value="@(assesmentScheduleResult.SCHEDULE_TYPE_ID)" Name="SCHEDULE_TYPE_ID" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="Schedule Time/Schedule At/Interval" />
+
+                                            <RadzenDatePicker TValue="DateTime?" ShowTime="true" TimeOnly="true" @bind-Value="@(assesmentScheduleResult.SCHEDULE_TIME)"
+                                                              ShowSeconds="false" HoursStep="1.5" MinutesStep="5" DateFormat="HH:mm:ss"
+                                                              SecondsStep="10" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 2)" />
+
+                                            <RadzenNumeric style="width: 100%" @bind-Value="@(assesmentScheduleResult.INTERVAL)" Name="HourInterval"
+                                                           Max="8" Min="2" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 4)" />
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="Time From:" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 4)" />
+                                            <RadzenDropDown Data=@DdlTime Style="width:100%" TValue="int?" @bind-Value="assesmentScheduleResult.StartHour"
+                                                            Change=@OnFromToHourChange TextProperty="Text" ValueProperty="Value" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 4)" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="Time To:" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 4)" />
+                                            <RadzenDropDown Data=@DdlTime TValue="int?" @bind-Value="assesmentScheduleResult.EndHour"
+                                                            Change=@OnFromToHourChange TextProperty="Text" ValueProperty="Value" Style="width:100%" Visible="@(assesmentScheduleResult.SCHEDULE_TYPE_ID == 4)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="Mon" Component="MON" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.MON)" Name="MON">
+                                            </RadzenCheckBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="TUE" Component="TUE" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.TUE)" Name="TUE">
+                                            </RadzenCheckBox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="WED" Component="WED" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.WED)" Name="WED">
+                                            </RadzenCheckBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="THU" Component="THUS" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.THUS)" Name="THUS">
+                                            </RadzenCheckBox>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="FRI" Component="FRI" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.FRI)" Name="FRI">
+                                            </RadzenCheckBox>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="SAT" Component="SAT" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.SAT)" Name="SAT">
+                                            </RadzenCheckBox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <RadzenLabel Text="SUN" Component="SUN" style="width: 100%">
+                                            </RadzenLabel>
+                                            <RadzenCheckBox @bind-Value="@(assesmentScheduleResult.SUN)" Name="SUN">
+                                            </RadzenCheckBox>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                            </RadzenButton>
+                                        </div>
+                                    </div>
+
+                                </ChildContent>
+
+                            </RadzenTemplateForm>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,114 @@
+﻿@page "/work-order"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Work Order Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Work Order</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Work Order</h4>
+
+                                @*<div style="float: right ">
+            <a target="blank" href="HelpWorkOrder">
+                <i class="material-icons d-inline-flex">help</i> Help
+            </a>
+        </div>*@
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right; margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+
+
+                            </div>
+
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                <div class="loading">Loading&#8230;</div>}
+
+                                <Table TableItem="WorkOrder" Items="@getWorkOrdersResult" PageSize="15" ColumnReorder="true" TableRowClass="@(x => x.RowClass)">
+                                    <Column TableItem="WorkOrder" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="WorkOrder" Title="Work Order No" Field="@(x => x.WORK_ORDER_NUMBER)" Sortable="true" Filterable="true" Width="9%" DefaultSortColumn="true"/>
+                                    
+                                    <Column TableItem="WorkOrder" Title="Raised Date" Field="@(x => x.DATE_RAISED)" Sortable="true" Filterable="true" Width="6%">
+                                        <Template>
+                                            @string.Format("{0:dd/MM/yyyy}", context.DATE_RAISED)
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="WorkOrder" Title="Due Date" Field="@(x => x.DUE_DATE)" Sortable="true" Filterable="true" Width="6%">
+                                        <Template>
+                                            @string.Format("{0:dd/MM/yyyy}", context.DUE_DATE)
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="WorkOrder" Title="Status" Field="@(x => x.OrderStatus.NAME)" Sortable="true" Filterable="true" Width="13%">
+                                        <Template>
+                                            @context.OrderStatus?.NAME
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="WorkOrder" Title="Priority" Field="@(x => x.PriorityMaster.NAME)" Sortable="true" Filterable="true" Width="8%">
+                                        <Template>
+                                            @context.PriorityMaster?.NAME
+                                        </Template>
+                                    </Column>
+                                  
+                                    <Column TableItem="WorkOrder" Title="Entity Status" Field="@(x => x.EntityStatus.NAME)" Sortable="true" Filterable="true" Width="11%">
+                                        <Template>
+                                            @context.EntityStatus?.NAME
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="WorkOrder" Title="Warning Level" Field="@(x => x.WarningLevel.NAME)" Sortable="true" Filterable="true" Width="7%">
+                                        <Template>
+                                            @context.WarningLevel?.NAME
+                                        </Template>
+                                    </Column>
+                                    <Column TableItem="WorkOrder" Title="Description" Field="@(x => x.DESCRIPTION)" Sortable="true" Filterable="true" Width="24%" />
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

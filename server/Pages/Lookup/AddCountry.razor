@@ -1,0 +1,81 @@
+﻿@page "/add-country"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-info">
+                    <div class="card-body">
+                        <RadzenContent @ref="content1" Container="main">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <RadzenTemplateForm @ref="form0" Data="@country" Visible="@(country != null)" TItem="Country" Submit="@Form0Submit">
+                                            <ChildContent>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel @ref="idLabel" Text="Id" Component="ID" style="width: 100%">
+                                                        </RadzenLabel>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenNumeric @ref="id" style="display: block; width: 100%" @bind-Value="@(country.ID)" Name="ID">
+                                                        </RadzenNumeric>
+                                                        <RadzenRequiredValidator @ref="idRequiredValidator" Component="ID" Text="ID is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel @ref="countrynameLabel" Text="Countryname" Component="COUNTRYNAME" style="width: 100%">
+                                                        </RadzenLabel>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenTextBox @ref="countryname" MaxLength="250" style="display: block; width: 100%" @bind-Value="@(country.COUNTRYNAME)" Name="COUNTRYNAME">
+                                                        </RadzenTextBox>
+                                                        <RadzenRequiredValidator @ref="countrynameRequiredValidator" Component="COUNTRYNAME" Text="COUNTRYNAME is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel @ref="shortnameLabel" Text="Shortname" Component="SHORTNAME" style="width: 100%">
+                                                        </RadzenLabel>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenTextBox @ref="shortname" MaxLength="50" style="display: block; width: 100%" @bind-Value="@(country.SHORTNAME)" Name="SHORTNAME">
+                                                        </RadzenTextBox>
+                                                        <RadzenRequiredValidator @ref="shortnameRequiredValidator" Component="SHORTNAME" Text="SHORTNAME is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col offset-sm-3">
+                                                        <RadzenButton @ref="button1" ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                                        </RadzenButton>
+                                                        <RadzenButton @ref="button2" ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                        </RadzenButton>
+                                                    </div>
+                                                </div>
+                                            </ChildContent>
+                                        </RadzenTemplateForm>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,68 @@
+﻿@page "/add-templateattachment/{TEMPLATEID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddTemplateattachmentComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@templateattachment" TItem="Clear.Risk.Models.ClearConnection.Templateattachment" Visible="@(templateattachment != null)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+                <div class="col-md-6">
+                    <RadzenLabel Component="ATTACHEMENTNAME" style="width: 100%" Text="Attachement Title">
+                    </RadzenLabel>
+                    <RadzenTextBox MaxLength="100" style="width: 100%" @bind-Value="@(templateattachment.ATTACHEMENTNAME)" Name="ATTACHEMENTNAME">
+                    </RadzenTextBox>
+                    <RadzenRequiredValidator Component="ATTACHEMENTNAME" Text="Attachement Title is Required" style="position: absolute">
+                    </RadzenRequiredValidator>
+                </div>
+                @*<div class="col-md-6">
+                    <RadzenLabel Text="Template Type" Component="TEMPLATETYPEID" style="width: 100%">
+                    </RadzenLabel>
+                    <RadzenDropDown Data="@getTemplateTypesResult" TextProperty="NAME" ValueProperty="TEMPLATETYPEID" Placeholder="Choose Template Type" style="display: block; width: 100%" @bind-Value="@(templateattachment.TEMPLATETYPEID)" Name="TEMPLATETYPEID">
+                    </RadzenDropDown>
+                    
+                    <RadzenRequiredValidator Component="TEMPLATETYPEID" Text="TEMPLATETYPEID is required" style="position: absolute">
+                    </RadzenRequiredValidator>
+                </div>*@
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-6">
+                <RadzenLabel Component="DOCUMENTURL" style="width: 100%" Text="Select File">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                  <RadzenUpload @ref="upload" ChooseText="Upload Files" Url="Upload/Templates" Progress="@((args) => OnProgress(args, "Manual Upload"))">
+                  </RadzenUpload>
+                  <RadzenProgressBar Value="@progress" Unit="@info" Visible="@(progress > 0)" Style="margin-bottom: 20px" />
+                  @foreach (var e in events.OrderByDescending(i => i.Key))
+                  {
+                      @e.Value
+                      <br />
+                  }
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

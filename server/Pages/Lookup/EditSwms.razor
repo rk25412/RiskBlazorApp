@@ -1,0 +1,469 @@
+﻿@page "/EditSwms/{SWMSID}"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<style>
+    .ui-state-disabled {
+        visibility: hidden !important;
+    }
+</style>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Edit Assessment Template</h4>
+                                @*<a class="btn btn-secondary" href="/swms-template" style="float: right;">Back to List</a>*@
+                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@ButtonBackClick" Style="float:right" />
+                                <RadzenButton ButtonStyle="ButtonStyle.Info" Text="Save as Draft" Click="@SaveAsDraft" Style="float:right;margin-right:5px;" />
+                            </div>
+                        </div>
+                        <RadzenCard Style="width:100%;">
+                            <RadzenTemplateForm Data="@swmstemplate" Visible="@(swmstemplate != null)" TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <RadzenSteps>
+                                        <Steps>
+                                            <RadzenStepsItem Text="Template Details">
+                                                <div class="card card-success">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Assessment Template Details</h4>
+                                                        @*<RadzenButton  ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Button" Icon="save" Text="Update" Click="@UpdateStep1" Style="float:right" />*@
+                                                    </div>
+
+                                                    <div class="body">
+                                                        
+                                                            <div style="margin-bottom: 1rem" class="row">
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Template Id" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    @*<RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(swmstemplate.SWMSID)" Name="SWMSID" Disabled="true">
+                                                </RadzenTextBox>*@
+                                                                    <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(swmstemplate.SWMSID)" Name="SWMSID" ReadOnly="true"></RadzenNumeric>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Date Created" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDatePicker DateFormat="dd/MM/yy" style="display: block; width: 100%" @bind-Value="@(swmstemplate.CREATED_DATE)" Name="CREATED_DATE" ReadOnly="true"></RadzenDatePicker>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Date Modified" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDatePicker DateFormat="dd/MM/yy" style="display: block; width: 100%" @bind-Value="@(swmstemplate.UPDATED_DATE)" Name="UPDATED_DATE" ReadOnly="true"></RadzenDatePicker>
+                                                                </div>
+                                                            </div>
+                                                            <div style="margin-bottom: 1rem" class="row">
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Template name" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(swmstemplate.TEMPLATENAME)" Name="TEMPLATENAME">
+                                                                    </RadzenTextBox>
+                                                                    <RadzenRequiredValidator Component="TEMPLATENAME" Text="Template name is required" style="position: absolute">
+                                                                    </RadzenRequiredValidator>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Version" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(swmstemplate.VERSION)" Name="VERSION">
+                                                                    </RadzenTextBox>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Template For" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true"  AllowFiltering="true" Data="@getSwmsTemplateCategoriesResult" TextProperty="NAME" ValueProperty="TEMPLATE_CATEGORY_ID" Placeholder="Please Select" style="display: block; width: 100%" @bind-Value="@(swmstemplate.TEMPLATEQUESTION)" Name="TEMPLATEQUESTION">
+                                                                    </RadzenDropDown>
+                                                                    <RadzenRequiredValidator Component="TEMPLATEQUESTION" Text="TEMPLATEQUESTION is required" style="position: absolute" DefaultValue="0">
+                                                                    </RadzenRequiredValidator>
+                                                                </div>
+
+                                                            </div>
+
+                                                            <div style="margin-bottom: 1rem" class="row">
+
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Company Name" style="width: 100%" Visible="@(swmstemplate.TEMPLATEQUESTION==1)">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getPeopleResult" TextProperty="COMPANY_NAME" ValueProperty="PERSON_ID" Placeholder="Please Select" style="width: 100%" @bind-Value="@(swmstemplate.COMPANYID)"
+                                                                                    Name="COMPANYID" Visible="@(swmstemplate.TEMPLATEQUESTION==1)">
+                                                                    </RadzenDropDown>
+
+                                                                    <RadzenLabel Text="Country" style="width: 100%" Visible="@(swmstemplate.TEMPLATEQUESTION==2)">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getCountriesResult" TextProperty="COUNTRYNAME" ValueProperty="ID"
+                                                                                    Placeholder="Choose Country" style="width: 100%" @bind-Value="@(swmstemplate.COUNTRY_ID)"
+                                                                                    Name="COUNTRY_ID" Visible="@(swmstemplate.TEMPLATEQUESTION==2)">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="State" style="width: 100%" Visible="@(swmstemplate.TEMPLATEQUESTION==2)">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getStatesResult.Where(s=>s.COUNTRYID == swmstemplate.COUNTRY_ID)" TextProperty="STATENAME" ValueProperty="ID" Placeholder="Choose State" style="width: 100%" @bind-Value="@(swmstemplate.STATEID)" Name="STATEID" Visible="@(swmstemplate.TEMPLATEQUESTION==2)">
+                                                                    </RadzenDropDown>
+                                                                    <RadzenLabel Text=" " style="width: 100%" Visible="@(swmstemplate.TEMPLATEQUESTION==1)">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getPeopleResult" TextProperty="FIRST_NAME" ValueProperty="PERSON_ID" Placeholder="Select Manager" style="width: 100%" @bind-Value="@(swmstemplate.FM_MANAGER_ID)" Name="FM_MANAGER_ID" Visible="@(swmstemplate.TEMPLATEQUESTION==1)">
+                                                                    </RadzenDropDown>
+
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Template Type" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getTemplateTypesResult" TextProperty="NAME" ValueProperty="TEMPLATE_TYPE_ID" Placeholder="Please Select SWMS Type" style="width: 100%" @bind-Value="@(swmstemplate.SWMSTYPE)" Name="SWMSTYPE">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                            </div>
+                                                            <div style="margin-bottom: 1rem" class="row">
+
+
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Trade Category" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getTradeCategoriesResult" TextProperty="TRADE_NAME" ValueProperty="TRADE_CATEGORY_ID" Placeholder="Select Trade Category" style="width: 100%" @bind-Value="@(swmstemplate.TRADECATEGORYID)" Name="TRADECATEGORYID">
+                                                                    </RadzenDropDown>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Template" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown Data="@getTemplateResult.Where(b=>b.TRADECATEGORYID ==swmstemplate.TRADECATEGORYID)"
+                                                                                    TextProperty="TEMPLATENAME" AllowFiltering="true" AllowClear="true" ValueProperty="ID"
+                                                                                    Placeholder="Choose Template" style="width: 100%" @bind-Value="@(swmstemplate.TEMPLATE_ID)" Name="TEMPLATE_ID">
+                                                                    </RadzenDropDown>
+                                                                    <RadzenRequiredValidator Component="TEMPLATE_ID" Text="Template is required" DefaultValue="0">
+                                                                    </RadzenRequiredValidator>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Status" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getStatusMastersResult" TextProperty="NAME" ValueProperty="STATUS_ID" Placeholder="Select Status" style="width: 100%" @bind-Value="@(swmstemplate.STATUS)" Name="STATUS">
+                                                                    </RadzenDropDown>
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="row" style="margin-bottom: 1rem">
+                                                                <div class="col-md-4">
+                                                                    <RadzenLabel Text="Upload Risk Assessment" style="width: 100%">
+                                                                    </RadzenLabel>
+                                                                    @if (string.IsNullOrEmpty(swmstemplate.RiskAssessmentDoc))
+                                                                    {
+                                                                        <div class="text-center">
+                                                                            <RadzenUpload Url="@($"api/upload/single/{filename}")" Auto="false" Style="width:100%;margin-bottom:20px"
+                                                                                          Progress="@((args) => OnProgress(args, "Single file upload"))" @ref="upload" ChooseText="Select a Document" Accept=".pdf,.xlsx,.doc,.docx,jpg,jpeg,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document/" />
+                                                                            <RadzenButton Style="width:100%" Text="Upload" Click=@(args => upload.Upload()) />
+
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                                                            <span style="width:90%;overflow:hidden;display:inline-block">@swmstemplate.RiskAssessmentDoc</span>
+                                                                            <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+
+
+
+
+                                                        
+
+                                                    </div>
+                                                </div>
+
+                                            </RadzenStepsItem>
+                                            <RadzenStepsItem Text="Assessment Step Details">
+                                                <div class="card card-success">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Manage Assessment Steps</h4>
+                                                        @*<RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Button" Icon="save" Text="Update" Click="@UpdateStep2" Style="float:right" />*@
+                                                    </div>
+
+                                                    <div class="body">
+                                                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Visible="@(isAddEdit == false)" Text="Add" Click="@Button0Click">
+                                                        </RadzenButton>
+
+                                                        @if (isAddEdit == true && stepTemplate != null)
+                                                        {
+                                                            <div style="width:100%;margin-bottom: 20px;">
+                                                                @*<RadzenPanel AllowCollapse="true" Style="width:100%;margin-bottom: 20px; height:500px;" Visible="@(stepTemplate != null && isAddEdit == true)">*@
+                                                                <div style="margin-bottom: 1rem" class="row">
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Stepno" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(stepTemplate.STEPNO)" Name="STEPNO">
+                                                                        </RadzenNumeric>
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Task & or Category of Hazard" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenTextArea MaxLength="4000" style="width: 100%" @bind-Value="@(stepTemplate.TASKCATEGEORY)" Name="TASKCATEGEORY" />
+                                                                        @*<RadzenRequiredValidator Component="TASKCATEGEORY" Text="Task & or Category of Hazard is required">
+                                                    </RadzenRequiredValidator>*@
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="What are the Specific Hazards?" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        @*<RadzenTextArea MaxLength="4000" style="width: 100%" @bind-Value="@(stepTemplate.HAZARD)" Name="HAZARD" />*@
+                                                                        <RadzenAutoComplete Data="@customHazardData" TextProperty="NAME"
+                                                                                            LoadData="@LoadSpecificHazardData"
+                                                                                            Style="width: 100%" Change="@(args => ChangeSpecificHazards(args, "AutoComplete with custom filtering"))" @bind-Value="@(stepTemplate.HAZARD)" Name="HAZARD" />
+
+                                                                        @*<RadzenRequiredValidator Component="HAZARD" Text="Specific Hazards is required">
+                                                    </RadzenRequiredValidator>*@
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div style="margin-bottom: 1rem" class="row">
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Impact" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenAutoComplete Data="@customImpactData" TextProperty="NAME"
+                                                                                            LoadData="@LoadImpactData"
+                                                                                            Style="width: 100%" Change="@(args => ChangeImpact(args, "AutoComplete with custom filtering"))" @bind-Value="@(stepTemplate.HEALTHIMPACT)" Name="HEALTHIMPACT" />
+                                                                        @*<RadzenRequiredValidator Component="HEALTHIMPACT" Text="Impact is required">
+                                                    </RadzenRequiredValidator>*@
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk Before Control Likelyhood" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getRiskLikelyhoodsResult" TextProperty="NameWithRiskValue" ValueProperty="RISK_VALUE_ID" Placeholder="Please Select Likelyhood" style="width: 100%" @bind-Value="@(stepTemplate.RISK_LIKELYHOOD_ID)" Name="RISK_LIKELYHOOD_ID" Change="@(args => ChangeRISK_LIKELYHOOD(args, "DropDown"))">
+                                                                        </RadzenDropDown>
+                                                                        @*<RadzenRequiredValidator Component="RISK_LIKELYHOOD_ID" Text="Risk Before Control Likelyhood is required" DefaultValue="0">
+                                                    </RadzenRequiredValidator>*@
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk Before Control Consequence" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getConsequencesResult" TextProperty="NameWithConsequenceValue" ValueProperty="CONSEQUENCE_ID" Placeholder="Please Select Consequences" style="width: 100%" @bind-Value="@(stepTemplate.CONSEQUENCE_ID)" Name="CONSEQUENCE_ID" Change="@(args => ChangeCONSEQUENCE_ID(args, "DropDown"))">
+                                                                        </RadzenDropDown>
+                                                                        @*<RadzenRequiredValidator Component="CONSEQUENCE_ID" Text="Risk Before Control Consequence is required" DefaultValue="0">
+                                                    </RadzenRequiredValidator>*@
+                                                                    </div>
+                                                                </div>
+                                                                <div style="margin-bottom: 1rem" class="row">
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk Before Control Score" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(stepTemplate.RISK_CONTRL_SCORE)" Name="RISK_CONTRL_SCORE" ReadOnly="true">
+                                                                        </RadzenNumeric>
+                                                                        @*<RadzenNumericRangeValidator Component="RISK_CONTRL_SCORE" Min="1" Text="Risk Before Control Score is required" />*@
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Methods of Controlling Hazards" style="width: 100%">
+                                                                        </RadzenLabel>
+
+                                                                        <RadzenAutoComplete Data="@customControllingHazardData" TextProperty="NAME"
+                                                                                            LoadData="@LoadControllingHazardData"
+                                                                                            Style="width: 100%" Change="@(args => ChangeControllingHazards(args, "AutoComplete with custom filtering"))" @bind-Value="@(stepTemplate.CONTROLLINGHAZARDS)" Name="CONTROLLINGHAZARDS" />
+                                                                        @*<RadzenRequiredValidator Component="CONTROLLINGHAZARDS" Text="Methods of Controlling Hazards is required">
+                                                    </RadzenRequiredValidator>*@
+
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk After Control Likelyhood" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getRiskLikelyhoodsResult" TextProperty="NameWithRiskValue" ValueProperty="RISK_VALUE_ID" Placeholder="Please Select Likelyhood" style="width: 100%" @bind-Value="@(stepTemplate.RISK_AFTER_LIKELYHOOD_ID)" Name="RISK_AFTER_LIKELYHOOD_ID" Change="@(args => ChangeRISK_AFTER_LIKELYHOOD_ID(args, "DropDown"))">
+                                                                        </RadzenDropDown>
+                                                                        @*<RadzenRequiredValidator Component="RISK_AFTER_LIKELYHOOD_ID" Text="Risk After Control Likelyhood is required" DefaultValue="0">
+                                                    </RadzenRequiredValidator>*@
+
+                                                                    </div>
+                                                                </div>
+
+                                                                <div style="margin-bottom: 1rem" class="row">
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk After Control Consequence" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getConsequencesResult" TextProperty="NameWithConsequenceValue" ValueProperty="CONSEQUENCE_ID" Placeholder="Please Select Consequences" style="width: 100%" @bind-Value="@(stepTemplate.AFTER_CONSEQUENCE_ID)" Name="AFTER_CONSEQUENCE_ID" Change="@(args => ChangeAFTER_CONSEQUENCE_ID(args, "DropDown"))">
+                                                                        </RadzenDropDown>
+                                                                        @*<RadzenRequiredValidator Component="AFTER_CONSEQUENCE_ID" Text="Risk After Control Consequence is required" DefaultValue="0">
+                                                    </RadzenRequiredValidator>*@
+
+                                                                    </div>
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Risk After Control Score" style="width: 100%">
+                                                                        </RadzenLabel>
+
+                                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(stepTemplate.AFTER_RISK_CONTROL_SCORE)" Name="AFTER_RISK_CONTROL_SCORE" ReadOnly="true">
+                                                                        </RadzenNumeric>
+                                                                        @*<RadzenNumericRangeValidator Component="AFTER_RISK_CONTROL_SCORE" Min="1" Text="Risk After Control Score is required" />*@
+                                                                    </div>
+
+                                                                    <div class="col-md-4">
+                                                                        <RadzenLabel Text="Who is Responsible?" style="width: 100%">
+                                                                        </RadzenLabel>
+                                                                        <RadzenDropDown AllowClear="true" AllowFiltering="true" Data="@getResposnsibleTypesResult" TextProperty="NAME" ValueProperty="RESPONSIBLE_ID" Placeholder="Please Select person/role responsible" style="width: 100%" @bind-Value="@(stepTemplate.RESPOSNSIBLE_TYPE_ID)" Name="RESPOSNSIBLE_TYPE_ID">
+                                                                        </RadzenDropDown>
+                                                                        @*<RadzenRequiredValidator Component="RESPOSNSIBLE_TYPE_ID" Text="Who is Responsible is required" DefaultValue="0">
+                                                    </RadzenRequiredValidator>*@
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div>
+                                                                    <RadzenButton ButtonType="ButtonType.Button" Style="float:right;" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary" Click="@SaveClick">
+                                                                    </RadzenButton>
+                                                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Style="float:right;margin:0 5px" Text="Cancel" Click="@Button2Click">
+                                                                    </RadzenButton>
+                                                                </div>
+
+                                                                @*</RadzenPanel>*@
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            <RadzenPanel Style="width:100%;" Visible="@(isAddEdit == false)">
+
+                                                                <Table TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Items="@(swmstemplate.SwmsTemplatesteps.OrderBy(i => i.STEPNO).ToList())" PageSize="15" ColumnReorder="true">
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                                                        <Template Context="Step">
+
+                                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsStepDeleteButtonClick(args, Step))" @onclick:stopPropagation="true">
+                                                                            </RadzenButton>
+                                                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, Step))" @onclick:stopPropagation="true">
+                                                                            </RadzenButton>
+                                                                            @*<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="arrow_upward" Size="ButtonSize.Small" Click="@((args) => MoveStepUp(args, context))" @onclick:stopPropagation="true" />*@
+
+                                                                        </Template>
+                                                                    </Column>
+
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Step No." Field="@(x => x.STEPNO)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Category of Hazard" Field="@(x => x.TASKCATEGEORY)" Sortable="true" Filterable="true" Width="20%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Specific Hazard or Risk" Field="@(x => x.HAZARD)" Sortable="true" Filterable="true" Width="20%">
+
+                                                                    </Column>
+
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Potential  Impact" Field="@(x => x.HEALTHIMPACT)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk Before Control Likelyhood" Field="@(x => x.RiskLikelyhood.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk Before Control Consequence" Field="@(x => x.Consequence.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk Before Control Score" Field="@(x => x.RISK_CONTRL_SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Method of Controlling Hazards" Field="@(x => x.CONTROLLINGHAZARDS)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk After Control Likelyhood" Field="@(x => x.RiskLikelyhood1.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk After Control Consequence" Field="@(x => x.Consequence1.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Risk After Control Score" Field="@(x => x.AFTER_RISK_CONTROL_SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                                                    </Column>
+
+                                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Title="Responsible" Field="@(x => x.ResposnsibleType.NAME)" Sortable="true" Filterable="true" Width="10%" />
+
+                                                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                                                </Table>
+
+                                                            </RadzenPanel>
+                                                        }
+
+                                                    </div>
+                                                </div>
+
+                                            </RadzenStepsItem>
+                                            <RadzenStepsItem Text="Manage Additional Details">
+                                                <div class="card card-success">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">PPE And Other</h4>
+                                                        @*<RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Button" Icon="save" Text="Update" Click="@UpdateStep1" Style="float:right" />*@
+                                                    </div>
+
+                                                    <div class="body">
+                                                        <div style="margin-bottom: 1rem" class="row">
+
+                                                            <div class="col-md-6">
+                                                                <RadzenLabel Text="Plant and Equipment" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Multiple="true" Data="@getPlantEquipmentsResult" TValue="IEnumerable<int>" AllowFiltering="true" AllowClear="true"
+                                                                                TextProperty="NAME" ValueProperty="PLANT_EQUIPMENT_ID"
+                                                                                Placeholder="Please Select Hazard Material" style="width: 100%" @bind-Value="@(otherdetail.plants)" Name="plants">
+                                                                </RadzenDropDown>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <RadzenLabel Text="PPE Required" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Multiple="true" Data="@getPpevaluesResult" TValue="IEnumerable<int>" AllowFiltering="true"
+                                                                                TextProperty="KEY_DISPLAY" ValueProperty="PPE_ID" Placeholder="Please Select PPE Required" style="width: 100%" @bind-Value="@(otherdetail.ppes)" Name="ppes">
+                                                                </RadzenDropDown>
+
+                                                            </div>
+
+                                                            <div class="col-md-6">
+                                                                <RadzenLabel Text="Licence Permit" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Multiple="true" Data="@getLicencePermitsResult" TValue="IEnumerable<int>" TextProperty="NAME" ValueProperty="PERMIT_ID" Placeholder="Select Licences & Permits" style="display: block; width: 100%" @bind-Value="@(otherdetail.licenes)" Name="licenes">
+                                                                </RadzenDropDown>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <RadzenLabel Text="Referenced Legislation" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Multiple="true" Data="@getReferencedLegislationsResult" TValue="IEnumerable<int>" AllowFiltering="true"
+                                                                                TextProperty="NAME" ValueProperty="LEGISLATION_ID" Placeholder="Please Select Referenced Legislation" style="width: 100%" @bind-Value="@(otherdetail.legislations)" Name="legislations">
+                                                                </RadzenDropDown>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <RadzenLabel Text="Hazard Material Value" style="width: 100%">
+                                                                </RadzenLabel>
+                                                                <RadzenDropDown Multiple="true" Data="@getHazardMaterialValuesResult" TValue="IEnumerable<int>" AllowFiltering="true"
+                                                                                TextProperty="NAME" ValueProperty="HAZARD_MATERIAL_ID" Placeholder="Please Select Hazard Material" style="width: 100%" @bind-Value="@(otherdetail.materialsHazardous)" Name="materialsHazardous">
+                                                                </RadzenDropDown>
+                                                            </div>
+
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col offset-sm-3">
+                                                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                                                </RadzenButton>
+                                                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@CancelClick">
+                                                                </RadzenButton>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </RadzenStepsItem>
+                                        </Steps>
+                                    </RadzenSteps>
+                                </ChildContent>
+                            </RadzenTemplateForm>
+                        </RadzenCard>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

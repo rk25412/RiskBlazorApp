@@ -1,0 +1,175 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Net.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+
+namespace UveousSaaS.WebHost.Infrastructures.Helpers
+{
+    public static class IdentityExtensions
+    {
+         
+
+        public static string GetUserEmail(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.Email).Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim : string.Empty;
+        }
+
+        public static bool IsSuperAdmin(this IIdentity identity)
+        {
+            var roles = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.Role).ToList();
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim == "System Administrator" ? true : false : false;
+        }
+
+        public static int GetUserId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? int.Parse(claim) : -1;
+        }
+
+        public static string GetUserCulture(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "Culture").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim : string.Empty;
+        }
+
+        public static string GetUserPicture(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "Picture").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim : string.Empty;
+        }
+
+        public static string GetUserRole(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim : string.Empty;
+        }
+
+        public static void SetUserRole(this IIdentity identity, string key, string value)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == ClaimTypes.Role).SingleOrDefault();
+            if (claim != null)
+                ((ClaimsIdentity)identity).RemoveClaim(claim);
+
+            ((ClaimsIdentity)identity).AddClaim(new Claim(key, value));
+        }
+
+        public static int GetUserClientId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "ClientId").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? int.Parse(claim) : -1;
+        }
+        public static int GetUserOrgId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "OrgId").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? int.Parse(claim) : -1;
+        }
+
+        public static int GetUserWahrehouseId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "WahrehouseId").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? int.Parse(claim) : -1;
+        }
+
+        public static void SetUserWahrehouseId(this IIdentity identity, string key, string value)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "WahrehouseId").SingleOrDefault();
+            if (claim != null)
+                ((ClaimsIdentity)identity).RemoveClaim(claim);
+
+            ((ClaimsIdentity)identity).AddClaim(new Claim(key, value));
+        }
+
+        public static string GetUserBusinessPartnerId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "BpartnerId").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ?  claim : string.Empty;
+        }
+
+        public static int GetUserCurrencyId(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "CurrencyId").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? int.Parse(claim) : -1;
+        }
+         
+
+        public static void SetUserOrgId(this IIdentity identity, string key, string value)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "OrgId").SingleOrDefault();
+            if (claim != null)
+                ((ClaimsIdentity)identity).RemoveClaim(claim);
+
+            ((ClaimsIdentity)identity).AddClaim(new Claim(key, value));
+        }
+
+        public async static Task UpdateClaim(this IIdentity identity, string key, string value)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == key).FirstOrDefault();
+            if (claim != null)
+                ((ClaimsIdentity)identity).RemoveClaim(claim);
+
+            ((ClaimsIdentity)identity).AddClaim(new Claim(key, value));
+
+            var userIdentity = new ClaimsIdentity(((ClaimsIdentity)identity).Claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var userPrincipal = new ClaimsPrincipal(userIdentity);
+
+            var identitynew = new ClaimsIdentity(((ClaimsIdentity)identity).Claims, "PmrerpSecurity");
+            ClaimsPrincipal principal = new ClaimsPrincipal(new[] { identitynew });
+
+            UveousAppContext.Current.User = principal;
+           // ContextCurrent.User = principal;
+            
+            await AuthenticationHttpContextExtensions.SignInAsync(UveousAppContext.Current, principal, new AuthenticationProperties { IsPersistent = true });
+
+        }
+
+
+        public static IServiceProvider ServiceProvider;
+        public static Microsoft.AspNetCore.Http.HttpContext ContextCurrent
+        {
+            get
+            {
+                // var factory2 = ServiceProvider.GetService<Microsoft.AspNetCore.Http.IHttpContextAccessor>();
+                object factory = ServiceProvider.GetService(typeof(Microsoft.AspNetCore.Http.IHttpContextAccessor));
+
+                // Microsoft.AspNetCore.Http.HttpContextAccessor fac =(Microsoft.AspNetCore.Http.HttpContextAccessor)factory;
+                Microsoft.AspNetCore.Http.HttpContext context = ((Microsoft.AspNetCore.Http.HttpContextAccessor)factory).HttpContext;
+                // context.Response.WriteAsync("Test");
+
+                return context;
+            }
+        }
+
+        public static string GetAppUserAccountType(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "AccountType").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ?  claim : string.Empty;
+        }
+
+        public static bool IsAllowProcessing(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "AllowProcess").Select(c => c.Value).SingleOrDefault();             
+            return (claim != null) ? bool.Parse(claim.ToString()) : false;
+        }
+
+        public static bool IsClientAdmin(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "IsClientAdmin").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? bool.Parse(claim.ToString()) : false;
+        }
+
+        public static string GetUserPhone(this IIdentity identity)
+        {
+            var claim = ((ClaimsIdentity)identity).Claims.Where(c => c.Type == "PhoneNo").Select(c => c.Value).SingleOrDefault();
+            return (claim != null) ? claim : string.Empty;
+        }
+    }
+}

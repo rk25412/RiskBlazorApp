@@ -1,0 +1,90 @@
+﻿@page "/trade-category"
+@layout MainLayout
+@inherits Clear.Risk.Pages.TradeCategoryComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Trade Category Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Trade Category  List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Trade Category</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right;margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+
+                            </div>
+                            <div class="card-body">
+                                @if (IsLoading)
+                                {
+                            <div class="loading">Loading&#8230;</div>}
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Items="@(getTradeCategoriesResult)" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Title="Trade Name" Field="@(x => x.TRADE_NAME)" Sortable="true" Filterable="true" Width="30%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Title="Parent Category" Field="@(x => x.TradeCategory1.TRADE_NAME)" Sortable="true" Filterable="true" Width="25%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Title="Description" Field="@(x => x.DESCRIPTION)" Sortable="true" Filterable="true" Width="25%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.TradeCategory" Title="Hourly Cost" Field="@(x => x.HOURLY_COST)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+
+
+
+

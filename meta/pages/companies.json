@@ -1,0 +1,96 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Companies",
+          "type": "heading"
+        },
+        {
+          "allowFiltering": true,
+          "allowPaging": true,
+          "allowSorting": true,
+          "columns": [
+            {
+              "property": "COMPANY_NAME",
+              "title": "COMPANY NAME"
+            },
+            {
+              "property": "FIRST_NAME",
+              "title": "FIRST NAME"
+            },
+            {
+              "property": "MIDDLE_NAME",
+              "title": "MIDDLE NAME"
+            },
+            {
+              "property": "LAST_NAME",
+              "title": "LAST NAME"
+            },
+            {
+              "property": "PARENT_PERSON_ID",
+              "title": "PARENT PERSON ID"
+            },
+            {
+              "filterProperty": "PersonType.TYPE_NAME",
+              "property": "COMPANYTYPE",
+              "sortProperty": "PersonType.TYPE_NAME",
+              "template": "${data.PersonType?.TYPE_NAME}",
+              "title": "Person Type"
+            },
+            {
+              "filterProperty": "Applicence.LICENCE_NAME",
+              "property": "APPLICENCEID",
+              "sortProperty": "Applicence.LICENCE_NAME",
+              "template": "${data.Applicence?.LICENCE_NAME}",
+              "title": "Applicence"
+            },
+            {
+              "formatString": "{0:d}",
+              "property": "APPLICENCE_STARTDATE",
+              "title": "APPLICENCE STARTDATE"
+            },
+            {
+              "property": "CURRENT_BALANCE",
+              "title": "CURRENT BALANCE"
+            }
+          ],
+          "data": "${getPeopleResult}",
+          "itemType": "ClearCovid.Models.ClearConnection.Person",
+          "name": "grid0",
+          "pageSize": 10,
+          "type": "grid"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [
+          {
+            "name": "$expand",
+            "value": "State,Country,Person1,State1,Country1,PersonType,Applicence"
+          }
+        ],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Companies"
+}

@@ -1,0 +1,129 @@
+﻿@page "/smtp"
+@layout MainLayout
+@inherits Clear.Risk.Pages.SmtpComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">SMTP Setup Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">SMTP List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Manage SMTP Setup</h4>
+                        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                        </RadzenButton>
+                        <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right; margin-right:5px" Text="Help" Click="@HelpClick">
+                        </RadzenButton>
+                    </div>
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+            <div class="loading">Loading&#8230;</div> }
+        else
+        {
+
+
+<Table TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Items="@(getSmtpsetupsResult)" PageSize="15" ColumnReorder="true">
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="Action" Sortable="false" Filterable="false" Width="10%">
+        <Template>
+
+            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+            </RadzenButton>
+            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+            </RadzenButton>
+
+        </Template>
+    </Column>
+
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SMTP Server" Field="@(x => x.SMTP_SERVER_STRING)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SMTP User Account" Field="@(x => x.SMTP_USER_ACCOUNT)" Sortable="true" Filterable="true" Width="20%">
+
+    </Column>
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SMTP Account Password" Field="@(x => x.SMTP_ACCOUNT_PASSWORD)" Sortable="true" Filterable="true" Width="20%">
+
+    </Column>
+
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SMTP Mail From" Field="@(x => x.SMTP_MAIL_FROM)" Sortable="true" Filterable="true" Width="10%">
+
+    </Column>
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SMTP Port" Field="@(x => x.SMTP_PORT)" Sortable="true" Filterable="true" Width="10%">
+
+    </Column>
+    <Column TableItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Title="SSL" Field="@(x => x.USE_SSL)" Sortable="true" Filterable="true" Width="10%">
+
+    </Column>   
+
+
+    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+</Table>}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+@*<RadzenContent Container="main">
+    <ChildContent>
+        <RadzenHeading Size="H1" Text="SMTP">
+        </RadzenHeading>
+        <div class="row">
+            <div class="col-md-12">
+                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+                </RadzenButton>
+                <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getSmtpsetupsResult" TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" RowSelect="@Grid0RowSelect">
+                    <Columns>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Property="SMTP_SERVER_STRING" Title="SMTP SERVER STRING">
+                        </RadzenGridColumn>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Property="SMTP_USER_ACCOUNT" Title="SMTP USER ACCOUNT">
+                        </RadzenGridColumn>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Property="SMTP_ACCOUNT_PASSWORD" Title="SMTP ACCOUNT PASSWORD">
+                        </RadzenGridColumn>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Property="SMTP_MAIL_FROM" Title="SMTP MAIL FROM">
+                        </RadzenGridColumn>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Property="SMTP_PORT" Title="SMTP PORT">
+                        </RadzenGridColumn>
+                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Smtpsetup" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                            <Template Context="clearCovidModelsClearConnectionSmtpsetup">
+                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionSmtpsetup))" @onclick:stopPropagation="true">
+                                </RadzenButton>
+                            </Template>
+                        </RadzenGridColumn>
+                    </Columns>
+                </RadzenGrid>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>*@

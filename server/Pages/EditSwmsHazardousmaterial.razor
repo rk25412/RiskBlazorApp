@@ -1,0 +1,53 @@
+﻿@page "/edit-swms-hazardousmaterial/{HAZARDOUSMATERIALID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditSwmsHazardousmaterialComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="Clear.Risk.Models.ClearConnection.SwmsHazardousmaterial" Data="@swmshazardousmaterial" Visible="@(swmshazardousmaterial != null)" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Hazard Material Value" Component="HAZARD_MATERIAL_ID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getHazardMaterialValuesResult" TextProperty="NAME" ValueProperty="HAZARD_MATERIAL_ID" Placeholder="Please Select Hazard Material" style="width: 100%" @bind-Value="@(swmshazardousmaterial.HAZARD_MATERIAL_ID)" Name="HAZARD_MATERIAL_ID">
+                </RadzenDropDown>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Is Deleted" Component="IS_DELETED" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenCheckBox @bind-Value="@(swmshazardousmaterial.IS_DELETED)" Name="IS_DELETED">
+                </RadzenCheckBox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

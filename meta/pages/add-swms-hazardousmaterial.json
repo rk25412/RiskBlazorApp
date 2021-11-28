@@ -1,0 +1,195 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Hazard Material Value",
+                              "component": "HAZARD_MATERIAL_ID",
+                              "name": "HAZARD_MATERIAL_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getHazardMaterialValuesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "HAZARD_MATERIAL_ID",
+                              "placeholder": "Choose HazardMaterialValue",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "HAZARD_MATERIAL_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmshazardousmaterial.HAZARD_MATERIAL_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${swmshazardousmaterial.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "type": "execute",
+                        "code": "swmshazardousmaterial.SWMSID = int.Parse($\"{SWMSID}\");"
+                      },
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new SwmsHazardousmaterial!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createSwmsHazardousmaterial",
+                        "parameters": [
+                          {
+                            "name": "SwmsHazardousmaterial",
+                            "value": "${swmshazardousmaterial}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmshazardousmaterial}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "data": "${swmshazardousmaterial}",
+                  "visible": "${swmshazardousmaterial != null}",
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsHazardousmaterial"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getHazardMaterialValues",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getHazardMaterialValuesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.HazardMaterialValue>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "swmshazardousmaterial",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.SwmsHazardousmaterial(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.SwmsHazardousmaterial"
+      }
+    ]
+  },
+  "name": "Add Swms Hazardousmaterial",
+  "access": "Authenticated",
+  "layout": "Main"
+}

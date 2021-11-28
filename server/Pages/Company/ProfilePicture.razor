@@ -1,0 +1,58 @@
+﻿@page "/ProfilePicture/{PersonId}"
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        <RadzenTemplateForm Data="@person" Visible="@(person != null)" TItem="Clear.Risk.Models.ClearConnection.Person" Submit="@(args => Form0Submit(args))">
+                            <ChildContent>
+
+
+
+                                @if (string.IsNullOrEmpty(person.UPLOAD_PROFILE))
+                                {
+                                    <div class="row" style="width:100%">
+                                        <div class="col-9 text-center">
+                                            <RadzenUpload @ref="upload" Auto="false" Url="api/upload/uploadProfilePic" Style="margin-bottom: 20px;width:100%;"
+                                                          Progress=@(args => OnProgress(args, "Manual Upload")) Accept="image/*" ChooseText="Select Profile Picture" />
+                                        </div>
+                                        <div class="col-3">
+                                            <RadzenButton Text="Upload" Click=@(args => upload.Upload()) Style="height:50px;" />
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                        <span style="width:90%;overflow:hidden;display:inline-block">@person.UPLOAD_PROFILE</span>
+                                        <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                    </div>
+                                }
+                                <div class="text-center mt-1">
+                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                    </RadzenButton>
+                                </div>
+
+
+                            </ChildContent>
+                        </RadzenTemplateForm>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

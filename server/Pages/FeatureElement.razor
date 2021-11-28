@@ -1,0 +1,65 @@
+﻿@page "/feature"
+@layout WebLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using BlazorTable
+
+
+<style>
+    hr {
+        margin: auto;
+        width: 70%;
+    }
+</style>>
+
+<section class="feature_part section_padding">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6 col-lg-5">
+                                <div class="feature_part text-center">
+                                    <h2>System Features</h2>
+                                    <hr>
+                                    <br />
+                                    <br />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            @if (isLoading)
+                            {
+                                <div class="loading">Loading&#8230;</div>}
+                            <div class="row">
+                                <div class="col-12">
+                                    <RadzenDataList @ref="datalist0" AllowPaging="true" Data="@getSystemFeaturesResult" TItem="SystemFeatures" PageSize="10" WrapItems="false">
+                                        <Template Context="systemFeatures">
+                                            <RadzenAccordion Multiple="true">
+                                                <Items>
+                                                    <RadzenAccordionItem Text="@systemFeatures.Features_ScreenName">
+                                                        @((MarkupString)systemFeatures.Html_Content)
+                                                    </RadzenAccordionItem>
+
+                                                </Items>
+                                            </RadzenAccordion>
+                                        </Template>
+                                    </RadzenDataList>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>

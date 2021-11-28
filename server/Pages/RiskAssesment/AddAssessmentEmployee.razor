@@ -1,0 +1,44 @@
+﻿@page "/add-assessment-employee/{AssessmentId}"
+
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<div class="section">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <RadzenLabel Text="Add new Employee" />
+                                    <RadzenDropDown TValue="int" Data="getEmployeeResult" TextProperty="FullName" ValueProperty="PERSON_ID" Multiple="false"
+                                                    Placeholder="Choose Employees" Style="width: 100%" AllowClear="true" AllowFiltering="true"
+                                                    @bind-Value="SelectedEmployee" />
+                                </div>
+                            </div>
+
+                            <div style="display:flex; justify-content:center;">
+                                <RadzenButton ButtonStyle="ButtonStyle.Info" Text="Cancel" Click="CancelButtonClick" Style="margin: 0 5px" />
+                                <RadzenButton ButtonStyle="ButtonStyle.Primary" Text="Save" Click="Save0Click" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

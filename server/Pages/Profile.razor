@@ -1,0 +1,93 @@
+﻿@page "/profile"
+@layout MainLayout
+@inherits Clear.Risk.Pages.ProfileComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-header">
+                            <h4 class="card-title">Profile</h4>                            
+                        </div>
+                        <div class="card-body">                            
+                         <RadzenTemplateForm Method="post" Action="account/changepassword" TItem="ApplicationUser" Data="@(user)" Visible="@(user != null)">
+                                    <ChildContent>
+                                        <div style="margin-bottom: 1rem" class="row">
+                                            <div class="col-md-3">
+                                                <RadzenLabel Component="OldPassword" style="width: 100%" Text="Old Password">
+                                                </RadzenLabel>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <RadzenPassword style="display: block; width: 100%" Name="OldPassword">
+                                                </RadzenPassword>
+                                                <RadzenRequiredValidator Component="OldPassword" style="position: absolute" Text="Password is required">
+                                                </RadzenRequiredValidator>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 1rem" class="row">
+                                            <div class="col-md-3">
+                                                <RadzenLabel Component="NewPassword" style="width: 100%" Text="New Password">
+                                                </RadzenLabel>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <RadzenPassword style="display: block; width: 100%" Name="NewPassword">
+                                                </RadzenPassword>
+                                                <RadzenRequiredValidator Component="NewPassword" style="position: absolute" Text="Password is required">
+                                                </RadzenRequiredValidator>
+                                            </div>
+                                        </div>
+                                        <div style="margin-bottom: 1rem" class="row">
+                                            <div class="col-md-3">
+                                                <RadzenLabel Component="ConfirmPassword" style="width: 100%" Text="Confirm password">
+                                                </RadzenLabel>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <RadzenPassword style="display: block; width: 100%" Name="ConfirmPassword">
+                                                </RadzenPassword>
+                                                <RadzenRequiredValidator Component="ConfirmPassword" style="position: absolute" Text="ConfirmPassword is required">
+                                                </RadzenRequiredValidator>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col offset-sm-3">
+                                                <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Change password">
+                                                </RadzenButton>
+                                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+                                    </ChildContent>
+                                </RadzenTemplateForm>                           
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+
+
+
+@*<RadzenContent Container="main">
+    <ChildContent>
+        <RadzenHeading Size="H1" Text="Profile">
+        </RadzenHeading>
+        <div class="row">
+            <div class="col-md-12">
+                
+            </div>
+        </div>
+    </ChildContent>
+</RadzenContent>*@

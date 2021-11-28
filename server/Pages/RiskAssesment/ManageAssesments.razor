@@ -1,0 +1,124 @@
+﻿@page "/manage-assesments"
+@layout MainLayout
+@inherits Clear.Risk.Pages.ManageAssesmentsComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Risk Assessment Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Risk Order</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Risk Assessment</h4>
+
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right;margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+
+                            </div>
+
+                            <div class="card-body" style="overflow:auto">
+
+                                @if (isLoading)
+                                {
+                                    <div class="loading">Loading&#8230;</div> 
+                                }
+                                else
+                                {
+                                    <div style="@(Security.IsInRole("System Administrator") ? "width:120vw;" : "")">
+                                        <Table TableItem="Clear.Risk.Models.ClearConnection.Assesment" Items="@(getAssesmentsResult)" PageSize="20" ColumnReorder="true" style="overflow:auto">
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                                <Template>
+                                                    @if (context.ISSCHEDULE)
+                                                    {
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) => GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    }
+                                                    else
+                                                    {
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Secondary" Icon="pageview" Size="ButtonSize.Small" Click="@((args) => GridViewAssessmentClick(args, context))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    }
+                                                </Template>
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Assessment No" Field="@(x => x.RISKASSESSMENTNO)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Work Order" Field="@(x => x.WORKORDERNUMBER)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "10%" : "23%")>
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Project Name" Field="@(x => x.PROJECTNAME)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "10%" : "20%")>
+
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Assessment Date" Field="@(x => x.ASSESMENTDATE)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "7%" : "10%")>
+                                                <Template>
+                                                    @string.Format("{0:dd/MM/yyyy}", context.ASSESMENTDATE)
+                                                </Template>
+                                            </Column>
+
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Assessment Type" Field="@(x => x.TemplateTypeName)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "7%" : "10%")>
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Status" Field="@(x => x.EntityStatusName)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "7%" : "10%")>
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Warning Level" Field="@(x => x.WarningLevelName)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "7%" : "10%")>
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Internal/Client" Field="@(x => x.Internal)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "7%" : "10%")>
+
+                                            </Column>
+                                            <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Completed" Field="@(x => x.ISCOMPLETED)" Sortable="true" Filterable="true" Width=@(Security.IsInRole("System Administrator")? "5%" : "10%")>
+
+                                            </Column>
+
+                                            @if (Security.IsInRole("System Administrator"))
+                                            {
+                                                <Column TableItem="Clear.Risk.Models.ClearConnection.Assesment" Title="Activity" Field="@(x => x.AssessmentActivity)" Width="40%" Filterable="true" />
+                                            }
+
+
+                                            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                        </Table>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+
+

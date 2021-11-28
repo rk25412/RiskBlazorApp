@@ -1,0 +1,43 @@
+﻿@page "/Help/{ScreenId}"
+
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using System.Text.Encodings.Web
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+
+            <ChildContent>
+                @if (getHelpReferencesResult != null)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title">@getHelpReferencesResult.SCREEN_NAME</h4>
+                                </div>
+                                <div class="card-body">
+                                    @if (isLoading)
+                                    {
+                                        <div class="loading">Loading&#8230;</div>
+                                    }
+                                    <div>@((MarkupString)getHelpReferencesResult.HTML_CONTENT)</div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </ChildContent> 
+        </RadzenContent>
+    </div>
+</section>

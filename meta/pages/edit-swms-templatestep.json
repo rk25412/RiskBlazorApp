@@ -1,0 +1,750 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Taskcategeory",
+                              "component": "TASKCATEGEORY",
+                              "name": "TASKCATEGEORYLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 4000,
+                              "type": "textbox",
+                              "name": "TASKCATEGEORY",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.TASKCATEGEORY}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Hazard",
+                              "component": "HAZARD",
+                              "name": "HAZARDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 4000,
+                              "type": "textbox",
+                              "name": "HAZARD",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.HAZARD}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Healthimpact",
+                              "component": "HEALTHIMPACT",
+                              "name": "HEALTHIMPACTLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 4000,
+                              "type": "textbox",
+                              "name": "HEALTHIMPACT",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.HEALTHIMPACT}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Swmstype",
+                              "component": "SWMSTYPE",
+                              "name": "SWMSTYPELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 4000,
+                              "type": "textbox",
+                              "name": "SWMSTYPE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.SWMSTYPE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Risk Likelyhood",
+                              "component": "RISK_LIKELYHOOD_ID",
+                              "name": "RISK_LIKELYHOOD_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getRiskLikelyhoodsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "RISK_VALUE_ID",
+                              "placeholder": "Choose RiskLikelyhood",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "RISK_LIKELYHOOD_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.RISK_LIKELYHOOD_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Consequence",
+                              "component": "CONSEQUENCE_ID",
+                              "name": "CONSEQUENCE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getConsequencesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "CONSEQUENCE_ID",
+                              "placeholder": "Choose Consequence",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "CONSEQUENCE_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.CONSEQUENCE_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Risk Contrl Score",
+                              "component": "RISK_CONTRL_SCORE",
+                              "name": "RISK_CONTRL_SCORELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "RISK_CONTRL_SCORE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.RISK_CONTRL_SCORE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Controllinghazards",
+                              "component": "CONTROLLINGHAZARDS",
+                              "name": "CONTROLLINGHAZARDSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 4000,
+                              "type": "textbox",
+                              "name": "CONTROLLINGHAZARDS",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.CONTROLLINGHAZARDS}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Risk Likelyhood",
+                              "component": "RISK_AFTER_LIKELYHOOD_ID",
+                              "name": "RISK_AFTER_LIKELYHOOD_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getRiskLikelyhoodsResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "RISK_VALUE_ID",
+                              "placeholder": "Choose RiskLikelyhood",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "RISK_AFTER_LIKELYHOOD_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.RISK_AFTER_LIKELYHOOD_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Consequence",
+                              "component": "AFTER_CONSEQUENCE_ID",
+                              "name": "AFTER_CONSEQUENCE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getConsequencesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "CONSEQUENCE_ID",
+                              "placeholder": "Choose Consequence",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "AFTER_CONSEQUENCE_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.AFTER_CONSEQUENCE_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "After Risk Control Score",
+                              "component": "AFTER_RISK_CONTROL_SCORE",
+                              "name": "AFTER_RISK_CONTROL_SCORELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "AFTER_RISK_CONTROL_SCORE",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.AFTER_RISK_CONTROL_SCORE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Resposnsible Type",
+                              "component": "RESPOSNSIBLE_TYPE_ID",
+                              "name": "RESPOSNSIBLE_TYPE_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getResposnsibleTypesResult}",
+                              "textProperty": "NAME",
+                              "valueProperty": "RESPONSIBLE_ID",
+                              "placeholder": "Choose ResposnsibleType",
+                              "valueType": "int?",
+                              "type": "dropdown",
+                              "name": "RESPOSNSIBLE_TYPE_ID",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.RESPOSNSIBLE_TYPE_ID}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Status",
+                              "component": "STATUS",
+                              "name": "STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "STATUS",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.STATUS}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Isdelete",
+                              "component": "ISDELETE",
+                              "name": "ISDELETELabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool?",
+                              "type": "checkbox",
+                              "name": "ISDELETE",
+                              "triState": true,
+                              "value": "${swmstemplatestep.ISDELETE}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Stepno",
+                              "component": "STEPNO",
+                              "name": "STEPNOLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int?",
+                              "type": "numeric",
+                              "name": "STEPNO",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "value": "${swmstemplatestep.STEPNO}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update SwmsTemplatestep",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateSwmsTemplatestep",
+                        "parameters": [
+                          {
+                            "name": "STEPID",
+                            "value": "${parameters.STEPID}"
+                          },
+                          {
+                            "name": "SwmsTemplatestep",
+                            "value": "${swmstemplatestep}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${swmstemplatestep}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.SwmsTemplatestep",
+                  "data": "${swmstemplatestep}",
+                  "visible": "${swmstemplatestep != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getSwmsTemplatestepBySTEPID",
+        "parameters": [
+          {
+            "name": "STEPID",
+            "value": "${parameters.STEPID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "swmstemplatestep",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.SwmsTemplatestep"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getRiskLikelyhoods",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getRiskLikelyhoodsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.RiskLikelyhood>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getConsequences",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getConsequencesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Consequence>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getResposnsibleTypes",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getResposnsibleTypesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.ResposnsibleType>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit Swms Templatestep",
+  "access": "Authenticated",
+  "layout": "Main"
+}

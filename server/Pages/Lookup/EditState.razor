@@ -1,0 +1,59 @@
+﻿@page "/edit-state/{ID}"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-info">
+                    <div class="card-body">
+                        <RadzenContent @ref="content1" Container="main">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <RadzenTemplateForm @ref="form0" TItem="State" Data="@state" Visible="@(state != null)" Submit="@Form0Submit">
+                                            <ChildContent>
+                                                 
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel @ref="statenameLabel" Text="Statename" Component="STATENAME" style="width: 100%">
+                                                        </RadzenLabel>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenTextBox @ref="statename" MaxLength="150" style="display: block; width: 100%" @bind-Value="@(state.STATENAME)" Name="STATENAME">
+                                                        </RadzenTextBox>
+                                                        <RadzenRequiredValidator @ref="statenameRequiredValidator" Component="STATENAME" Text="STATENAME is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col offset-sm-3">
+                                                        <RadzenButton @ref="button1" ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                                        </RadzenButton>
+                                                        <RadzenButton @ref="button2" ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                        </RadzenButton>
+                                                    </div>
+                                                </div>
+                                            </ChildContent>
+                                        </RadzenTemplateForm>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenContent>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

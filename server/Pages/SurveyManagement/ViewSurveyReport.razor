@@ -1,0 +1,279 @@
+﻿@page "/view-survey-report/{SURVEY_REPORT_ID}"
+@page "/view-survey-report/{SURVEY_REPORT_ID}/{EmpId}"
+@page "/view-survey-report/{SURVEY_REPORT_ID}/{backpage}/{backId}/{tabNo}"
+
+
+
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Assessment Survey</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Assessment Survey</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        @if (isLoading)
+        {
+            <div class="loading">Loading&#8230;</div>
+        }
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title" style="display:inline-block">Survey Information</h4>
+                        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@ButtonBackToListClick" Style="float:right" />
+                    </div>
+
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>}
+                        <RadzenCard Style="width:100%;" Visible="@(surveyreport !=null)">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Survey Date/Time">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@string.Format("{0:dd/MM/yyyy H:mm:ss}", surveyreport.SURVEY_DATE)</b>
+
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Survey Title">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.Survey?.SURVEY_TITLE)</b>
+
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Surveyor">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.Surveyor?.FIRST_NAME) @(surveyreport.Surveyor?.LAST_NAME)</b>
+
+
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Assessment No.">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.Assesment?.RISKASSESSMENTNO)  </b>
+
+
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Entity Status">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.Assesment?.EntityStatus?.NAME)</b>
+
+
+                                </div>
+
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Warning Level">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.Assesment?.WarningLevel?.NAME)</b>
+
+
+                                </div>
+
+                                <div class="col-md-6">
+                                    <RadzenLabel Text="Surveyor Comments">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@(surveyreport.COMMENTS)</b>
+                                </div>
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Question Score">
+                                    </RadzenLabel>
+                                    <br />
+                                    <b>@getSurveyAnswerChecklistsResult.Sum(i => i.Question.SCORE)</b>
+                                </div>
+
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-16" style="overflow:auto">
+                                    @*<RadzenDataList WrapItems="true" AllowPaging="true" Data="@getSurveyAnswerChecklistsResult" TItem="SurveyAnswerChecklist" PageSize="1">
+                                            <Template Context="question">
+                                                <RadzenCard Style="width:100%;">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div>Q.No:</div>
+                                                            <b>@question.Question?.SURVEYQ_ORDER</b>
+                                                            <div style="margin-top:20px">Question:</div>
+                                                            <b>@(question.Question?.QUESTION_TITLE )</b>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div>Question Description:</div>
+                                                            <b>@question.Question?.QUESTION_DESC</b>
+
+
+                                                        </div>
+                                                    </div>
+
+                                                    @if (question.Question != null && question.Question.QUESTION_TYPE_ID == 1)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div>Surveyor Answer:</div>
+                                                                <b>@question.YESNO</b>
+                                                                <div style="margin-top:20px">Surveyor Comments:</div>
+                                                                <b>@(question.SurveyorComments )</b>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else if (question.Question != null && question.Question.QUESTION_TYPE_ID == 3)
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div>Surveyor Answer:</div>
+                                                                <b>@question.COMMENTS</b>
+                                                                <div style="margin-top:20px">Surveyor Comments:</div>
+                                                                <b>@(question.SurveyorComments )</b>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div style="margin-top:20px">Surveyor Comments:</div>
+                                                                <b>@(question.SurveyorComments )</b>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                    @if (question.SurveyAnswerValues != null)
+                                                    {
+                                                        <div>Surveyor Answer:</div>
+                                                        foreach (var item in question.SurveyAnswerValues)
+                                                        {
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+
+                                                                    <b>@item.SurveyAnswer?.SURVEY_ANSWER_TITLE</b>
+
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                </RadzenCard>
+                                            </Template>
+                                        </RadzenDataList>*@
+
+
+
+                                    <div style="width:75vw">
+                                        <Table TableItem="SurveyAnswerChecklist" Items="getSurveyAnswerChecklistsResult" PageSize="4" ColumnReorder="true">
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Survey Date/Time:" Field="@(x => x.UPDATED_DATE)" Sortable="true" Filterable="true" Width="16%" />
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Q.No:" Field="@(x => x.Question.SURVEYQ_ORDER)" Sortable="true" Filterable="true" Width="7%" />
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Question Type:" Field="@(x => x.Question.QUESTION_DESC)" Sortable="true" Filterable="true" Width="15%" />
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Question:" Field="@(x => x.Question.QUESTION_TITLE)" Sortable="true" Filterable="true" Width="15%" />
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Question Answer:" Field="@(x => x.Question.SurveyAnswers)" Sortable="true" Filterable="true">
+
+                                                <Template>
+                                                    @if (context.Question != null && context.Question.QUESTION_TYPE_ID == 1)
+                                                    {
+                                                        <div>
+                                                            @context.YESNO
+                                                        </div>
+                                                    }
+                                                    else if (context.Question != null && context.Question.QUESTION_TYPE_ID == 3)
+                                                    {
+                                                        <div>
+                                                            @context.COMMENTS
+                                                        </div>
+                                                    }
+                                                    @if (context.SurveyAnswerValues != null)
+                                                    {
+                                                        foreach (var item in context.SurveyAnswerValues)
+                                                        {
+                                                            <div>
+                                                                @item.SurveyAnswer?.SURVEY_ANSWER_TITLE
+                                                            </div>
+                                                        }
+                                                    }
+                                                </Template>
+
+                                            </Column>
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Comments:" Field="@(x => x.Question)" Sortable="true" Filterable="true">
+
+                                                <Template>
+                                                    @if (context.Question != null && context.Question.QUESTION_TYPE_ID == 1)
+                                                    {
+                                                        <div>
+                                                            @(context.SurveyorComments )
+                                                        </div>
+                                                    }
+                                                    else if (context.Question != null && context.Question.QUESTION_TYPE_ID == 3)
+                                                    {
+                                                        <div>
+                                                            @(context.SurveyorComments )
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div>
+                                                            @(context.SurveyorComments )
+                                                        </div>
+                                                    }
+                                                </Template>
+
+                                            </Column>
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Score:" Field="@(x => x.Question.SCORE)" Sortable="true" Filterable="true" />
+
+                                            <Column TableItem="SurveyAnswerChecklist" Title="Warning Level:" Field="@(x => x.Question.WarningLevel.NAME)" Sortable="true" Filterable="true" />
+
+                                            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                        </Table>
+                                    </div>
+                                </div>
+                            </div>
+                        </RadzenCard>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

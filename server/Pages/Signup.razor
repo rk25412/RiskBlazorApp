@@ -1,0 +1,222 @@
+﻿@page "/Signup"
+@layout WebLayout
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.EntityFrameworkCore
+
+
+
+
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+</section>
+<!-- breadcrumb start-->
+<!-- ================ contact section start ================= -->
+<section class="contact-section section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+            </div>
+            <div class="col-12">
+                <h2 class="contact-title">Create an Account</h2>
+            </div>
+            <div class="col-lg-12">
+                @if (IsLoading)
+                {
+                    <div class="loading">Loading&#8230;</div>
+                }
+                else
+                {
+                    <RadzenContent Container="main" @ref="content1">
+                        <ChildContent>
+                            <RadzenTemplateForm Data="@(person)" TItem="Clear.Risk.Models.ClearConnection.Person" Visible="@(person != null)" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Company Name" Component="COMPANY_NAME">
+                                            </RadzenLabel><span class="text-danger">*</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenTextBox MaxLength="50" @bind-Value="@(person.COMPANY_NAME)" style="display: block; width: 100%" Name="COMPANY_NAME">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="COMPANY_NAME" Text="Company Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="First Name" Component="FIRST_NAME">
+                                            </RadzenLabel><span class="text-danger">*</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="50" @bind-Value="@(person.FIRST_NAME)" style="display: block; width: 100%" Name="FIRST_NAME">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="FIRST_NAME" Text="First Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Last Name" Component="LAST_NAME">
+                                            </RadzenLabel><span class="text-danger">*</span>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="40" @bind-Value="@(person.LAST_NAME)" style="display: block; width: 100%" Name="LAST_NAME">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="LAST_NAME" Text="Last Name is required">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Email" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(person.PERSONAL_EMAIL)" Name="PERSONAL_EMAIL">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="PERSONAL_EMAIL" Text="Personal Email is required">
+                                            </RadzenRequiredValidator>
+                                            <RadzenRegexValidator Component="PERSONAL_EMAIL" Text="Please enter a valid email" Pattern="@emailRegex" />
+                                        </div>
+
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Password" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenPassword style=" display: block;width: 100%" Name="Password" @bind-Value="person.PASSWORDHASH" />
+                                            <RadzenRequiredValidator Component="Password" Text="Enter password" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Confirm Password" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenPassword style="display: block;width: 100%" Name="RepeatPassword" @bind-Value="person.ConfirmPassword" />
+                                            <RadzenRequiredValidator Component="RepeatPassword" Text="Repeat your password" />
+                                            <RadzenCompareValidator Visible="@(!string.IsNullOrEmpty(person.ConfirmPassword))" Value="@person.PASSWORDHASH" Component="RepeatPassword" Text="Password mismatch" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Address1" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.PERSONALADDRESS1)" Name="PERSONALADDRESS1">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="PERSONALADDRESS1" Text="Address1 is required" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Address2" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.PERSONALADDRESS2)" Name="PERSONALADDRESS2">
+                                            </RadzenTextBox>
+                                        </div>
+
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Country" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenDropDown Data="@getCountriesResult" AllowClear="true"
+                                                            FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                            TextProperty="COUNTRYNAME"
+                                                            ValueProperty="ID"
+                                                            Placeholder="Choose Country"
+                                                            style="display: block; width: 100%"
+                                                            @bind-Value="@(person.PERSONAL_COUNTRY_ID)" Name="COUNTRY_ID">
+                                            </RadzenDropDown>
+                                            <RadzenRequiredValidator Component="COUNTRY_ID" Text="Country is required" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="State" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == person.PERSONAL_COUNTRY_ID)" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                            TextProperty="STATENAME"
+                                                            ValueProperty="ID"
+                                                            Placeholder="Choose State" style="width: 100%" @bind-Value="@(person.PERSONAL_STATE_ID)" Name="STATE_ID">
+                                            </RadzenDropDown>
+                                            <RadzenRequiredValidator Component="STATE_ID" Text="State is required" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="City" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="100" style="width: 100%" @bind-Value="@(person.PERSONAL_CITY)" Name="PERSONAL_CITY">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="PERSONAL_CITY" Text="City is required" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Mobile" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="12" style="width: 100%" @bind-Value="@(person.PERSONAL_MOBILE)" Name="PERSONAL_MOBILE" Change="@(args => ChangeMobilePhone(args, "Mobile"))">
+                                            </RadzenTextBox>
+                                            <RadzenRequiredValidator Component="PERSONAL_MOBILE" Text="Mobile No is required" DefaultValue="0">
+                                            </RadzenRequiredValidator>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text=" Phone" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="12" style="width: 100%" @bind-Value="@(person.PERSONAL_PHONE)" Name="PERSONAL_PHONE" Change="@(args => ChangeMobilePhone(args, "Phone"))">
+                                            </RadzenTextBox>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Post Code" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="10" style="width: 100%" @bind-Value="@(person.PERSONAL_POSTCODE)" Name="PERSONAL_CITY">
+                                            </RadzenTextBox>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 1rem">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Fax" />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.PERSONAL_FAX)" Name="PERSONAL_FAX">
+                                            </RadzenTextBox>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Register" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+
+                                        </div>
+
+                                    </div>
+                                </ChildContent>
+                            </RadzenTemplateForm>
+                        </ChildContent>
+                    </RadzenContent>
+                }
+
+
+
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

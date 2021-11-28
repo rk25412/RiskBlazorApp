@@ -1,0 +1,112 @@
+﻿@page "/add-company-transaction"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-info">
+                    
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+
+                        <RadzenContent @ref="content1" Container="main">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <RadzenTemplateForm @ref="form0" Data="@companytransaction" Visible="@(companytransaction != null)" TItem="CompanyTransaction" Submit="@Form0Submit">
+                                            <ChildContent>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel @ref="amountpaidLabel" Text="Amount" Component="AMOUNTPAID" style="width: 100%">
+                                                        </RadzenLabel>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenNumeric @ref="amountpaid" style="display: block; width: 100%" @bind-Value="@(companytransaction.AMOUNTPAID)" Name="AMOUNTPAID">
+                                                        </RadzenNumeric>
+                                                        @*<RadzenRequiredValidator @ref="amountpaidRequiredValidator" Component="AMOUNTPAID" Text="AMOUNTPAID is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>*@
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Credit/Debit Card Number" />
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenTextBox style="display: block; width: 300px" MaxLength="16" @bind-Value="@(companytransaction.CardNumder)" Name="CardNumder">
+                                                        </RadzenTextBox>
+                                                        @*<RadzenRegexValidator Component="CardNumder" Text="only insert numbers" Pattern="\d{16}" Popup="false" Style="position: absolute" />*@
+                                                        @*<RadzenRequiredValidator Component="CardNumder" Text="Debit/Credit Card is required" style="position: absolute">
+        </RadzenRequiredValidator>*@
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Expiry Month/Year" />
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @*<RadzenNumeric style="display: block; width: 100px" MaxLength="2"  @bind-Value="@(companytransaction.Month)" Name="Month">
+                                                        </RadzenNumeric>/*@
+                                                        <RadzenDropDown TValue="int" Data="@Months" Placeholder="Month" Name="Month" Change="@(args => ChangeMonthYear(args, "Month"))">
+                                                        </RadzenDropDown>
+                                                        @*<RadzenRequiredValidator Component="Month" Text="Expiry Month is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>*@
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        @*<RadzenNumeric style="display: block; width: 100px" MaxLength="4"   @bind-Value="@(companytransaction.Year)" Name="Year">
+                                                        </RadzenNumeric>*@
+                                                        <RadzenDropDown TValue="int" Data="@Years" Placeholder="Year" Name="Year" Change="@(args => ChangeMonthYear(args, "Year"))">
+                                                        </RadzenDropDown>
+                                                        @*<RadzenRequiredValidator Component="Year" Text="Expiry Year is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>*@
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="CVC" />
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        <RadzenNumeric style="display: block; width: 100px" Min="0" Max="999" @bind-Value="@(companytransaction.CVC)" Name="CVC">
+                                                        </RadzenNumeric>
+                                                        @*<RadzenRequiredValidator Component="CVC" Text="CVC  is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>*@
+                                                         
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col offset-sm-3">
+                                                        <RadzenButton @ref="button1" ButtonType="ButtonType.Submit" Icon="save" Text="Process Payment" ButtonStyle="ButtonStyle.Primary">
+                                                        </RadzenButton>
+                                                        <RadzenButton @ref="button2" ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                        </RadzenButton>
+                                                    </div>
+                                                </div>
+                                            </ChildContent>
+                                        </RadzenTemplateForm>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenContent>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

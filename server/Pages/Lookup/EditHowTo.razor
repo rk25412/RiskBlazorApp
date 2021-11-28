@@ -1,0 +1,133 @@
+﻿@page "/EditHowTo/{HowToId}"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using Blazored.TextEditor
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+@using Microsoft.JSInterop;
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.AspNetCore.Components.Web;
+
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        else
+                        {
+                    <RadzenTemplateForm Data="@howToUse" TItem="HowToUse" Submit="@Form0Submit">
+                        <ChildContent>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Subject" Component="Subject" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(howToUse.Subject)" Name="Subject">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="Subject" Text="Subject is required">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Pdf Name" Component="Pdf_Name" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(howToUse.PdfName)" Name="Pdf_Name">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="Pdf_Name" Text="Pdf Name is required">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Upload Pdf" Component="FILENAME" Style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    @if (string.IsNullOrEmpty(howToUse.PdfPath))
+                                    {
+
+                                        <RadzenUpload @ref="upload1" Auto="false" Url="api/upload/HowToAddPdf" Style="margin-bottom: 20px;width:100%;"
+                                                      Progress=@(args => OnProgress1(args, "Manual Upload")) Accept=".pdf" ChooseText="Select pdf" />
+                                        <br />
+                                        <RadzenButton Text="Upload" Click=@(args => upload1.Upload()) Size="ButtonSize.Small" />
+
+                                    }
+                                    else
+                                    {
+                                        <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                            <span style="width:90%;overflow:hidden;display:inline-block">@howToUse.PdfPath</span>
+                                            <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Video Name" Component="Video_Name" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(howToUse.VideoName)" Name="Video_Name">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="Video_Name" Text="Video Name is required">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Upload Video" Component="ChooseVideo" Style="width: 100%"></RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    @if (string.IsNullOrEmpty(howToUse.VideoPath))
+                                    {
+                                        <RadzenUpload @ref="upload" Auto="false" Url="api/upload/HowToAddVideo" Style="margin-bottom: 20px;width:100%;"
+                                                      Progress=@(args => OnProgress(args, "Manual Upload")) Accept="video/*" ChooseText="Select Video" />
+                                        <br />
+                                        <RadzenButton Text="Upload" Click=@(args => upload.Upload()) Size="ButtonSize.Small" />
+                                    }
+                                    else
+                                    {
+
+                                        <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                            <span style="width:90%;overflow:hidden;display:inline-block">@howToUse.VideoPath</span>
+                                            <button type="button" @onclick="@RemoveDoc1" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col offset-sm-3">
+                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+
+                        </ChildContent>
+                    </RadzenTemplateForm>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

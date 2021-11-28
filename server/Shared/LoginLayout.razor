@@ -1,0 +1,29 @@
+﻿@inherits Clear.Risk.Layouts.LoginLayoutComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+<RadzenDialog />
+<RadzenNotification />
+
+<RadzenBody @ref="body0"  Expanded="true">
+    <ChildContent>
+        <RadzenImage Path="assets/images/login-background.png" style="bottom: 0; height: 100%; left: 0; position: absolute; right: 0; top: 0; width: 100%">
+        </RadzenImage>
+        <div class="row justify-content-center align-items-center" style="bottom: 0; left: 0; margin-left: 0; margin-right: 0; position: absolute; right: 0; top: 0">
+            <div class="col-xl-4 col-lg-3 col-md-3 col-sm-8" style="padding-left: 0; padding-right: 0">
+                <RadzenCard style="margin-top: 0">
+                    <ChildContent>
+                        <RadzenImage Path="assets/images/logo.png" style="display: block; height: 100px; margin-left: auto; margin-right: auto; margin-top: -72px; width: 160px">
+                        </RadzenImage>
+                        <RadzenContentContainer Name="main">
+                            @Body
+                        </RadzenContentContainer>
+                    </ChildContent>
+                </RadzenCard>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenBody>

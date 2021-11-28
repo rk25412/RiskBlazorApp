@@ -1,0 +1,168 @@
+﻿@page "/add-applicence"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                                <div class="loading">Loading&#8230;</div> 
+                         }
+                         else
+                           {
+                                    <RadzenTemplateForm @ref="form0" Data="@applicence" Visible="@(applicence != null)" TItem="Applicence" Submit="@Form0Submit">
+                                        <ChildContent>
+                                            <div style="margin-bottom: 1rem" class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="licenceNameLabel" Text="Licence Name" Component="LICENCE_NAME" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenTextBox @ref="licenceName" MaxLength="50" style="display: block; width: 100%" @bind-Value="@(applicence.LICENCE_NAME)" Name="LICENCE_NAME">
+                                                    </RadzenTextBox>
+                                                    <RadzenRequiredValidator @ref="licenceNameRequiredValidator" Component="LICENCE_NAME" Text="LICENCE_NAME is required" style="position: absolute">
+                                                    </RadzenRequiredValidator>
+                                                </div>
+
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="versionLabel" Text="Version" Component="VERSION" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenTextBox @ref="version" MaxLength="10" style="display: block; width: 100%" @bind-Value="@(applicence.VERSION)" Name="VERSION">
+                                                    </RadzenTextBox>
+                                                    <RadzenRequiredValidator @ref="versionRequiredValidator" Component="VERSION" Text="VERSION is required" style="position: absolute">
+                                                    </RadzenRequiredValidator>
+                                                </div>
+
+                                            </div>
+                                            <div style="margin-bottom: 1rem" class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="priceLabel" Text="Price" Component="PRICE" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenNumeric @ref="price" style="width: 100%" @bind-Value="@(applicence.PRICE)" Name="PRICE">
+                                                    </RadzenNumeric>
+                                                </div>
+
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="discountLabel" Text="Discount" Component="DISCOUNT" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenNumeric @ref="discount" style="width: 100%" @bind-Value="@(applicence.DISCOUNT)" Name="DISCOUNT">
+                                                    </RadzenNumeric>
+                                                </div>
+
+                                            </div>
+
+                                            <div style="margin-bottom: 1rem" class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="netpriceLabel" Text="Netprice" Component="NETPRICE" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenNumeric @ref="netprice" style="width: 100%" @bind-Value="@(applicence.NETPRICE)" Name="NETPRICE">
+                                                    </RadzenNumeric>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="currencyIdLabel" Text="Currency" Component="CURRENCY_ID" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenDropDown @ref="currencyId" Data="@getCurrenciesResult"
+                                                                    TextProperty="ISO_CODE" ValueProperty="CURRENCY_ID"
+                                                                    Placeholder="Choose Currency"
+                                                                    style="width: 100%" @bind-Value="@(applicence.CURRENCY_ID)"
+                                                                    Name="CURRENCY_ID" AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+                                                    </RadzenDropDown>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel Text="Signup Credit" Component="DEFAULT_CREDIT" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenNumeric style="width: 100%" @bind-Value="@(applicence.DEFAULT_CREDIT)" Name="DEFAULT_CREDIT">
+                                                    </RadzenNumeric>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel Text="Company Min. Balance Required" Component="MIN_BALANCE" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenNumeric style="width: 100%" @bind-Value="@(applicence.MIN_BALANCE)" Name="MIN_BALANCE">
+                                                    </RadzenNumeric>
+                                                </div>
+
+                                            </div>
+                                            <div style="margin-bottom: 1rem" class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="descriptionLabel" Text="Description" Component="DESCRIPTION" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenTextArea MaxLength="255" Rows="3" style="display: block; width: 100%" @bind-Value="@(applicence.DESCRIPTION)" Name="DESCRIPTION">
+
+                                                    </RadzenTextArea>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="helpLabel" Text="Help" Component="HELP" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenTextArea MaxLength="255" Rows="3" style="display: block; width: 100%" @bind-Value="@(applicence.HELP)" Name="HELP">
+
+                                                    </RadzenTextArea>
+                                                </div>
+
+                                            </div>
+
+                                            <div style="margin-bottom: 1rem" class="row">
+                                                <div class="col-md-6">
+                                                    <RadzenLabel Text="Country" Component="COUNTRY_ID" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenDropDown Data="@getCountryResult"
+                                                                    TextProperty="COUNTRYNAME" ValueProperty="ID"
+                                                                    Placeholder="Choose Country"
+                                                                    style="width: 100%" @bind-Value="@(applicence.COUNTRY_ID)"
+                                                                    Name="COUNTRY_ID" AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+                                                    </RadzenDropDown>
+                                                </div>
+
+
+                                                <div class="col-md-6">
+                                                    <RadzenLabel @ref="isDefaultLabel" Text="Is Default" Component="IS_DEFAULT" style="width: 100%">
+                                                    </RadzenLabel>
+                                                    <RadzenCheckBox @ref="isDefault" @bind-Value="@(applicence.IS_DEFAULT)" Name="IS_DEFAULT">
+                                                    </RadzenCheckBox>
+                                                </div>
+
+                                            </div>
+
+
+
+
+                                            <div class="row">
+                                                <div class="col offset-sm-3">
+
+
+                                                    <RadzenButton @ref="button1" ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                                    </RadzenButton>
+
+                                                    <RadzenButton @ref="button2" ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                    </RadzenButton>
+                                                </div>
+                                            </div>
+                                        </ChildContent>
+                                    </RadzenTemplateForm>
+                                }
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

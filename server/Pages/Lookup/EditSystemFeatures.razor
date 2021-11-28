@@ -1,0 +1,113 @@
+﻿@page "/edit-system-feature/{Feature_ID}"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using Blazored.TextEditor
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+            <div class="loading">Loading&#8230;</div>}
+        else
+        {
+<RadzenTemplateForm Data="@editSystemFeatures" Visible="@(editSystemFeatures != null)" TItem="SystemFeatures" Submit="@Form0Submit">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Feature Screen ID" Component="Feature_ScreenID" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(editSystemFeatures.Feature_ScreenID)" Name="Feature_ScreenID">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Features Screen Name" Component="Features_ScreenName" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(editSystemFeatures.Features_ScreenName)" Name="SCREEN_NAME">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="SCREEN_NAME" Text="SCREEN_NAME is required" style="position: absolute">
+                </RadzenRequiredValidator>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Html Content" Component="Html_Content" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9" style="height:300px">
+                <BlazoredTextEditor @ref="@QuillHtml">
+                    <ToolbarContent>
+                        <select class="ql-header">
+                            <option selected=""></option>
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5"></option>
+                        </select>
+                        <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-color"></select>
+                            <select class="ql-background"></select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered"></button>
+                            <button class="ql-list" value="bullet"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-link"></button>
+                            <button class="btn btn-link" id="custom-button"
+                                    @onclick="InsertImageClick">
+                                <img src="imageIcon.png" style="border:hidden" />
+                            </button>
+                        </span>
+                    </ToolbarContent>
+                    <EditorContent>
+                        @((MarkupString)editSystemFeatures.Html_Content)
+                    </EditorContent>
+                </BlazoredTextEditor>
+                @*<FileManager @ref="FileManagerControl"
+                    ImageSelected="InsertImage" />*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

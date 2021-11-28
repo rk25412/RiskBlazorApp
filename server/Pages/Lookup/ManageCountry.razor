@@ -1,0 +1,97 @@
+﻿@page "/manage-country"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Country Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Country List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h4 class="card-title">Manage Currency</h4>
+
+                    </div>
+                    <div class="card-body">
+
+                        <RadzenContent @ref="content1" Container="main">
+                            <ChildContent>
+                                
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <RadzenButton @ref="button0" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+                                        </RadzenButton>
+                                        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getCountriesResult" TItem="Country" RowDoubleClick="@Grid0RowDoubleClick" RowSelect="@Grid0RowSelect">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Country" Property="ID" Title="ID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Country" Property="COUNTRYNAME" Title="COUNTRYNAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Country" Property="SHORTNAME" Title="SHORTNAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Country" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                                                    <Template Context="clearRiskModelsClearRiskCountry">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearRiskModelsClearRiskCountry))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+                                        <RadzenHeading @ref="heading1" Size="H1" Text="States">
+                                        </RadzenHeading>
+                                        <RadzenButton @ref="stateAddButton" Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Disabled="@(this.master == null)" Click="@StateAddButtonClick">
+                                        </RadzenButton>
+                                        <RadzenGrid @ref="grid1" Data="@States" AllowFiltering="true" AllowPaging="true" AllowSorting="true" TItem="State" RowSelect="@Grid1RowSelect">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="State" Property="ID" Title="ID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="State" Property="STATENAME" Title="STATENAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="State" Property="COUNTRYID" SortProperty="Country.COUNTRYNAME" FilterProperty="Country.COUNTRYNAME" Title="Country">
+                                                    <Template Context="data">
+                                                        @(data.Country?.COUNTRYNAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="State" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                                                    <Template Context="clearRiskModelsClearRiskState">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>StateDeleteButtonClick(args, clearRiskModelsClearRiskState))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+                                    </div>
+                                </div>
+                            </ChildContent>
+                        </RadzenContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

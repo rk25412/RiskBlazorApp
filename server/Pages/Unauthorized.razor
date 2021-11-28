@@ -1,0 +1,25 @@
+﻿@page "/unauthorized"
+@layout MainLayout
+@inherits Clear.Risk.Pages.UnauthorizedComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Unauthorized">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenHtml>
+          The current user is not authorized to see this page.
+        </RadzenHtml>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

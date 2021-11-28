@@ -1,0 +1,55 @@
+﻿@page "/add-swms-pperequired/{SWMSID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddSwmsPperequiredComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@swmspperequired" Visible="@(swmspperequired != null)" TItem="Clear.Risk.Models.ClearConnection.SwmsPperequired" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Ppevalue" Component="PPE_VALUE_ID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getPpevaluesResult" TextProperty="KEY_DISPLAY" ValueProperty="PPE_ID" Placeholder="Please Select PPE Required" style="display: block; width: 100%" @bind-Value="@(swmspperequired.PPE_VALUE_ID)" Name="PPE_VALUE_ID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="PPE_VALUE_ID" Text="PPE_VALUE_ID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Is Deleted" Component="IS_DELETED" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenCheckBox @bind-Value="@(swmspperequired.IS_DELETED)" Name="IS_DELETED">
+                </RadzenCheckBox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

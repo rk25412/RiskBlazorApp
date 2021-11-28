@@ -1,0 +1,92 @@
+﻿@page "/employees"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using BlazorTable
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Employee Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Manage Employee</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Employees</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right; margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                                    <div class="loading">Loading&#8230;</div>
+                                }
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.Person" Items="@getPeopleResult" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="First Name" Field="@(x => x.FIRST_NAME)" Sortable="true" Filterable="true" Width="13%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Last Name" Field="@(x => x.LAST_NAME)" Sortable="true" Filterable="true" Width="13%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Mobile No" Field="@(x => x.BUSINESS_MOBILE)" Sortable="true" Filterable="true" Width="12%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Email" Field="@(x => x.PERSONAL_EMAIL)" Sortable="true" Filterable="true" Width="15%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Manager" Field="@(x => x.ManagerName)" Sortable="true" Filterable="true" Width="14%" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="IsManager" Field="@(x =>x.CHECKISMANAGER)" Sortable="true" Filterable="true" Width="12%" />
+
+                                    @if (Security.IsInRole("System Administrator"))
+                                    {
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Company" Field="@(x => x.COMPANY_NAME)" Sortable="true" Filterable="true" Width="15%" />
+                                    }
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+
+
+
+

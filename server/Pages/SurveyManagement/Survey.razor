@@ -1,0 +1,91 @@
+﻿@page "/survey"
+@layout MainLayout
+@inherits Clear.Risk.Pages.SurveyComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Survey Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Survey Template</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (isLoading)
+                        {
+        <div class="loading">Loading&#8230;</div>}
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Survey Template</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add Survey Template" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right;margin-right:5px" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.Survey" Items="@getSurveysResult" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                        <Template>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridSelectButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Survey Type" Field="@(x => x.SurveyTypeName)" Sortable="true" Filterable="true" Width="12%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Survey Title" Field="@(x => x.SURVEY_TITLE)" Sortable="true" Filterable="true" Width="20%">
+
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Yes/No Score" Field="@(x => x.YES_NO_SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Single/MultiChoice Score" Field="@(x => x.CHOICE_SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Text Score" Field="@(x => x.TEXT_SCORE)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Survey" Title="Total Score" Field="@(x => x.TScore)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+

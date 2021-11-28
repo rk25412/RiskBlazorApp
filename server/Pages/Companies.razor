@@ -1,0 +1,71 @@
+﻿@page "/old-companies"
+@layout MainLayout
+@inherits Clear.Risk.Pages.CompaniesComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Companies</h4>                                
+                            </div>
+                            <div class="card-body">
+                                <SpinLoader IsLoading="@(getPeopleResult == null)">
+                                    <LoadingTemplate>
+                                        <Circle Color="#e67e22" Size="60px" Center="true" />
+                                    </LoadingTemplate>
+                                    <ContentTemplate>
+                                        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getPeopleResult" TItem="Clear.Risk.Models.ClearConnection.Person" PageSize="10">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="COMPANY_NAME" Title="COMPANY NAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="FIRST_NAME" Title="FIRST NAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="MIDDLE_NAME" Title="MIDDLE NAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="LAST_NAME" Title="LAST NAME">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PARENT_PERSON_ID" Title="PARENT PERSON ID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="PersonType.TYPE_NAME" Property="COMPANYTYPE" SortProperty="PersonType.TYPE_NAME" Title="Person Type">
+                                                    <Template Context="data">
+                                                        @(data.PersonType?.TYPE_NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="Applicence.LICENCE_NAME" Property="APPLICENCEID" SortProperty="Applicence.LICENCE_NAME" Title="Applicence">
+                                                    <Template Context="data">
+                                                        @(data.Applicence?.LICENCE_NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FormatString="{0:d}" Property="APPLICENCE_STARTDATE" Title="APPLICENCE STARTDATE">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="CURRENT_BALANCE" Title="CURRENT BALANCE">
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+                                    </ContentTemplate>
+                                </SpinLoader>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+
+
+

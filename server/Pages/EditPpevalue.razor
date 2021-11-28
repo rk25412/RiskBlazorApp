@@ -1,0 +1,198 @@
+﻿@page "/edit-ppevalue/{PPE_ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditPpevalueComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                    <div class="loading">Loading&#8230;</div>}
+                else
+                {
+                    <RadzenTemplateForm TItem="Clear.Risk.Models.ClearConnection.Ppevalue" Data="@ppevalue" Visible="@(ppevalue != null)" Submit="@Form0Submit">
+                        <ChildContent>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Key Value" Component="KEY_VALUE" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(ppevalue.KEY_VALUE)" Name="KEY_VALUE">
+                                    </RadzenNumeric>
+                                    <RadzenRequiredValidator Component="KEY_VALUE" Text="KEY_VALUE is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Key Display" Component="KEY_DISPLAY" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(ppevalue.KEY_DISPLAY)" Name="KEY_DISPLAY">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="KEY_DISPLAY" Text="KEY_DISPLAY is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Iconimage" Component="ICONIMAGE" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox style="width: 100%" @bind-Value="@(ppevalue.ICONIMAGE)" Name="ICONIMAGE">
+                                    </RadzenTextBox>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Iconpath" Component="ICONPATH" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">                                    
+                                    <RadzenUpload Url="api/upload/UploadIconImage" Style="width:100%;height:2.2rem" Accept="image/*" 
+                                                  Progress="@((args) => Change(args, "Single file upload"))" />
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Active" Component="ACTIVE" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenCheckBox @bind-Value="@(ppevalue.ACTIVE)" Name="ACTIVE">
+                                    </RadzenCheckBox>
+                                </div>
+                            </div>
+                            @*<div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Created Date" Component="CREATED_DATE" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenDatePicker style="width: 100%" @bind-Value="@(ppevalue.CREATED_DATE)" Name="CREATED_DATE">
+                </RadzenDatePicker>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Creator Id" Component="CREATOR_ID" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.CREATOR_ID)" Name="CREATOR_ID">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Updated Date" Component="UPDATED_DATE" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenDatePicker style="width: 100%" @bind-Value="@(ppevalue.UPDATED_DATE)" Name="UPDATED_DATE">
+                </RadzenDatePicker>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Updater Id" Component="UPDATER_ID" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.UPDATER_ID)" Name="UPDATER_ID">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Deleted Date" Component="DELETED_DATE" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenDatePicker style="width: 100%" @bind-Value="@(ppevalue.DELETED_DATE)" Name="DELETED_DATE">
+                </RadzenDatePicker>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Deleter Id" Component="DELETER_ID" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.DELETER_ID)" Name="DELETER_ID">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Is Deleted" Component="IS_DELETED" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenCheckBox TriState="true" @bind-Value="@(ppevalue.IS_DELETED)" Name="IS_DELETED">
+                </RadzenCheckBox>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Escalation Level" Component="ESCALATION_LEVEL" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.ESCALATION_LEVEL)" Name="ESCALATION_LEVEL">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Warning Level" Component="WARNING_LEVEL" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.WARNING_LEVEL)" Name="WARNING_LEVEL">
+                </RadzenNumeric>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Status Level" Component="STATUS_LEVEL" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenNumeric style="width: 100%" @bind-Value="@(ppevalue.STATUS_LEVEL)" Name="STATUS_LEVEL">
+                </RadzenNumeric>
+            </div>
+        </div>*@
+                            <div class="row">
+                                <div class="col offset-sm-3">
+                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+                        </ChildContent>
+                    </RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

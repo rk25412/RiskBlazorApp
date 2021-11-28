@@ -1,0 +1,89 @@
+﻿@page "/company-transaction"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using BlazorTable
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Transaction History</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Transaction History</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Transaction History</h4>
+                        <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right" Text="Help" Click="@HelpClick">
+                        </RadzenButton>
+                    </div>
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        
+                        <Table TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Items="@getCompanyAccountTransactionsResult" PageSize="15" ColumnReorder="true">
+                            
+
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Person" Field="@(x => x.Person.COMPANY_NAME)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Transaction Date" Field="@(x => x.TRANSACTION_DATE)" Sortable="true" Filterable="true" Width="20%">
+                                <Template>
+                                    @string.Format("{0:dd/MM/yyyy H:mm:ss}", context.TRANSACTION_DATE)
+                                </Template>
+                            </Column>
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Amount Paid" Field="@(x => x.PAYMENT_AMOUNT)" Sortable="true" Filterable="true" Width="20%">
+
+                            </Column>
+
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Amount Deposite" Field="@(x => x.DEPOSITE_AMOUNT)" Sortable="true" Filterable="true" Width="10%">
+
+                            </Column>
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Balance" Field="@(x => x.Balance)" Sortable="true" Filterable="true" Width="10%">
+
+                            </Column>
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Description" Field="@(x => x.DESCRIPTION)" Sortable="true" Filterable="true" Width="10%">
+
+                            </Column>
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="TRXTYPE" Field="@(x => x.TRXTYPE)" Sortable="true" Filterable="true" Width="10%">
+
+                            </Column>
+                            <Column TableItem="Clear.Risk.Models.ClearConnection.CompanyAccountTransaction" Title="Currency" Field="@(x => x.Currency.ISO_CODE)" Sortable="true" Filterable="true" Width="10%">
+
+                            </Column>
+                            
+
+                            <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                        </Table>
+
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

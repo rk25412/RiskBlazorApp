@@ -1,0 +1,657 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "REFERENCENUMBER",
+                              "name": "REFERENCENUMBERLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Referencenumber",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 50,
+                              "name": "REFERENCENUMBER",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${template.REFERENCENUMBER}",
+                              "valueType": "string"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "STATUS",
+                              "name": "STATUSLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Status Master",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatusMastersResult}",
+                              "name": "STATUS",
+                              "placeholder": "Choose StatusMaster",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "textProperty": "NAME",
+                              "type": "dropdown",
+                              "value": "${template.STATUS}",
+                              "valueProperty": "STATUS_ID",
+                              "valueType": "int"
+                            },
+                            {
+                              "component": "STATUS",
+                              "defaultValue": "0",
+                              "name": "STATUSRequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "STATUS is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "TEMPLATENAME",
+                              "name": "TEMPLATENAMELabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Templatename",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 100,
+                              "name": "TEMPLATENAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${template.TEMPLATENAME}",
+                              "valueType": "string"
+                            },
+                            {
+                              "component": "TEMPLATENAME",
+                              "name": "TEMPLATENAMERequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "TEMPLATENAME is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "TRADECATEGORYID",
+                              "name": "TRADECATEGORYIDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Trade Category",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getTradeCategoriesResult}",
+                              "name": "TRADECATEGORYID",
+                              "placeholder": "Choose TradeCategory",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "textProperty": "TRADE_NAME",
+                              "type": "dropdown",
+                              "value": "${template.TRADECATEGORYID}",
+                              "valueProperty": "TRADE_CATEGORY_ID",
+                              "valueType": "int"
+                            },
+                            {
+                              "component": "TRADECATEGORYID",
+                              "defaultValue": "0",
+                              "name": "TRADECATEGORYIDRequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "TRADECATEGORYID is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "VERSONNUMBER",
+                              "name": "VERSONNUMBERLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Versonnumber",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 100,
+                              "name": "VERSONNUMBER",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${template.VERSONNUMBER}",
+                              "valueType": "string"
+                            },
+                            {
+                              "component": "VERSONNUMBER",
+                              "name": "VERSONNUMBERRequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "VERSONNUMBER is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "COMPANYID",
+                              "name": "COMPANYIDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Person",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getPeopleResult}",
+                              "name": "COMPANYID",
+                              "placeholder": "Choose Person",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "COMPANY_NAME",
+                              "type": "dropdown",
+                              "value": "${template.COMPANYID}",
+                              "valueProperty": "PERSON_ID",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "TYPEFORID",
+                              "name": "TYPEFORIDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Swms Template Category",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getSwmsTemplateCategoriesResult}",
+                              "name": "TYPEFORID",
+                              "placeholder": "Choose SwmsTemplateCategory",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "textProperty": "NAME",
+                              "type": "dropdown",
+                              "value": "${template.TYPEFORID}",
+                              "valueProperty": "TEMPLATE_CATEGORY_ID",
+                              "valueType": "int"
+                            },
+                            {
+                              "component": "TYPEFORID",
+                              "defaultValue": "0",
+                              "name": "TYPEFORIDRequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "TYPEFORID is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "COUNTRY_ID",
+                              "name": "COUNTRY_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Country",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getCountriesResult}",
+                              "name": "COUNTRY_ID",
+                              "placeholder": "Choose Country",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "COUNTRYNAME",
+                              "type": "dropdown",
+                              "value": "${template.COUNTRY_ID}",
+                              "valueProperty": "ID",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "STATEID",
+                              "name": "STATEIDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "State",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getStatesResult}",
+                              "name": "STATEID",
+                              "placeholder": "Choose State",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "STATENAME",
+                              "type": "dropdown",
+                              "value": "${template.STATEID}",
+                              "valueProperty": "ID",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "buttonStyle": "primary",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "type": "button"
+                            },
+                            {
+                              "buttonStyle": "light",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              },
+                              "text": "Cancel",
+                              "type": "button"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "type": "row"
+                    }
+                  ],
+                  "data": "${template}",
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update Template",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateTemplate",
+                        "parameters": [
+                          {
+                            "name": "ID",
+                            "value": "${parameters.ID}"
+                          },
+                          {
+                            "name": "Template",
+                            "value": "${template}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "result": "${template}",
+                            "type": "close-popup"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Template",
+                  "name": "form0",
+                  "type": "template-form",
+                  "visible": "${template != null}"
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "error": [],
+        "name": "ClearConnection.getTemplateByID",
+        "parameters": [
+          {
+            "name": "ID",
+            "value": "${parameters.ID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "template",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.Template"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStatusMasters",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatusMastersResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.StatusMaster>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getTradeCategories",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getTradeCategoriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.TradeCategory>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getSwmsTemplateCategories",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getSwmsTemplateCategoriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.SwmsTemplateCategory>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getCountries",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getCountriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Country>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getEscalationLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getEscalationLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.EscalationLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getWarningLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getWarningLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.WarningLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStatusLevels",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatusLevelsResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.StatusLevel>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "ClearConnection.getStates",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getStatesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.State>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Edit Template"
+}

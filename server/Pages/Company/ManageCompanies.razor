@@ -1,0 +1,115 @@
+﻿@page "/companies"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet" />
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Company Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Manage Companies</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Manage Companies</h4>
+                        <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right" Text="Help" Click="@HelpClick">
+                        </RadzenButton>
+                    </div>
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+            <div class="loading">Loading&#8230;</div>}
+                        <RadzenContent Container="main">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-md-12">
+
+                                        <SpinLoader IsLoading="@(getPeopleResult == null)">
+                                            <LoadingTemplate>
+                                                <Circle Color="#e67e22" Size="60px" Center="true" />
+                                            </LoadingTemplate>
+                                            <ContentTemplate>
+                                                <Table TableItem="Clear.Risk.Models.ClearConnection.Person" Items="@getPeopleResult" PageSize="15" ColumnReorder="true">
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                                        <Template>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                            </RadzenButton>
+                                                            <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="vpn_key" Size="ButtonSize.Small" Click="@(args => ChangePassword(args, context))" @onclick:stopPropagation="true" />
+
+                                                        </Template>
+                                                    </Column>
+
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Company Name" Field="@(x => x.COMPANY_NAME)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="First Name" Field="@(x => x.FIRST_NAME)" Sortable="true" Filterable="true" Width="20%">
+
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Middle Name" Field="@(x => x.MIDDLE_NAME)" Sortable="true" Filterable="true" Width="20%">
+
+                                                    </Column>
+
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Last Name" Field="@(x => x.LAST_NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Parent Person Id" Field="@(x => x.PARENT_PERSON_ID)" Sortable="true" Filterable="true" Width="10%">
+
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Person Type" Field="@(x => x.PersonType.TYPE_NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Applicence" Field="@(x => x.Applicence.LICENCE_NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Applicence StartDate" Field="@(x => x.APPLICENCE_STARTDATE)" Sortable="true" Filterable="true" Width="10%">
+                                                        <Template>
+                                                            @string.Format("{0:dd/MM/yyyy H:mm:ss}", context.APPLICENCE_STARTDATE)
+                                                        </Template>
+                                                    </Column>
+                                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title=" Current Balance" Field="@(x => x. CURRENT_BALANCE)" Sortable="true" Filterable="true" Width="10%">
+
+                                                    </Column>
+
+                                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                                </Table>
+
+                                            </ContentTemplate>
+                                        </SpinLoader>
+                                    </div>
+                                </div>
+
+
+                            </ChildContent>
+                        </RadzenContent>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

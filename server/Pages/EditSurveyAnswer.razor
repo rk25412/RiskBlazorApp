@@ -1,0 +1,72 @@
+﻿@page "/edit-survey-answer/{SURVEY_ANSWER_ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditSurveyAnswerComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm TItem="Clear.Risk.Models.ClearConnection.SurveyQuestionAnswer" Data="@surveyanswer" Visible="@(surveyanswer != null)" Submit="@Form0Submit">
+            <ChildContent>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Text="Survey Answer Title" Component="SURVEY_ANSWER_TITLE" style="width: 100%">
+                        </RadzenLabel>
+                        <RadzenTextBox MaxLength="150" style="width: 100%" @bind-Value="@(surveyanswer.SURVEY_ANSWER_TITLE)" Name="SURVEY_ANSWER_TITLE">
+                        </RadzenTextBox>
+                    </div>
+                    <div class="col-md-6">
+                        <RadzenLabel Text="Warning Level" Component="WARNING_LEVEL_ID" style="width: 100%">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getWarningResult"
+                                        TextProperty="NAME" ValueProperty="WARNING_LEVEL_ID"
+                                        Placeholder="Choose Question" style="width: 100%"
+                                        @bind-Value="@(surveyanswer.WARNING_LEVEL_ID)" Name="WARNING_LEVEL_ID"
+                                        AllowClear="true" AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+                        </RadzenDropDown>
+                    </div>
+                </div>
+               
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Text="Go To Question" Component="GOTO_QUESTION_ID" style="width: 100%">
+                        </RadzenLabel>
+
+                        <RadzenDropDown Data="@getSurveyQuestionsResult"
+                                        TextProperty="QUESTION_TITLE"
+                                        ValueProperty="SURVEYQ_QUESTION_ID"
+                                        Placeholder="Choose SurveyQuestion"
+                                        style="display: block; width: 100%"
+                                        @bind-Value="@(surveyanswer.GOTO_QUESTION_ID)"
+                                        Name="GOTO_QUESTION_ID" AllowClear="true" AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive">
+                        </RadzenDropDown>
+                    </div>
+                     
+
+                </div>
+
+
+                <div class="row">
+                    <div class="col offset-sm-3">
+                        <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                        </RadzenButton>
+                        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                        </RadzenButton>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

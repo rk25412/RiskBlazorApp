@@ -1,0 +1,282 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "TRADE_NAME",
+                              "name": "TRADE_NAMELabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Trade Name",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 150,
+                              "name": "TRADE_NAME",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${tradecategory.TRADE_NAME}",
+                              "valueType": "string"
+                            },
+                            {
+                              "component": "TRADE_NAME",
+                              "name": "TRADE_NAMERequiredValidator",
+                              "style": {
+                                "position": "absolute"
+                              },
+                              "text": "TRADE_NAME is required",
+                              "type": "required-validator"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "PARENT_ID",
+                              "name": "PARENT_IDLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Trade Category",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "data": "${getTradeCategoriesResult}",
+                              "name": "PARENT_ID",
+                              "placeholder": "Choose TradeCategory",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "textProperty": "TRADE_NAME",
+                              "type": "dropdown",
+                              "value": "${tradecategory.PARENT_ID}",
+                              "valueProperty": "TRADE_CATEGORY_ID",
+                              "valueType": "int?"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "DESCRIPTION",
+                              "name": "DESCRIPTIONLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Description",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 250,
+                              "name": "DESCRIPTION",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${tradecategory.DESCRIPTION}",
+                              "valueType": "string"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "HOURLY_COST",
+                              "name": "HOURLY_COSTLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Hourly Cost",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "name": "HOURLY_COST",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "type": "numeric",
+                              "value": "${tradecategory.HOURLY_COST}",
+                              "valueType": "decimal"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "buttonStyle": "primary",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "type": "button"
+                            },
+                            {
+                              "buttonStyle": "light",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              },
+                              "text": "Cancel",
+                              "type": "button"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "type": "row"
+                    }
+                  ],
+                  "data": "${tradecategory}",
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new TradeCategory!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createTradeCategory",
+                        "parameters": [
+                          {
+                            "name": "TradeCategory",
+                            "value": "${tradecategory}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "result": "${tradecategory}",
+                            "type": "close-popup"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.TradeCategory",
+                  "name": "form0",
+                  "type": "template-form",
+                  "visible": "${tradecategory != null}"
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getTradeCategories",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getTradeCategoriesResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.TradeCategory>"
+          }
+        ],
+        "type": "invoke"
+      },
+      {
+        "name": "tradecategory",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.TradeCategory(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.TradeCategory"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Add Trade Category"
+}

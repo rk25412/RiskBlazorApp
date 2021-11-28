@@ -1,0 +1,278 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Person"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-person",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "grid0.Reload();",
+                            "type": "execute"
+                          },
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getPeopleResult}",
+                  "events": {
+                    "loadData": [],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "PERSON_ID",
+                            "value": "${event.PERSON_ID}"
+                          }
+                        ],
+                        "path": "edit-person",
+                        "type": "popup",
+                        "then": [
+                          {
+                            "code": "await InvokeAsync(() => { StateHasChanged(); });",
+                            "type": "execute"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "FIRST_NAME",
+                      "title": "FIRST NAME"
+                    },
+                    {
+                      "property": "MIDDLE_NAME",
+                      "title": "MIDDLE NAME"
+                    },
+                    {
+                      "property": "LAST_NAME",
+                      "title": "LAST NAME"
+                    },
+                    {
+                      "property": "PERSONALADDRESS1",
+                      "title": "PERSONALADDRESS 1"
+                    },
+                    {
+                      "property": "PERSONALADDRESS2",
+                      "title": "PERSONALADDRESS 2"
+                    },
+                    {
+                      "property": "PERSONAL_CITY",
+                      "title": "PERSONAL CITY"
+                    },
+                    {
+                      "property": "PERSONAL_STATE_ID",
+                      "sortProperty": "State.STATENAME",
+                      "filterProperty": "State.STATENAME",
+                      "template": "${data.State?.STATENAME}",
+                      "title": "State"
+                    },
+                    {
+                      "property": "PERSONAL_COUNTRY_ID",
+                      "sortProperty": "Country.COUNTRYNAME",
+                      "filterProperty": "Country.COUNTRYNAME",
+                      "template": "${data.Country?.COUNTRYNAME}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "PERSONAL_PHONE",
+                      "title": "PERSONAL PHONE"
+                    },
+                    {
+                      "property": "PERSONAL_MOBILE",
+                      "title": "PERSONAL MOBILE"
+                    },
+                    {
+                      "property": "PERSONAL_EMAIL",
+                      "title": "PERSONAL EMAIL"
+                    },
+                    {
+                      "property": "PERSONAL_FAX",
+                      "title": "PERSONAL FAX"
+                    },
+                    {
+                      "property": "PERSONAL_WEB_ADD",
+                      "title": "PERSONAL WEB ADD"
+                    },
+                    {
+                      "property": "BUSINESS_ADDRESS1",
+                      "title": "BUSINESS ADDRESS 1"
+                    },
+                    {
+                      "property": "BUSINESS_ADDRESS2",
+                      "title": "BUSINESS ADDRESS 2"
+                    },
+                    {
+                      "property": "BUSINESS_CITY",
+                      "title": "BUSINESS CITY"
+                    },
+                    {
+                      "property": "BUSINESS_STATE_ID",
+                      "sortProperty": "State1.STATENAME",
+                      "filterProperty": "State1.STATENAME",
+                      "template": "${data.State1?.STATENAME}",
+                      "title": "State"
+                    },
+                    {
+                      "property": "BUSINESS_COUNTRY_ID",
+                      "sortProperty": "Country1.COUNTRYNAME",
+                      "filterProperty": "Country1.COUNTRYNAME",
+                      "template": "${data.Country1?.COUNTRYNAME}",
+                      "title": "Country"
+                    },
+                    {
+                      "property": "BUSINESS_PHONE",
+                      "title": "BUSINESS PHONE"
+                    },
+                    {
+                      "property": "BUSINESS_MOBILE",
+                      "title": "BUSINESS MOBILE"
+                    },
+                    {
+                      "property": "BUSINESS_EMAIL",
+                      "title": "BUSINESS EMAIL"
+                    },
+                    {
+                      "property": "BUSINESS_FAX",
+                      "title": "BUSINESS FAX"
+                    },
+                    {
+                      "property": "BUSINESS_WEB_ADD",
+                      "title": "BUSINESS WEB ADD"
+                    },
+                    {
+                      "property": "COMPANYTYPE",
+                      "sortProperty": "PersonType.TYPE_NAME",
+                      "filterProperty": "PersonType.TYPE_NAME",
+                      "template": "${data.PersonType?.TYPE_NAME}",
+                      "title": "Person Type"
+                    },
+                    {
+                      "property": "DESIGNATION",
+                      "title": "DESIGNATION"
+                    },
+                    {
+                      "property": "PASSWORDHASH",
+                      "title": "PASSWORDHASH"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Person",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ClearConnection.deletePerson",
+                                "parameters": [
+                                  {
+                                    "name": "PERSON_ID",
+                                    "value": "${data.PERSON_ID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "grid",
+                  "itemType": "ClearCovid.Models.ClearConnection.Person"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Person",
+  "access": "Authenticated",
+  "layout": "Main"
+}

@@ -1,0 +1,192 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "heading",
+          "name": "pageTitle",
+          "size": "H1",
+          "text": "Mange Users"
+        },
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "icon": "add_circle_outline",
+                  "name": "button0",
+                  "style": {
+                    "marginBottom": "10px"
+                  },
+                  "text": "Add",
+                  "type": "button",
+                  "events": {
+                    "click": [
+                      {
+                        "path": "add-mange-users",
+                        "type": "navigate",
+                        "then": []
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "grid0",
+                  "allowFiltering": true,
+                  "allowPaging": true,
+                  "allowSorting": true,
+                  "data": "${getPeopleResult}",
+                  "events": {
+                    "loadData": [],
+                    "rowSelect": [
+                      {
+                        "parameters": [
+                          {
+                            "name": "PERSON_ID",
+                            "value": "${event.PERSON_ID}"
+                          }
+                        ],
+                        "path": "edit-mange-users",
+                        "type": "navigate",
+                        "then": []
+                      }
+                    ]
+                  },
+                  "title": "",
+                  "columns": [
+                    {
+                      "property": "FIRST_NAME",
+                      "title": "FIRST NAME"
+                    },
+                    {
+                      "property": "MIDDLE_NAME",
+                      "title": "MIDDLE NAME"
+                    },
+                    {
+                      "property": "LAST_NAME",
+                      "title": "LAST NAME"
+                    },
+                    {
+                      "property": "PERSONAL_PHONE",
+                      "title": "PERSONAL PHONE"
+                    },
+                    {
+                      "property": "PERSONAL_MOBILE",
+                      "title": "PERSONAL MOBILE"
+                    },
+                    {
+                      "property": "PERSONAL_EMAIL",
+                      "title": "PERSONAL EMAIL"
+                    },
+                    {
+                      "property": "BUSINESS_PHONE",
+                      "title": "BUSINESS PHONE"
+                    },
+                    {
+                      "property": "BUSINESS_MOBILE",
+                      "title": "BUSINESS MOBILE"
+                    },
+                    {
+                      "property": "BUSINESS_EMAIL",
+                      "title": "BUSINESS EMAIL"
+                    },
+                    {
+                      "property": "COMPANYTYPE",
+                      "sortProperty": "PersonType.TYPE_NAME",
+                      "filterProperty": "PersonType.TYPE_NAME",
+                      "template": "${data.PersonType?.TYPE_NAME}",
+                      "title": "Person Type"
+                    },
+                    {
+                      "property": "DESIGNATION",
+                      "title": "DESIGNATION"
+                    },
+                    {
+                      "filterable": false,
+                      "sortable": false,
+                      "width": "70px",
+                      "textAlign": "center",
+                      "template": [
+                        {
+                          "attributes": [
+                            {
+                              "name": "@onclick:stopPropagation",
+                              "value": true
+                            }
+                          ],
+                          "buttonStyle": "danger",
+                          "icon": "close",
+                          "name": "gridDeleteButton",
+                          "text": "",
+                          "size": "sm",
+                          "type": "button",
+                          "events": {
+                            "click": [
+                              {
+                                "condition": "await DialogService.Confirm(\"Are you sure you want to delete this record?\") == true",
+                                "error": [
+                                  {
+                                    "detail": "Unable to delete Person",
+                                    "severity": "error",
+                                    "summary": "Error",
+                                    "type": "notify"
+                                  }
+                                ],
+                                "name": "ClearConnection.deletePerson",
+                                "parameters": [
+                                  {
+                                    "name": "PERSON_ID",
+                                    "value": "${data.PERSON_ID}"
+                                  }
+                                ],
+                                "then": [
+                                  {
+                                    "code": "grid0.Reload();",
+                                    "condition": "result != null",
+                                    "type": "execute"
+                                  }
+                                ],
+                                "type": "invoke"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "type": "grid",
+                  "itemType": "ClearCovid.Models.ClearConnection.Person"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getPeople",
+        "parameters": [],
+        "then": [
+          {
+            "name": "getPeopleResult",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "IEnumerable<ClearCovid.Models.ClearConnection.Person>"
+          }
+        ],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Mange Users",
+  "access": "Authenticated",
+  "layout": "Main"
+}

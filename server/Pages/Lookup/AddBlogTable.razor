@@ -1,0 +1,137 @@
+@page "/add-BlogTable"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Authorization
+@using Blazored.TextEditor
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+            <div class="loading">Loading&#8230;</div>}
+        else
+        {
+<RadzenTemplateForm Data="@addBlogTable" Visible="@(addBlogTable != null)" TItem="BlogTable" Submit="@Form0Submit">
+    <ChildContent>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Tittle" Component="Tittle" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(addBlogTable.BgTittle)" Name="Tittle">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="Tittle" Text="Tittle is required" style="position: absolute">
+                </RadzenRequiredValidator>
+            </div>
+        </div>
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Short Details" Component="ShortDetails" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9">
+                <RadzenTextBox MaxLength="250" style="display: block; width: 100%" @bind-Value="@(addBlogTable.BgShortDetails)" Name="ShortDetails">
+                </RadzenTextBox>
+                <RadzenRequiredValidator Component="ShortDetails" Text="ShortDetails is required" style="position: absolute">
+                </RadzenRequiredValidator>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Upload Image" Component="FILENAME" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+
+                                            @if (string.IsNullOrEmpty(addBlogTable.BgImgPath))
+                                            {
+                                                <div class="text-center">
+                                                    <RadzenUpload Url="@($"api/upload/blog")" Auto="false" Style="width:100%;margin-bottom:20px"
+                                                                  Progress="@((args) => OnProgress(args))" @ref="upload" ChooseText="Select a Image" Accept="image/*" />
+                                                    <RadzenButton Style="width:100%" Text="Upload" Click=@(args => upload.Upload()) />
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div style="width:100%; border: 1px solid #dadfe2;padding: 0.1875rem 0.625rem; height: 2.1875rem;border-radius: 4px;overflow: hidden;">
+                                                    <span style="width:90%;overflow:hidden;display:inline-block">@addBlogTable.BgImgPath</span>
+                                                    <button type="button" @onclick="@RemoveDoc" class="btn btn-sm float-right" style="line-height:0.9 !important; font-size:20px;z-index:10">&times;</button>
+                                                </div>
+                                            }
+
+                                        </div>
+                                    </div>
+
+        <div style="margin-bottom: 1rem" class="row">
+            <div class="col-md-3">
+                <RadzenLabel Text="Long Details" Component="LongDetails" style="width: 100%">
+                </RadzenLabel>
+            </div>
+            <div class="col-md-9" style="height:300px">
+                <BlazoredTextEditor @ref="@QuillHtml">
+                    <ToolbarContent>
+                        <select class="ql-header">
+                            <option selected=""></option>
+                            <option value="1"></option>
+                            <option value="2"></option>
+                            <option value="3"></option>
+                            <option value="4"></option>
+                            <option value="5"></option>
+                        </select>
+                        <span class="ql-formats">
+                            <button class="ql-bold"></button>
+                            <button class="ql-italic"></button>
+                            <button class="ql-underline"></button>
+                            <button class="ql-strike"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <select class="ql-color"></select>
+                            <select class="ql-background"></select>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-list" value="ordered"></button>
+                            <button class="ql-list" value="bullet"></button>
+                        </span>
+                        <span class="ql-formats">
+                            <button class="ql-link"></button>
+                            <button class="btn btn-link" id="custom-button"
+                                    @onclick="InsertImageClick">
+                                <img src="imageIcon.png" style="border:hidden" />
+                            </button>
+                        </span>
+                    </ToolbarContent>
+                    <EditorContent>
+                        @((MarkupString)addBlogTable.BgLongDetails)
+                    </EditorContent>
+                </BlazoredTextEditor>
+                @*<FileManager @ref="FileManagerControl"
+                    ImageSelected="InsertImage" />*@
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+            </div>
+        </div>
+    </ChildContent>
+</RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

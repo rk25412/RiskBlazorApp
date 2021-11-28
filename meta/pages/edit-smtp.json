@@ -1,0 +1,397 @@
+{
+  "components": [
+    {
+      "type": "content",
+      "container": "main",
+      "components": [
+        {
+          "type": "row",
+          "components": [
+            {
+              "type": "col",
+              "class": "col-md-12",
+              "components": [
+                {
+                  "type": "template-form",
+                  "name": "form0",
+                  "components": [
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Is Deleted",
+                              "component": "IS_DELETED",
+                              "name": "IS_DELETEDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "bool",
+                              "type": "checkbox",
+                              "name": "IS_DELETED",
+                              "value": "${smtpsetup.IS_DELETED}"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Smtp Server String",
+                              "component": "SMTP_SERVER_STRING",
+                              "name": "SMTP_SERVER_STRINGLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "SMTP_SERVER_STRING",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${smtpsetup.SMTP_SERVER_STRING}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SMTP_SERVER_STRINGRequiredValidator",
+                              "component": "SMTP_SERVER_STRING",
+                              "text": "SMTP_SERVER_STRING is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Smtp User Account",
+                              "component": "SMTP_USER_ACCOUNT",
+                              "name": "SMTP_USER_ACCOUNTLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "SMTP_USER_ACCOUNT",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${smtpsetup.SMTP_USER_ACCOUNT}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SMTP_USER_ACCOUNTRequiredValidator",
+                              "component": "SMTP_USER_ACCOUNT",
+                              "text": "SMTP_USER_ACCOUNT is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Smtp Account Password",
+                              "component": "SMTP_ACCOUNT_PASSWORD",
+                              "name": "SMTP_ACCOUNT_PASSWORDLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "SMTP_ACCOUNT_PASSWORD",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${smtpsetup.SMTP_ACCOUNT_PASSWORD}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SMTP_ACCOUNT_PASSWORDRequiredValidator",
+                              "component": "SMTP_ACCOUNT_PASSWORD",
+                              "text": "SMTP_ACCOUNT_PASSWORD is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Smtp Mail From",
+                              "component": "SMTP_MAIL_FROM",
+                              "name": "SMTP_MAIL_FROMLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "string",
+                              "maxLength": 100,
+                              "type": "textbox",
+                              "name": "SMTP_MAIL_FROM",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${smtpsetup.SMTP_MAIL_FROM}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SMTP_MAIL_FROMRequiredValidator",
+                              "component": "SMTP_MAIL_FROM",
+                              "text": "SMTP_MAIL_FROM is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "type": "label",
+                              "text": "Smtp Port",
+                              "component": "SMTP_PORT",
+                              "name": "SMTP_PORTLabel",
+                              "style": {
+                                "width": "100%"
+                              }
+                            }
+                          ]
+                        },
+                        {
+                          "type": "col",
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "valueType": "int",
+                              "type": "numeric",
+                              "name": "SMTP_PORT",
+                              "style": {
+                                "display": "block",
+                                "width": "100%"
+                              },
+                              "value": "${smtpsetup.SMTP_PORT}"
+                            },
+                            {
+                              "type": "required-validator",
+                              "name": "SMTP_PORTRequiredValidator",
+                              "component": "SMTP_PORT",
+                              "text": "SMTP_PORT is required",
+                              "style": {
+                                "position": "absolute"
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "row",
+                      "components": [
+                        {
+                          "type": "col",
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "type": "button",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "buttonStyle": "primary"
+                            },
+                            {
+                              "type": "button",
+                              "buttonStyle": "light",
+                              "text": "Cancel",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "events": {
+                    "submit": [
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to update Smtpsetup",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.updateSmtpsetup",
+                        "parameters": [
+                          {
+                            "name": "SMTP_SETUP_ID",
+                            "value": "${parameters.SMTP_SETUP_ID}"
+                          },
+                          {
+                            "name": "Smtpsetup",
+                            "value": "${smtpsetup}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "type": "close-popup",
+                            "result": "${smtpsetup}"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Smtpsetup",
+                  "data": "${smtpsetup}",
+                  "visible": "${smtpsetup != null}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "ClearConnection.getSmtpsetupBySMTP_SETUP_ID",
+        "parameters": [
+          {
+            "name": "SMTP_SETUP_ID",
+            "value": "${parameters.SMTP_SETUP_ID}"
+          }
+        ],
+        "then": [
+          {
+            "name": "smtpsetup",
+            "type": "set",
+            "value": "${result}",
+            "valueType": "ClearCovid.Models.ClearConnection.Smtpsetup"
+          }
+        ],
+        "error": [],
+        "type": "invoke"
+      }
+    ]
+  },
+  "name": "Edit SMTP",
+  "access": "Authenticated",
+  "layout": "Main"
+}

@@ -1,0 +1,93 @@
+﻿@page "/Clients"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet" />
+
+
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Client Management</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                        <li class="breadcrumb-item active">Manage Clients</li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            <RadzenContent Container="main">
+                <ChildContent>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-success">
+                                <div class="card-header">
+                                    <h4 class="card-title">Manage Clients</h4>
+                                    <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                    </RadzenButton>
+                                    <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right;margin-right:5px" Text="Help" Click="@HelpClick">
+                                    </RadzenButton>
+                                </div>
+                                <div class="card-body">
+                                    @if (isLoading)
+                                    {
+                                        <div class="loading">Loading&#8230;</div>
+                                    }
+
+                                    <Table TableItem="Clear.Risk.Models.ClearConnection.Person" Items="@getPeopleResult" PageSize="15" ColumnReorder="true">
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Action" Sortable="false" Filterable="false" Width="5%">
+                                            <Template>
+                                                @*<RadzenButton ButtonStyle="ButtonStyle.Info" Icon="explore" Size="ButtonSize.Small" Click="@((args) =>GridSelectButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                    </RadzenButton>*@
+                                                <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                </RadzenButton>
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="vpn_key" Size="ButtonSize.Small" Click="@(args => ChangePassword(args, context))" @onclick:stopPropagation="true" />
+
+                                            </Template>
+                                        </Column>
+
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Company Name" Field="@(x => x.COMPANY_NAME)" Sortable="true" Filterable="true" Width="25%" DefaultSortColumn="true" />
+
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Contact Person" Field="@(x => x.FullName)" Sortable="true" Filterable="true" Width="20%" />
+
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Email" Field="@(x => x.PERSONAL_EMAIL)" Sortable="true" Filterable="true" Width="20%" />
+
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Mobile" Field="@(x => x.PERSONAL_MOBILE)" Sortable="true" Filterable="true" Width="10%" />
+
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="City" Field="@(x => x.PERSONAL_CITY)" Sortable="true" Filterable="true" Width="10%" />
+
+                                        
+                                        <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title=" Post Code" Field="@(x => x. PERSONAL_POSTCODE)" Sortable="true" Filterable="true" Width="15%" />
+
+                                        <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                    </Table>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ChildContent>
+            </RadzenContent>
+        </div>
+    </section>
+
+
+

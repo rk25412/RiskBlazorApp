@@ -1,0 +1,31 @@
+﻿@inherits Clear.Risk.Layouts.MainLayoutComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+
+<RadzenDialog />
+<RadzenNotification />
+
+<TopHeader />
+<SideMenu />
+<div class="content-wrapper">
+    @Body
+
+
+</div>
+<!-- /.content-wrapper -->
+<footer class="main-footer">
+    <strong>Copyright &copy; 2018-2020 <a href="https://www.clear-worder.com">Clear Software Solution</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 3.1.0
+    </div>
+</footer>
+
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+</aside>

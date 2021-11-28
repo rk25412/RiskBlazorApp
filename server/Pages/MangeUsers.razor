@@ -1,0 +1,60 @@
+﻿@page "/mange-users"
+@layout MainLayout
+@inherits Clear.Risk.Pages.MangeUsersComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@*@attribute [Authorize]*@
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Manage Users">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getPeopleResult" TItem="Clear.Risk.Models.ClearConnection.Person" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="FIRST_NAME" Title="FIRST NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="MIDDLE_NAME" Title="MIDDLE NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="LAST_NAME" Title="LAST NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_PHONE" Title="PERSONAL PHONE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_MOBILE" Title="PERSONAL MOBILE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_EMAIL" Title="PERSONAL EMAIL">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_PHONE" Title="BUSINESS PHONE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_MOBILE" Title="BUSINESS MOBILE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_EMAIL" Title="BUSINESS EMAIL">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="COMPANYTYPE" SortProperty="PersonType.TYPE_NAME" FilterProperty="PersonType.TYPE_NAME" Title="Person Type">
+              <Template Context="data">
+              @(data.PersonType?.TYPE_NAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="DESIGNATION" Title="DESIGNATION">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+              <Template Context="clearCovidModelsClearConnectionPerson">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionPerson))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

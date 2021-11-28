@@ -1,0 +1,103 @@
+﻿@page "/manage-licence"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Application Licence Management</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="Dashboard">Home</a></li>
+                    <li class="breadcrumb-item active">Licence List</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Manage Application Licence</h4>
+                        <RadzenButton @ref="button0" Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="New Application Licence" Click="@Button0Click">
+                        </RadzenButton>
+                        <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right;margin-right:5px" Text="Help" Click="@HelpClick">
+                        </RadzenButton>
+                    </div>
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div> 
+                        }
+                        else
+                        {
+
+
+                            <Table TableItem="Clear.Risk.Models.ClearConnection.Applicence" Items="@(getApplicencesResult)" PageSize="15" ColumnReorder="true">
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                    <Template>
+
+                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, context))" @onclick:stopPropagation="true">
+                                        </RadzenButton>
+                                        <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                        </RadzenButton>
+
+                                    </Template>
+                                </Column>
+
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Licence Name" Field="@(x => x.LICENCE_NAME)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Version" Field="@(x => x.VERSION)" Sortable="true" Filterable="true" Width="20%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Description" Field="@(x => x.DESCRIPTION)" Sortable="true" Filterable="true" Width="20%">
+
+                                </Column>
+
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Default" Field="@(x => x.IS_DEFAULT)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Price" Field="@(x => x.PRICE)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Discount" Field="@(x => x.DISCOUNT)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Net Price" Field="@(x => x.NETPRICE)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Currency" Field="@(x => x.CURRENCY_ID)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+                                <Column TableItem="Clear.Risk.Models.ClearConnection.Applicence" Title="Country" Field="@(x => x.COUNTRY_ID)" Sortable="true" Filterable="true" Width="10%">
+
+                                </Column>
+
+
+                                <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                            </Table>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

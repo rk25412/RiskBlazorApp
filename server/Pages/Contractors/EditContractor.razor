@@ -1,0 +1,438 @@
+﻿@page "/edit-Contractor/{PersonId}"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                    @if (isLoading)
+                            {
+                                <div class="loading">Loading&#8230;</div>
+                                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Contractor</h4>
+                            </div>
+                            <div class="card-body">
+                                <RadzenTabs>
+                                    <Tabs>
+                                        <RadzenTabsItem Text="Personal Information">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <SpinLoader IsLoading="@(person == null)">
+                                                        <LoadingTemplate>
+                                                            <Circle Color="#e67e22" Size="60px" Center="true" />
+                                                        </LoadingTemplate>
+                                                        <ContentTemplate>
+                                                            <RadzenTemplateForm Data="@person" Visible="@(person != null)" TItem="Clear.Risk.Models.ClearConnection.Person" Submit="@Form0Submit">
+                                                                <ChildContent>
+                                                                    <RadzenCard Style="width:100%;">
+                                                                        <div class="row">
+                                                                            <div class="col offset-sm-3">
+                                                                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Update" ButtonStyle="ButtonStyle.Primary">
+                                                                                </RadzenButton>
+                                                                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                                                                </RadzenButton>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <RadzenFieldset AllowCollapse="false" Text="Company Information">
+                                                                            <ChildContent>
+                                                                                <div class="row">
+                                                                                    <div class="col-md-6">
+                                                                                        <RadzenLabel Text="Company Name" />
+                                                                                        <RadzenTextBox MaxLength="150" style="display: block; width: 100%" @bind-Value="@(person.COMPANY_NAME)" Name="COMPANY_NAME">
+                                                                                        </RadzenTextBox>
+                                                                                        <RadzenRequiredValidator Component="COMPANY_NAME" Text="Company Name is required" style="position: absolute">
+                                                                                        </RadzenRequiredValidator>
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <RadzenLabel Text="Email" />
+                                                                                        <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(person.PERSONAL_EMAIL)" Name="PERSONAL_EMAIL" ReadOnly="true">
+                                                                                        </RadzenTextBox>
+                                                                                        <RadzenRequiredValidator Component="PERSONAL_EMAIL" Text="PERSONAL_EMAIL is required" style="position: absolute">
+                                                                                        </RadzenRequiredValidator>
+                                                                                    </div>
+
+
+
+
+
+                                                                                </div>
+
+
+
+                                                                            </ChildContent>
+                                                                        </RadzenFieldset>
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <RadzenFieldset AllowCollapse="false" Text="Company Address">
+                                                                                    <ChildContent>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Address1" />
+                                                                                                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.PERSONALADDRESS1)" Name="PERSONALADDRESS1">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Address2" />
+                                                                                                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.PERSONALADDRESS2)" Name="PERSONALADDRESS2">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="City" />
+                                                                                                <RadzenTextBox MaxLength="100" style="width: 100%" @bind-Value="@(person.PERSONAL_CITY)" Name="PERSONAL_CITY">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Post Code" />
+                                                                                                <RadzenTextBox MaxLength="10" style="width: 100%" @bind-Value="@(person.PERSONAL_POSTCODE)" Name="PERSONAL_CITY">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Country" />
+                                                                                                <RadzenDropDown Data="@getCountriesResult" AllowClear="true"
+                                                                                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                TextProperty="COUNTRYNAME"
+                                                                                                                ValueProperty="ID"
+                                                                                                                Placeholder="Choose Country"
+                                                                                                                style="display: block; width: 100%"
+                                                                                                                @bind-Value="@(person.PERSONAL_COUNTRY_ID)" Name="COUNTRY_ID">
+                                                                                                </RadzenDropDown>
+                                                                                                <RadzenRequiredValidator Component="COUNTRY_ID" Text="COUNTRY_ID is required" style="position: absolute" DefaultValue="0">
+                                                                                                </RadzenRequiredValidator>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="State" />
+                                                                                                <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == person.PERSONAL_COUNTRY_ID)" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                TextProperty="STATENAME"
+                                                                                                                ValueProperty="ID"
+                                                                                                                Placeholder="Choose State" style="width: 100%" @bind-Value="@(person.PERSONAL_STATE_ID)" Name="STATE_ID">
+                                                                                                </RadzenDropDown>
+
+                                                                                            </div>
+
+
+
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Mobile" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.PERSONAL_MOBILE)" Name="PERSONAL_MOBILE">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text=" Phone" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.PERSONAL_PHONE)" Name="PERSONAL_PHONE">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Fax" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.PERSONAL_FAX)" Name="PERSONAL_FAX">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Website" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.PERSONAL_WEB_ADD)" Name="PERSONAL_WEB_ADD">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12">
+                                                                                                <RadzenFieldset AllowCollapse="false" Text="Contact Information">
+                                                                                                    <ChildContent>
+                                                                                                        <div class="row">
+
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="First Name" />
+                                                                                                                <RadzenTextBox MaxLength="50" style="display: block; width: 100%" @bind-Value="@(person.FIRST_NAME)" Name="FIRST_NAME">
+                                                                                                                </RadzenTextBox>
+                                                                                                                <RadzenRequiredValidator Component="FIRST_NAME" Text="First Name is required" style="position: absolute">
+                                                                                                                </RadzenRequiredValidator>
+                                                                                                            </div>
+
+
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="Last Name" />
+                                                                                                                <RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(person.LAST_NAME)" Name="LAST_NAME">
+                                                                                                                </RadzenTextBox>
+                                                                                                                <RadzenRequiredValidator Component="LAST_NAME" Text="Last Name is required" style="position: absolute">
+                                                                                                                </RadzenRequiredValidator>
+                                                                                                            </div>
+
+
+
+                                                                                                        </div>
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="Designation" />
+                                                                                                                @*<RadzenTextBox MaxLength="40" style="display: block; width: 100%" @bind-Value="@(person.DESIGNATION)" Name="DESIGNATION">
+        </RadzenTextBox>*@
+                                                                                                                <RadzenDropDown Data="@getDesigationResult" AllowClear="true"
+                                                                                                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                                TextProperty="DESIGNATIONNAME"
+                                                                                                                                ValueProperty="DESIGNATION_ID"
+                                                                                                                                Placeholder="Choose Designation"
+                                                                                                                                style="display: block; width: 100%"
+                                                                                                                                @bind-Value="@(person.DESIGNATION_ID)" Name="DESIGNATION_ID">
+                                                                                                                </RadzenDropDown>
+                                                                                                                <RadzenRequiredValidator Component="DESIGNATION_ID" Text="Designation is required" style="position: absolute" DefaultValue="0">
+                                                                                                                </RadzenRequiredValidator>
+
+                                                                                                            </div>
+
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="Status" />
+                                                                                                                <RadzenDropDown Data="@getStatusResult" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                                TextProperty="NAME"
+                                                                                                                                ValueProperty="STATUS_ID"
+                                                                                                                                Placeholder="Choose Status" style="width: 100%" @bind-Value="@(person.PERSON_STATUS)" Name="PERSON_STATUS">
+                                                                                                                </RadzenDropDown>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="Warning Level" />
+                                                                                                                <RadzenDropDown Data="@getWarningResult" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                                TextProperty="NAME"
+                                                                                                                                ValueProperty="WARNING_LEVEL_ID"
+                                                                                                                                Placeholder="Choose Warning Level" style="width: 100%" @bind-Value="@(person.WARNING_LEVEL)" Name="WARNING_LEVEL">
+                                                                                                                </RadzenDropDown>
+                                                                                                            </div>
+                                                                                                            <div class="col-md-6">
+                                                                                                                <RadzenLabel Text="Entity Status" />
+                                                                                                                <RadzenDropDown Data="@getEntityResult" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                                TextProperty="NAME"
+                                                                                                                                ValueProperty="ENTITY_STATUS_ID"
+                                                                                                                                Placeholder="Choose Entity Status" style="width: 100%" @bind-Value="@(person.ENTITY_STATUS_ID)" Name="ENTITY_STATUS_ID">
+                                                                                                                </RadzenDropDown>
+                                                                                                            </div>
+                                                                                                        </div>
+
+
+                                                                                                    </ChildContent>
+                                                                                                </RadzenFieldset>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                    </ChildContent>
+                                                                                </RadzenFieldset>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <RadzenFieldset AllowCollapse="false" Text="Business Address">
+                                                                                    <ChildContent>
+
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Address1" />
+                                                                                                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.BUSINESS_ADDRESS1)" Name="BUSINESS_ADDRESS1">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Address2" />
+                                                                                                <RadzenTextBox MaxLength="250" style="width: 100%" @bind-Value="@(person.BUSINESS_ADDRESS2)" Name="BUSINESS_ADDRESS2">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="City" />
+                                                                                                <RadzenTextBox MaxLength="150" style="width: 100%" @bind-Value="@(person.BUSINESS_CITY)" Name="BUSINESS_CITY">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Post Code" />
+                                                                                                <RadzenTextBox MaxLength="10" style="width: 100%" @bind-Value="@(person.BUSINESS_POSTCODE)" Name="PERSONAL_CITY">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Country" />
+                                                                                                <RadzenDropDown Data="@getCountriesResult" AllowClear="true"
+                                                                                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                TextProperty="COUNTRYNAME"
+                                                                                                                ValueProperty="ID"
+                                                                                                                Placeholder="Choose Country"
+                                                                                                                style="display: block; width: 100%"
+                                                                                                                @bind-Value="@(person.BUSINESS_COUNTRY_ID)" Name="COUNTRY_ID">
+                                                                                                </RadzenDropDown>
+                                                                                                <RadzenRequiredValidator Component="COUNTRY_ID" Text="COUNTRY_ID is required" style="position: absolute" DefaultValue="0">
+                                                                                                </RadzenRequiredValidator>
+
+                                                                                            </div>
+
+                                                                                            <div div class="col-md-6">
+                                                                                                <RadzenLabel Text="State" />
+                                                                                                <RadzenDropDown Data="@getStatesResult.Where(s=>s.COUNTRYID == person.BUSINESS_COUNTRY_ID)" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" FilterOperator="StringFilterOperator.StartsWith" AllowFiltering="true"
+                                                                                                                TextProperty="STATENAME"
+                                                                                                                ValueProperty="ID"
+                                                                                                                Placeholder="Choose State" style="width: 100%" @bind-Value="@(person.BUSINESS_STATE_ID)" Name="STATE_ID">
+                                                                                                </RadzenDropDown>
+                                                                                            </div>
+
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Mobile" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.BUSINESS_MOBILE)" Name="BUSINESS_MOBILE">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Phone" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.BUSINESS_PHONE)" Name="BUSINESS_PHONE">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+
+
+
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Email" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.BUSINESS_EMAIL)" Name="BUSINESS_EMAIL">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Fax" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.BUSINESS_FAX)" Name="BUSINESS_FAX">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+
+
+
+                                                                                        </div>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6">
+                                                                                                <RadzenLabel Text="Website" />
+                                                                                                <RadzenTextBox MaxLength="40" style="width: 100%" @bind-Value="@(person.BUSINESS_WEB_ADD)" Name="BUSINESS_WEB_ADD">
+                                                                                                </RadzenTextBox>
+                                                                                            </div>
+                                                                                        </div>
+
+
+                                                                                    </ChildContent>
+                                                                                </RadzenFieldset>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </RadzenCard>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                                </ChildContent>
+                                                            </RadzenTemplateForm>
+                                                        </ContentTemplate>
+                                                    </SpinLoader>
+
+
+
+                                                </div>
+                                            </div>
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Contacts">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add New Contact" Click="@ButtonclientClick">
+                                                    </RadzenButton>
+                                                    <RadzenGrid @ref="gridContact" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getPersonContactsResult" TItem="PersonContact" RowSelect="@GridContactRowSelect">
+                                                        <Columns>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSON_ID" SortProperty="Company.COMPANY_NAME" FilterProperty="Company.COMPANY_NAME" Title="Company">
+                                                                <Template Context="data">
+                                                                    @(data.Company?.COMPANY_NAME)
+                                                                </Template>
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="FIRST_NAME" Title="FIRST NAME">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="MIDDLE_NAME" Title="MIDDLE NAME">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="LAST_NAME" Title="LAST NAME">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSONAL_CITY" Title="PERSONAL CITY">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSONAL_COUNTRY_ID" SortProperty="PersonalCountry.COUNTRYNAME" FilterProperty="PersonalCountry.COUNTRYNAME" Title="Country">
+                                                                <Template Context="data">
+                                                                    @(data.PersonalCountry?.COUNTRYNAME)
+                                                                </Template>
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSONAL_PHONE" Title="PERSONAL PHONE">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSONAL_MOBILE" Title="PERSONAL MOBILE">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="PERSONAL_EMAIL" Title="PERSONAL EMAIL">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="ISPRIMARY" Title="ISPRIMARY">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Property="DESIGNATION" Title="DESIGNATION">
+                                                            </RadzenGridColumn>
+                                                            <RadzenGridColumn TItem="PersonContact" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                                                                <Template Context="clearRiskModelsClearRiskPersonContact">
+                                                                    <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridContactDeleteButtonClick(args, clearRiskModelsClearRiskPersonContact))" @onclick:stopPropagation="true">
+                                                                    </RadzenButton>
+                                                                </Template>
+                                                            </RadzenGridColumn>
+                                                        </Columns>
+                                                    </RadzenGrid>
+                                                </div>
+                                            </div>
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Work Site">
+                                            <div class="row">
+                                                <div class="col-md-12">
+
+                                                </div>
+                                            </div>
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Assessment History">
+
+                                        </RadzenTabsItem>
+                                        <RadzenTabsItem Text="Work Order History">
+
+                                        </RadzenTabsItem>
+                                    </Tabs>
+                                </RadzenTabs>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+              
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+

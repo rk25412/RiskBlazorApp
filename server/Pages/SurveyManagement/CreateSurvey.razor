@@ -1,0 +1,134 @@
+﻿@page "/create-survey"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @if (isLoading)
+                {
+                    <div class="loading">Loading&#8230;</div>
+                }
+
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h4 class="card-title">Survey Template</h4>
+                        @*<a href="/survey" class="btn btn-secondary" style="float:right">Back to List</a>*@
+                        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Back To List" Click="@ButtonBackClick" Style="float:right">
+                        </RadzenButton>
+
+
+                    </div>
+                    <div class="card-body">
+
+                        <RadzenTemplateForm Data="@survey" Visible="@(survey != null)" 
+                                            TItem="Clear.Risk.Models.ClearConnection.Survey" Submit="@Form0Submit">
+                            <ChildContent>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="card card-info">
+                                            <div class="card-header">
+                                                <h4 class="card-title">New Survey</h4>
+                                                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary" Style="float:right;">
+                                                </RadzenButton>
+                                                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click" Style="float:right;margin-right:5px">
+                                                </RadzenButton>
+                                                
+                                            </div>
+                                            <div class="card-body">
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Type" Component="SURVEY_TYPE_ID" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenDropDown Data="@getSurveyTypesResult" TextProperty="NAME" ValueProperty="SURVEY_TYPE_ID" Placeholder="Choose SurveyType" style="display: block; width: 100%" @bind-Value="@(survey.SURVEY_TYPE_ID)" Name="SURVEY_TYPE_ID">
+                                                        </RadzenDropDown>
+                                                        <RadzenRequiredValidator Component="SURVEY_TYPE_ID" Text="SURVEY_TYPE_ID is required" style="position: absolute" DefaultValue="0">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Title" Component="SURVEY_TITLE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(survey.SURVEY_TITLE)" Name="SURVEY_TITLE">
+                                                        </RadzenTextBox>
+                                                        <RadzenRequiredValidator Component="SURVEY_TITLE" Text="SURVEY_TITLE is required" style="position: absolute">
+                                                        </RadzenRequiredValidator>
+                                                    </div>
+                                                    
+                                                    <div class="col-md-3">
+                                                         
+
+                                                            <RadzenLabel Text="Base Survey" Component="ISBASED" style="width: 100%" Visible="@(Security.IsInRole("System Administrator"))">
+                                                            </RadzenLabel>
+                                                            <RadzenCheckBox style="display: block;" @bind-Value="@(survey.ISBASED)" Name="ISBASED" Visible="@(Security.IsInRole("System Administrator"))">
+                                                            </RadzenCheckBox>
+
+
+
+                                                       
+
+
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Base Survey" Component="BASE_SURVEY_ID" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenDropDown Data="@getBaseSurveyResult" TextProperty="SURVEY_TITLE"
+                                                                        ValueProperty="SURVEY_ID" Placeholder="Choose Based Survey"
+                                                                        style="display: block; width: 100%" @bind-Value="@(survey.BASE_SURVEY_ID)"
+                                                                        Name="BASE_SURVEY_ID" AllowFiltering="true" AllowClear="true">
+                                                        </RadzenDropDown>
+
+                                                    </div>
+                                                </div>
+                                                <div style="margin-bottom: 1rem" class="row">
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Yes No Score" Component="YES_NO_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.YES_NO_SCORE)" Name="YES_NO_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Choice Score" Component="CHOICE_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.CHOICE_SCORE)" Name="CHOICE_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Text Score" Component="TEXT_SCORE" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenNumeric style="width: 100%" @bind-Value="@(survey.TEXT_SCORE)" Name="TEXT_SCORE">
+                                                        </RadzenNumeric>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <RadzenLabel Text="Survey Desc" Component="SURVEY_DESC" style="width: 100%">
+                                                        </RadzenLabel>
+                                                        <RadzenTextArea style="width: 100%" Cols="5" Rows="3" @bind-Value="@(survey.SURVEY_DESC)" Name="SURVEY_DESC">
+                                                        </RadzenTextArea>
+                                                    </div>
+
+                                                </div>
+                                                
+
+                                            </div>
+                                        </div>
+                                     </div>
+                                  </div>
+                            </ChildContent>
+                        </RadzenTemplateForm>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

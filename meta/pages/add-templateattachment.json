@@ -1,0 +1,179 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "components": [
+            {
+              "class": "col-md-12",
+              "components": [
+                {
+                  "components": [
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "ATTACHEMENTNAME",
+                              "name": "ATTACHEMENTNAMELabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Attachementname",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "maxLength": 100,
+                              "name": "ATTACHEMENTNAME",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "type": "textbox",
+                              "value": "${templateattachment.ATTACHEMENTNAME}",
+                              "valueType": "string"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col-md-3",
+                          "components": [
+                            {
+                              "component": "DOCUMENTURL",
+                              "name": "DOCUMENTURLLabel",
+                              "style": {
+                                "width": "100%"
+                              },
+                              "text": "Documenturl",
+                              "type": "label"
+                            }
+                          ],
+                          "type": "col"
+                        },
+                        {
+                          "class": "col-md-9",
+                          "components": [
+                            {
+                              "chooseText": "Upload Files",
+                              "name": "upload0",
+                              "type": "upload",
+                              "url": "${templateattachment.DOCUMENTURL}"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "style": {
+                        "marginBottom": "1rem"
+                      },
+                      "type": "row"
+                    },
+                    {
+                      "components": [
+                        {
+                          "class": "col offset-sm-3",
+                          "components": [
+                            {
+                              "buttonStyle": "primary",
+                              "buttonType": "submit",
+                              "icon": "save",
+                              "text": "Save",
+                              "type": "button"
+                            },
+                            {
+                              "buttonStyle": "light",
+                              "events": {
+                                "click": [
+                                  {
+                                    "type": "close-popup"
+                                  }
+                                ]
+                              },
+                              "text": "Cancel",
+                              "type": "button"
+                            }
+                          ],
+                          "type": "col"
+                        }
+                      ],
+                      "type": "row"
+                    }
+                  ],
+                  "data": "${templateattachment}",
+                  "events": {
+                    "submit": [
+                      {
+                        "code": "templateattachment.TEMPLATEID = int.Parse($\"{TEMPLATEID}\");",
+                        "type": "execute"
+                      },
+                      {
+                        "error": [
+                          {
+                            "detail": "Unable to create new Templateattachment!",
+                            "severity": "error",
+                            "summary": "Error",
+                            "type": "notify"
+                          }
+                        ],
+                        "name": "ClearConnection.createTemplateattachment",
+                        "parameters": [
+                          {
+                            "name": "Templateattachment",
+                            "value": "${templateattachment}"
+                          }
+                        ],
+                        "then": [
+                          {
+                            "result": "${templateattachment}",
+                            "type": "close-popup"
+                          }
+                        ],
+                        "type": "invoke"
+                      }
+                    ]
+                  },
+                  "itemType": "ClearCovid.Models.ClearConnection.Templateattachment",
+                  "name": "form0",
+                  "type": "template-form",
+                  "visible": "${templateattachment != null}"
+                }
+              ],
+              "type": "col"
+            }
+          ],
+          "type": "row"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "events": {
+    "load": [
+      {
+        "name": "templateattachment",
+        "type": "set",
+        "value": "new ClearCovid.Models.ClearConnection.Templateattachment(){}",
+        "valueType": "ClearCovid.Models.ClearConnection.Templateattachment"
+      }
+    ]
+  },
+  "layout": "Main",
+  "name": "Add Templateattachment"
+}

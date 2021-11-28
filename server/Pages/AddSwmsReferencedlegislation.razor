@@ -1,0 +1,55 @@
+﻿@page "/add-swms-referencedlegislation/{SWMSID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.AddSwmsReferencedlegislationComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@swmsreferencedlegislation" Visible="@(swmsreferencedlegislation != null)" TItem="Clear.Risk.Models.ClearConnection.SwmsReferencedlegislation" Submit="@Form0Submit">
+          <ChildContent>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Referenced Legislation" Component="REFERENCE_LEGISLATION_ID" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenDropDown Data="@getReferencedLegislationsResult" TextProperty="NAME" ValueProperty="LEGISLATION_ID" Placeholder="Please Select Referenced Legislation" style="display: block; width: 100%" @bind-Value="@(swmsreferencedlegislation.REFERENCE_LEGISLATION_ID)" Name="REFERENCE_LEGISLATION_ID">
+                </RadzenDropDown>
+                <RadzenRequiredValidator Component="REFERENCE_LEGISLATION_ID" Text="REFERENCE_LEGISLATION_ID is required" style="position: absolute" DefaultValue="0">
+                </RadzenRequiredValidator>
+              </div>
+            </div>
+            <div style="margin-bottom: 1rem" class="row">
+              <div class="col-md-3">
+                <RadzenLabel Text="Is Deleted" Component="IS_DELETED" style="width: 100%">
+                </RadzenLabel>
+              </div>
+              <div class="col-md-9">
+                <RadzenCheckBox @bind-Value="@(swmsreferencedlegislation.IS_DELETED)" Name="IS_DELETED">
+                </RadzenCheckBox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col offset-sm-3">
+                <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                </RadzenButton>
+                <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                </RadzenButton>
+              </div>
+            </div>
+          </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

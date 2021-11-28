@@ -1,0 +1,65 @@
+﻿@page "/edit-control-measure-value/{CONTROL_MEASURE_ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditControlMeasureValueComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (IsLoading)
+                        {
+                    <div class="loading">Loading&#8230;</div>}
+                else
+                {
+                    <RadzenTemplateForm TItem="Clear.Risk.Models.ClearConnection.ControlMeasureValue" Data="@controlmeasurevalue" Visible="@(controlmeasurevalue != null)" Submit="@Form0Submit">
+                        <ChildContent>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Name" Component="NAME" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenTextBox MaxLength="255" style="display: block; width: 100%" @bind-Value="@(controlmeasurevalue.NAME)" Name="NAME">
+                                    </RadzenTextBox>
+                                    <RadzenRequiredValidator Component="NAME" Text="NAME is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div style="margin-bottom: 1rem" class="row">
+                                <div class="col-md-3">
+                                    <RadzenLabel Text="Control Value" Component="CONTROL_VALUE" style="width: 100%">
+                                    </RadzenLabel>
+                                </div>
+                                <div class="col-md-9">
+                                    <RadzenNumeric style="display: block; width: 100%" @bind-Value="@(controlmeasurevalue.CONTROL_VALUE)" Name="CONTROL_VALUE">
+                                    </RadzenNumeric>
+                                    <RadzenRequiredValidator Component="CONTROL_VALUE" Text="CONTROL_VALUE is required" style="position: absolute">
+                                    </RadzenRequiredValidator>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col offset-sm-3">
+                                    <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                    </RadzenButton>
+                                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                    </RadzenButton>
+                                </div>
+                            </div>
+                        </ChildContent>
+                    </RadzenTemplateForm>}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

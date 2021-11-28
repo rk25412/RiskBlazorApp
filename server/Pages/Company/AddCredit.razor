@@ -1,0 +1,54 @@
+﻿@page "/add-credit/{PersonId}"
+@layout MainLayout
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-success">
+                    <div class="card-body">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        else
+                        {
+                            <RadzenTemplateForm Data="@CompanyAccountTransaction" Visible="@(CompanyAccountTransaction != null)" TItem="CompanyAccountTransaction" Submit="@Form0Submit">
+                                <ChildContent>
+                                    <div style="margin-bottom: 1rem" class="row">
+                                        <div class="col-md-3">
+                                            <RadzenLabel Text="Amount" Component="DEPOSITE_AMOUNT" style="width: 100%">
+                                            </RadzenLabel>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <RadzenNumeric Style="display:block;width:100%;" Name="DEPOSITE_AMOUNT" @bind-Value="@CompanyAccountTransaction.DEPOSITE_AMOUNT">
+                                            </RadzenNumeric>
+                                            <RadzenNumericRangeValidator Component="DEPOSITE_AMOUNT" Min="1" Text="Amount is required" Style="position: absolute" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col offset-sm-3">
+                                            <RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" ButtonStyle="ButtonStyle.Primary">
+                                            </RadzenButton>
+                                            <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                                            </RadzenButton>
+                                        </div>
+                                    </div>
+                                </ChildContent>
+                            </RadzenTemplateForm>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

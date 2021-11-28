@@ -1,0 +1,215 @@
+﻿@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <div class="navbar-brand main_logo">
+        <img src="front/img/logo.png" alt="logo" class="brand-image-xl" style="opacity: .8">
+        @*<span class="brand-text font-weight-light">Clear Risk</span>*@
+    </div>
+    <div class="sidebar">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                @if (string.IsNullOrEmpty(person?.UPLOAD_PROFILE ?? null))
+                {
+                    <img src="assets/dist/img/user2-160x160.jpg" style="visibility:hidden" class="img-circle elevation-2" alt="User Image">
+                }
+                else
+                {
+                    <img src="@person.UPLOAD_PROFILE" width="160" height="160" class="img-circle elevation-2" alt="User Image">
+                }
+            </div>
+            <div class="info">
+                <a href="@("view-Company" + "/" + Security.getUserId())" class="d-block">@Security.Principal.Identity.Name</a>
+            </div>
+        </div>
+
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                @*<li class="nav-item">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <p>
+                                Dashboard
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </NavLink>
+
+                    </li>*@
+                <li class="nav-item" visible="@(!Security.IsAuthenticated())">
+
+                    @*<a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-copy"></i>
+                            <p>
+                                Settings
+                                <i class="fas fa-angle-left right"></i>
+                                <span class="badge badge-info right">6</span>
+                            </p>
+                        </a>*@
+
+
+
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <NavLink class="nav-link" href="impact-type">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Impact Value</p>
+                            </NavLink>
+
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+            <RadzenPanelMenuItem Icon="home" Path="Dashboard" Text="Dashboard" Visible="@(Security.IsAuthenticated())">
+            </RadzenPanelMenuItem>
+            <RadzenPanelMenuItem Icon="accessible" Text="Settings" Visible="@(Security.IsInRole("System Administrator"))">
+                <ChildContent>
+                    <RadzenPanelMenuItem Text="Manage Lookup">
+                        <ChildContent>
+                            <RadzenPanelMenuItem Path="manage-licence" Text="Manage licence">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="manage-currency" Text="Manage Currency">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="impact-type" Text="Impact Value">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="resposnsible-type" Text="Responsible Value">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="hazard-value" Text="Hazard Values">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="control-measure-value" Text="Control Measures">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="hazard-material-value" Text="Hazard Materials">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="risk-likelyhood" Text="Risk Likelyhood">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="consequence" Text="Consequences">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="plant-equipment" Text="Plant & Equipment">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="licence-permit" Text="Licence & Permit">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="referenced-legislation" Text="Refrenced Legislation">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="swms-section" Text="SWMS Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="trade-category" Text="Trade Category">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="template" Text="Template Category">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="high-risk-category" Text="High Risk Category">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="ppevalue" Text="PPE Value">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="template-type" Text="Template Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="industry-type" Text="Industry Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="work-order-type" Text="Work Order Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="process-type" Text="Process Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="criticality-master" Text="Reactive Criticality">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="order-status" Text="Order Status">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="priority-master" Text="Order Priority">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="survey-type" Text="Survey Type">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="Designation" Text="Designations">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="smtp" Text="SMTP Setup">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="help-reference" Text="Application Help">
+                            </RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="features" Text="System Features"></RadzenPanelMenuItem>
+                            <RadzenPanelMenuItem Path="blog-ref" Text="Blogs"></RadzenPanelMenuItem>
+
+
+                        </ChildContent>
+                    </RadzenPanelMenuItem>
+
+
+
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="accessible" Text="Template Management" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+
+                <ChildContent>
+                    <RadzenPanelMenuItem Path="swms-template" Text="Assessment Template">
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Path="company-document" Text="Document Management">
+                    </RadzenPanelMenuItem>
+                </ChildContent>
+
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="account_box" Text="Risk Assessment">
+                <ChildContent>
+                    <RadzenPanelMenuItem Path="manage-assesments" Text="Manage Assessment">
+                    </RadzenPanelMenuItem>
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="announcement" Text="Work Orders">
+                <ChildContent>
+                    <RadzenPanelMenuItem Path="work-order" Target="_self" Text="Manage Work Orders" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="announcement" Text="Survey Management">
+                <ChildContent>
+                    <RadzenPanelMenuItem Path="survey" Target="_self" Text="Manage Survey" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Path="survey-report" Target="_self" Text="Survey Report" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="face" Text="Administration" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                <ChildContent>
+                    <RadzenPanelMenuItem Path="Clients" Target="_self" Text="Manage Clients" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+                    @*<RadzenPanelMenuItem Path="contactors" Target="_self" Text="Manage Contractors" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+        </RadzenPanelMenuItem>*@
+                    <RadzenPanelMenuItem Path="companies" Target="_self" Text="Manage Company" Visible="@(Security.IsInRole("System Administrator"))">
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Path="employees" Target="_self" Text="Manage Employee" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Path="company-transaction" Target="_self" Text="Transaction History" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+                    <RadzenPanelMenuItem Path="invoice-transaction" Target="_self" Text="Payment History" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+
+                    <RadzenPanelMenuItem Path="company-worksite" Target="_self" Text="Company Work Site" Visible="@(Security.IsInRole("System Administrator") || Security.IsInRole("Administrator"))">
+                    </RadzenPanelMenuItem>
+
+                    <RadzenPanelMenuItem Path="scheduledJobs" Target="_blank" Text="Scheduled Jobs"  Visible="@(Security.IsInRole("System Administrator"))">
+                    </RadzenPanelMenuItem>
+
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+            <RadzenPanelMenuItem Icon="help" Text="How To">
+                <ChildContent>
+
+                    <RadzenPanelMenuItem Path="help-reference" Text="Manage Help" Visible="@(Security.IsInRole("System Administrator"))">
+                    </RadzenPanelMenuItem>
+
+                    <RadzenPanelMenuItem Path="help" Text="How To">
+                    </RadzenPanelMenuItem>
+
+                </ChildContent>
+            </RadzenPanelMenuItem>
+
+        </nav>
+
+    </div>
+</aside>

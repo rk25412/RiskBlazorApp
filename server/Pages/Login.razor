@@ -1,0 +1,34 @@
+﻿@page "/login"
+@layout LoginLayout
+@inherits Clear.Risk.Pages.LoginComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+
+
+<form method="post" action="account/login">
+    <RadzenContent Container="main">
+        <ChildContent>
+            <RadzenHeading Size="H1" Text="Login">
+            </RadzenHeading>
+            <div class="row">
+                <div class="col-md-12" >
+                    <div class="text-center">
+                        @*<RadzenLogin AllowResetPassword="false" Register="@Login0Register">
+                        </RadzenLogin>*@
+
+                        <RadzenLogin ResetPassword=@Forgot0Password
+                                     Register=@Login0Register Style="margin-bottom: 20px;" />
+
+                        @*<RadzenButton Text="Forgot Password" Click="@Forgot0Password">
+                        </RadzenButton>*@
+                    </div> 
+                </div>
+            </div>
+        </ChildContent>
+    </RadzenContent>
+</form>

@@ -1,0 +1,111 @@
+﻿@page "/edit-template/{ID}"
+@layout MainLayout
+@inherits Clear.Risk.Pages.EditTemplateComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenTemplateForm Data="@template" TItem="Clear.Risk.Models.ClearConnection.Template" Visible="@(template != null)" Submit="@Form0Submit">
+            <ChildContent>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Component="TEMPLATENAME" style="width: 100%" Text="Template Name">
+                        </RadzenLabel>
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(template.TEMPLATENAME)" Name="TEMPLATENAME">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="TEMPLATENAME" style="position: absolute" Text="TEMPLATENAME is required">
+                        </RadzenRequiredValidator>
+                    </div>
+                    <div class="col-md-6">
+                        <RadzenLabel Component="REFERENCENUMBER" style="width: 100%" Text="Reference No.">
+                        </RadzenLabel>
+                        <RadzenTextBox MaxLength="50" style="width: 100%" @bind-Value="@(template.REFERENCENUMBER)" Name="REFERENCENUMBER">
+                        </RadzenTextBox>
+                    </div>
+
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Component="VERSONNUMBER" style="width: 100%" Text="Version">
+                        </RadzenLabel>
+                        <RadzenTextBox MaxLength="100" style="display: block; width: 100%" @bind-Value="@(template.VERSONNUMBER)" Name="VERSONNUMBER">
+                        </RadzenTextBox>
+                        <RadzenRequiredValidator Component="VERSONNUMBER" style="position: absolute" Text="VERSONNUMBER is required">
+                        </RadzenRequiredValidator>
+                    </div>
+                    <div class="col-md-6">
+                        <RadzenLabel Component="STATUS" style="width: 100%" Text="Status">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getStatusMastersResult" Placeholder="Select Status" style="display: block; width: 100%" TextProperty="NAME" @bind-Value="@(template.STATUS)" ValueProperty="STATUS_ID" Name="STATUS">
+                        </RadzenDropDown>
+                        <RadzenRequiredValidator Component="STATUS" DefaultValue="0" style="position: absolute" Text="STATUS is required">
+                        </RadzenRequiredValidator>
+                    </div>
+
+                </div>
+
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Component="TRADECATEGORYID" style="width: 100%" Text="Trade Category">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getTradeCategoriesResult" Placeholder="Choose TradeCategory" style="display: block; width: 100%" TextProperty="TRADE_NAME" @bind-Value="@(template.TRADECATEGORYID)" ValueProperty="TRADE_CATEGORY_ID" Name="TRADECATEGORYID">
+                        </RadzenDropDown>
+                        <RadzenRequiredValidator Component="TRADECATEGORYID" DefaultValue="0" style="position: absolute" Text="TRADECATEGORYID is required">
+                        </RadzenRequiredValidator>
+                    </div>
+                    <div class="col-md-6">
+                        <RadzenLabel Component="TYPEFORID" style="width: 100%" Text="Template Category">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getSwmsTemplateCategoriesResult" Placeholder="Choose Template Category" style="display: block; width: 100%" TextProperty="NAME" @bind-Value="@(template.TYPEFORID)" ValueProperty="TEMPLATE_CATEGORY_ID" Name="TYPEFORID">
+                        </RadzenDropDown>
+                        <RadzenRequiredValidator Component="TYPEFORID" DefaultValue="0" style="position: absolute" Text="TYPEFORID is required">
+                        </RadzenRequiredValidator>
+                    </div>
+                </div>
+                <div style="margin-bottom: 1rem" class="row">
+                    <div class="col-md-6">
+                        <RadzenLabel Component="COMPANYID" style="width: 100%" Text="Company" Visible="@(template.TYPEFORID == 1)">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getPeopleResult" Placeholder="Choose Company" style="width: 100%" TextProperty="COMPANY_NAME" @bind-Value="@(template.COMPANYID)" ValueProperty="PERSON_ID" Name="COMPANYID" Visible="@(template.TYPEFORID == 1)">
+                        </RadzenDropDown>
+
+                        <RadzenLabel Component="COUNTRY_ID" style="width: 100%" Text="Country" Visible="@(template.TYPEFORID == 2)">
+                        </RadzenLabel>
+                        <RadzenDropDown Data="@getCountriesResult" Placeholder="Choose Country" style="width: 100%" TextProperty="COUNTRYNAME" @bind-Value="@(template.COUNTRY_ID)" ValueProperty="ID" Name="COUNTRY_ID" Visible="@(template.TYPEFORID == 2)">
+                        </RadzenDropDown>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="col-md-3">
+                            <RadzenLabel Component="STATEID" style="width: 100%" Text="State" Visible="@(template.TYPEFORID == 2)">
+                            </RadzenLabel>
+                        </div>
+                        <div class="col-md-9">
+                            <RadzenDropDown Data="@getStatesResult" Placeholder="Choose State" style="width: 100%" TextProperty="STATENAME" @bind-Value="@(template.STATEID)" ValueProperty="ID" Name="STATEID" Visible="@(template.TYPEFORID == 2)">
+                            </RadzenDropDown>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col offset-sm-3">
+                        <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save">
+                        </RadzenButton>
+                        <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Click="@Button2Click">
+                        </RadzenButton>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenTemplateForm>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

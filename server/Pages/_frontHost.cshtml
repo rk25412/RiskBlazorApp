@@ -1,0 +1,75 @@
+﻿ 
+@namespace Clear.Risk.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Radzen
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+        Clear Risk Assessment
+    </title>
+    <base href="/" />
+    @*<base href="/crm/" />*@
+    <link rel="icon" href="@Url.Content("~/front/img/favicon.png")">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/bootstrap.min.css")">
+    <!-- animate CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/animate.css")">
+    <!-- owl carousel CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/owl.carousel.min.css")">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/all.css")">
+    <!-- flaticon CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/flaticon.css")">
+    <link rel="stylesheet" href="@Url.Content("~/front/css/themify-icons.css")">
+    <!-- font awesome CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/magnific-popup.css")">
+    <!-- swiper CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/slick.css")">
+    <!-- style CSS -->
+    <link rel="stylesheet" href="@Url.Content("~/front/css/style.css")">
+
+    <link href="@Url.Content("~/assets/css/styles.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets/css/default.css")" rel="stylesheet" />
+</head>
+<body>
+    <app>@(await Html.RenderComponentAsync<App>(RenderMode.Server))</app>
+
+
+
+    <!-- jquery plugins here-->
+    <script src="@Url.Content("~/front/js/jquery-1.12.1.min.js")"></script>
+    <!-- popper js -->
+    <script src="@Url.Content("~/front/js/popper.min.js")"></script>
+    <!-- bootstrap js -->
+    <script src="@Url.Content("~/front/js/bootstrap.min.js")"></script>
+    <!-- easing js -->
+    <script src="@Url.Content("~/front/js/jquery.magnific-popup.js")"></script>
+    <!-- swiper js -->
+    <script src="@Url.Content("~/front/js/swiper.min.js")"></script>
+    <!-- swiper js -->
+    <script src="@Url.Content("~/front/js/masonry.pkgd.js")"></script>
+    <!-- particles js -->
+    <script src="@Url.Content("~/front/js/owl.carousel.min.js")"></script>
+    <script src="@Url.Content("~/front/js/jquery.nice-select.min.js")"></script>
+    <!-- slick js -->
+    <script src="@Url.Content("~/front/js/slick.min.js")"></script>
+    <script src="@Url.Content("~/front/js/jquery.counterup.min.js")"></script>
+    <script src="@Url.Content("~/front/js/waypoints.min.js")"></script>
+    <script src="@Url.Content("~/front/js/contact.js")"></script>
+    <script src="@Url.Content("~/front/js/jquery.ajaxchimp.min.js")"></script>
+    <script src="@Url.Content("~/front/js/jquery.form.js")"></script>
+    <script src="@Url.Content("~/front/js/jquery.validate.min.js")"></script>
+    <script src="@Url.Content("~/front/js/mail-script.js")"></script>
+    <!-- custom js -->
+    <script src="@Url.Content("~/front/js/custom.js")"></script>
+
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+    <script src="_framework/blazor.server.js"></script>
+    @*<script src="/crm/_framework/blazor.server.js"></script>*@
+    <link href="_content/BlazorPro.Spinkit/spinkit.min.css" rel="stylesheet" />
+</body>
+</html>

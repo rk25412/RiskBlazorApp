@@ -1,0 +1,210 @@
+{
+  "components": [
+    {
+      "components": [
+        {
+          "class": "justify-content-start align-items-center",
+          "components": [
+            {
+              "class": "col-md-6 d-flex align-items-center",
+              "components": [
+                {
+                  "events": {
+                    "click": [
+                      {
+                        "code": "await InvokeAsync(() => { sidebar0.Toggle(); });",
+                        "type": "execute"
+                      },
+                      {
+                        "code": "await InvokeAsync(() => { body0.Toggle(); });",
+                        "type": "execute"
+                      }
+                    ]
+                  },
+                  "name": "sidebar-toggle0",
+                  "type": "sidebar-toggle"
+                },
+                {
+                  "name": "label0",
+                  "text": "ClearCovid",
+                  "type": "label"
+                }
+              ],
+              "name": "leftCol",
+              "type": "col"
+            },
+            {
+              "class": "col-md-6 text-lg-right",
+              "components": [
+                {
+                  "name": "profilemenu0",
+                  "template": [
+                    {
+                      "email": "${Security.User?.Name}",
+                      "type": "gravatar"
+                    }
+                  ],
+                  "type": "profilemenu",
+                  "visible": "${Security.IsAuthenticated()}"
+                }
+              ],
+              "name": "rightCol",
+              "type": "col"
+            }
+          ],
+          "name": "headerRow",
+          "type": "row"
+        }
+      ],
+      "name": "header0",
+      "type": "header"
+    },
+    {
+      "components": [
+        {
+          "name": "main",
+          "type": "content-container"
+        }
+      ],
+      "name": "body0",
+      "type": "body"
+    },
+    {
+      "components": [
+        {
+          "items": [
+            {
+              "icon": "work_outline",
+              "items": [
+                {
+                  "icon": "work",
+                  "items": [
+                    {
+                      "items": [
+                        {
+                          "icon": "",
+                          "items": [
+                            {
+                              "path": "impact-type",
+                              "text": "Impact Value"
+                            },
+                            {
+                              "path": "resposnsible-type",
+                              "text": "Responsible Value"
+                            },
+                            {
+                              "path": "hazard-value",
+                              "text": "Hazard Values"
+                            },
+                            {
+                              "icon": "",
+                              "path": "control-measure-value",
+                              "text": "Control Measures"
+                            },
+                            {
+                              "icon": "",
+                              "path": "hazard-material-value",
+                              "text": "Hazard Materials"
+                            },
+                            {
+                              "path": "risk-likelyhood",
+                              "text": "Risk Likelyhood"
+                            },
+                            {
+                              "path": "consequence",
+                              "text": "Consequences"
+                            },
+                            {
+                              "path": "plant-equipment",
+                              "text": "Plant & Equipment"
+                            },
+                            {
+                              "path": "licence-permit",
+                              "text": "Licence & Permit"
+                            },
+                            {
+                              "icon": "",
+                              "path": "referenced-legislation",
+                              "text": "Refrenced Legislation"
+                            },
+                            {
+                              "path": "swms-section",
+                              "text": "SWMS Type"
+                            },
+                            {
+                              "path": "high-risk-category",
+                              "text": "High Risk Category"
+                            },
+                            {
+                              "path": "ppevalue",
+                              "text": "PPE Value"
+                            },
+                            {
+                              "path": "template-type",
+                              "text": "Template Type"
+                            }
+                          ],
+                          "text": "Template Lookup"
+                        }
+                      ],
+                      "text": "Manage Lookups"
+                    },
+                    {
+                      "items": [
+                        {
+                          "path": "template",
+                          "text": "Template Master"
+                        },
+                        {
+                          "path": "swms-template",
+                          "text": "Manage SWMS"
+                        }
+                      ],
+                      "text": "SWMS Template"
+                    },
+                    {
+                      "icon": "work",
+                      "path": "companies",
+                      "target": "_self",
+                      "text": "Manage Company"
+                    }
+                  ],
+                  "text": "Administration"
+                }
+              ],
+              "text": "Settings"
+            },
+            {
+              "items": [
+                {
+                  "path": "manage-assesments",
+                  "text": "Manage Assesment"
+                }
+              ],
+              "text": "Risk Assesment"
+            }
+          ],
+          "name": "panelmenu0",
+          "style": {
+            "height": "100%"
+          },
+          "type": "panelmenu"
+        }
+      ],
+      "name": "sidebar0",
+      "type": "sidebar"
+    },
+    {
+      "components": [
+        {
+          "name": "footerText",
+          "text": "ClearCovid, Copyright Ⓒ 2020",
+          "type": "label"
+        }
+      ],
+      "name": "footer0",
+      "type": "footer"
+    }
+  ],
+  "name": "Main"
+}

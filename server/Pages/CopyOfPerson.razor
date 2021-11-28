@@ -1,0 +1,102 @@
+﻿@page "/copy-of-person"
+@layout MainLayout
+@inherits Clear.Risk.Pages.CopyOfPersonComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<RadzenContent Container="main">
+  <ChildContent>
+    <RadzenHeading Size="H1" Text="Person">
+    </RadzenHeading>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px" Text="Add" Click="@Button0Click">
+        </RadzenButton>
+        <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getPeopleResult" TItem="Clear.Risk.Models.ClearConnection.Person" RowSelect="@Grid0RowSelect">
+          <Columns>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="FIRST_NAME" Title="FIRST NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="MIDDLE_NAME" Title="MIDDLE NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="LAST_NAME" Title="LAST NAME">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONALADDRESS1" Title="PERSONALADDRESS 1">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONALADDRESS2" Title="PERSONALADDRESS 2">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_CITY" Title="PERSONAL CITY">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="State.STATENAME" Property="PERSONAL_STATE_ID" SortProperty="State.STATENAME" Title="State">
+              <Template Context="data">
+              @(data.State?.STATENAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="Country.COUNTRYNAME" Property="PERSONAL_COUNTRY_ID" SortProperty="Country.COUNTRYNAME" Title="Country">
+              <Template Context="data">
+              @(data.Country?.COUNTRYNAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_PHONE" Title="PERSONAL PHONE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_MOBILE" Title="PERSONAL MOBILE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_EMAIL" Title="PERSONAL EMAIL">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_FAX" Title="PERSONAL FAX">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PERSONAL_WEB_ADD" Title="PERSONAL WEB ADD">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_ADDRESS1" Title="BUSINESS ADDRESS 1">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_ADDRESS2" Title="BUSINESS ADDRESS 2">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_CITY" Title="BUSINESS CITY">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="State1.STATENAME" Property="BUSINESS_STATE_ID" SortProperty="State1.STATENAME" Title="State">
+              <Template Context="data">
+              @(data.State1?.STATENAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="Country1.COUNTRYNAME" Property="BUSINESS_COUNTRY_ID" SortProperty="Country1.COUNTRYNAME" Title="Country">
+              <Template Context="data">
+              @(data.Country1?.COUNTRYNAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_PHONE" Title="BUSINESS PHONE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_MOBILE" Title="BUSINESS MOBILE">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_EMAIL" Title="BUSINESS EMAIL">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_FAX" Title="BUSINESS FAX">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="BUSINESS_WEB_ADD" Title="BUSINESS WEB ADD">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" FilterProperty="PersonType.TYPE_NAME" Property="COMPANYTYPE" SortProperty="PersonType.TYPE_NAME" Title="Person Type">
+              <Template Context="data">
+              @(data.PersonType?.TYPE_NAME)
+              </Template>
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="DESIGNATION" Title="DESIGNATION">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Property="PASSWORDHASH" Title="PASSWORDHASH">
+            </RadzenGridColumn>
+            <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.Person" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+              <Template Context="clearCovidModelsClearConnectionPerson">
+                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionPerson))" @onclick:stopPropagation="true">
+                </RadzenButton>
+              </Template>
+            </RadzenGridColumn>
+          </Columns>
+        </RadzenGrid>
+      </div>
+    </div>
+  </ChildContent>
+</RadzenContent>

@@ -1,0 +1,122 @@
+{
+  "access": "Authenticated",
+  "components": [
+    {
+      "components": [
+        {
+          "name": "pageTitle",
+          "size": "H2",
+          "text": "NEW RISK ASSESSMENT",
+          "type": "heading"
+        },
+        {
+          "components": [
+            {
+              "components": [
+                {
+                  "class": "col-md-6",
+                  "components": [
+                    {
+                      "allowCollapse": false,
+                      "components": [
+                        {
+                          "components": [
+                            {
+                              "class": "col-md-6",
+                              "components": [
+                                {
+                                  "name": "label0",
+                                  "text": "Assesment No.",
+                                  "type": "label"
+                                }
+                              ],
+                              "name": "col3",
+                              "type": "col"
+                            },
+                            {
+                              "class": "col-md-6",
+                              "components": [
+                                {
+                                  "name": "RISKASSESSMENTNO",
+                                  "style": {
+                                    "width": "191.40000915527344px"
+                                  },
+                                  "type": "textbox",
+                                  "value": "${assesment.RISKASSESSMENTNO}"
+                                }
+                              ],
+                              "name": "col4",
+                              "type": "col"
+                            }
+                          ],
+                          "name": "row2",
+                          "style": {
+                            "width": "385px"
+                          },
+                          "type": "row"
+                        }
+                      ],
+                      "name": "fieldset0",
+                      "style": {
+                        "width": "415px"
+                      },
+                      "text": "Assesment Information",
+                      "type": "fieldset"
+                    }
+                  ],
+                  "name": "col0",
+                  "type": "col"
+                },
+                {
+                  "class": "col-md-6",
+                  "components": [
+                    {
+                      "allowCollapse": false,
+                      "name": "fieldset1",
+                      "text": "Assesment Information",
+                      "type": "fieldset"
+                    }
+                  ],
+                  "name": "col1",
+                  "type": "col"
+                }
+              ],
+              "name": "row0",
+              "style": {
+                "marginBottom": "1rem"
+              },
+              "type": "row"
+            },
+            {
+              "components": [
+                {
+                  "class": "offset-sm-3 col-md-9",
+                  "components": [
+                    {
+                      "buttonType": "submit",
+                      "icon": "save",
+                      "name": "button0",
+                      "text": "Save",
+                      "type": "button"
+                    }
+                  ],
+                  "name": "col2",
+                  "type": "col"
+                }
+              ],
+              "name": "row1",
+              "type": "row"
+            }
+          ],
+          "data": "${assesment}",
+          "name": "templateForm0",
+          "type": "template-form"
+        }
+      ],
+      "container": "main",
+      "type": "content"
+    }
+  ],
+  "layout": "Main",
+  "name": "New Assesment"
+}

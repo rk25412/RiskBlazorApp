@@ -1,0 +1,88 @@
+﻿@page "/contactors"
+@layout MainLayout
+
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@using BlazorTable
+@attribute [Authorize]
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        @if (isLoading)
+                        {
+                            <div class="loading">Loading&#8230;</div>
+                        }
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Manage Contractors</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                                <RadzenButton Icon="help_outline" style="margin-bottom: 10px; float:right" Text="Help" Click="@HelpClick">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                               
+
+                                <Table TableItem="Clear.Risk.Models.ClearConnection.Person" Items="@getPeopleResult" PageSize="15" ColumnReorder="true">
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Action" Sortable="false" Filterable="false" Width="10%">
+                                        <Template>
+                                            @*<RadzenButton ButtonStyle="ButtonStyle.Info" Icon="explore" Size="ButtonSize.Small" Click="@((args) =>GridSelectButtonClick(args, context))" @onclick:stopPropagation="true">
+                                                </RadzenButton>*@
+                                            <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Small" Click="@((args) =>GridEditButtonClick(args, context))" @onclick:stopPropagation="true">
+                                            </RadzenButton>
+
+                                        </Template>
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Contractor Name" Field="@(x => x.COMPANY_NAME)" Sortable="true" Filterable="true" Width="10%" DefaultSortColumn="true" />
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Contact Person" Field="@(x => x.FullName)" Sortable="true" Filterable="true" Width="20%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Email" Field="@(x => x.PERSONAL_EMAIL)" Sortable="true" Filterable="true" Width="20%">
+
+                                    </Column>
+
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Mobile" Field="@(x => x.PERSONAL_MOBILE)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="City" Field="@(x => x.PERSONAL_CITY)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="State" Field="@(x => x.State.STATENAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Country" Field="@(x => x.Country.COUNTRYNAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                        </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title="Status" Field="@(x => x.Status.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+                                    <Column TableItem="Clear.Risk.Models.ClearConnection.Person" Title=" Warning Level" Field="@(x => x. WarningLevel.NAME)" Sortable="true" Filterable="true" Width="10%">
+
+                                    </Column>
+
+                                    <Pager ShowPageNumber="true" ShowTotalCount="true" />
+                                </Table>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
+
+

@@ -1,0 +1,269 @@
+﻿@page "/swms-template_od"
+@layout MainLayout
+@inherits Clear.Risk.Pages.SwmsTemplateComponent
+
+@using Radzen
+@using Radzen.Blazor
+@using Clear.Risk.Models.ClearConnection
+@using Microsoft.AspNetCore.Identity;
+@using Clear.Risk.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
+
+
+<section class="content">
+    <div class="container-fluid">
+        <RadzenContent Container="main">
+            <ChildContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-success">
+                            <div class="card-header">
+                                <h4 class="card-title">Swms Template</h4>
+                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px; float:right" Text="Add" Click="@Button0Click">
+                                </RadzenButton>
+                            </div>
+                            <div class="card-body">
+                                @if (isLoading)
+                                {
+                            <div class="loading">Loading&#8230;</div>}
+                                <RadzenGrid @ref="grid0" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@getSwmsTemplatesResult" TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" RowExpand="@Grid0RowExpand" RowSelect="@Grid0RowSelect">
+                                    <Columns>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Property="SWMSID" Title="SWMSID">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="Person.COMPANY_NAME" Property="COMPANYID" SortProperty="Person.COMPANY_NAME" Title="Person">
+                                            <Template Context="data">
+                                                @(data.Person?.COMPANY_NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="TemplateType.NAME" Property="SWMSTYPE" SortProperty="TemplateType.NAME" Title="Template Type">
+                                            <Template Context="data">
+                                                @(data.TemplateType?.NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Property="TEMPLATENAME" Title="TEMPLATENAME">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Property="VERSION" Title="VERSION">
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="SwmsTemplateCategory.NAME" Property="TEMPLATEQUESTION" SortProperty="SwmsTemplateCategory.NAME" Title="Swms Template Category">
+                                            <Template Context="data">
+                                                @(data.SwmsTemplateCategory?.NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="Country.COUNTRYNAME" Property="COUNTRY_ID" SortProperty="Country.COUNTRYNAME" Title="Country">
+                                            <Template Context="data">
+                                                @(data.Country?.COUNTRYNAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="State.STATENAME" Property="STATEID" SortProperty="State.STATENAME" Title="State">
+                                            <Template Context="data">
+                                                @(data.State?.STATENAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" FilterProperty="TradeCategory.TRADE_NAME" Property="TRADECATEGORYID" SortProperty="TradeCategory.TRADE_NAME" Title="Trade Category">
+                                            <Template Context="data">
+                                                @(data.TradeCategory?.TRADE_NAME)
+                                            </Template>
+                                        </RadzenGridColumn>
+                                        <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplate" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                            <Template Context="clearCovidModelsClearConnectionSwmsTemplate">
+                                                <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>GridDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))" @onclick:stopPropagation="true">
+                                                </RadzenButton>
+                                            </Template>
+                                        </RadzenGridColumn>
+                                    </Columns>
+                                    <Template Context="clearCovidModelsClearConnectionSwmsTemplate">
+
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Steps</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsTemplatestepAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+                                        <RadzenGrid @ref="grid6" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsTemplatesteps)" TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" RowSelect="@((args) =>Grid6RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="STEPID" Title="Step No.">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="TASKCATEGEORY"  Title="Category of Hazard">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="HAZARD" Title="Specific Hazards">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="HEALTHIMPACT" Title="Impact Health & Safty">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" FilterProperty="RiskLikelyhood.NAME" Property="RISK_LIKELYHOOD_ID" SortProperty="RiskLikelyhood.NAME" Title="Risk Before Control">
+                                                    <Template Context="data">
+                                                        @(data.RiskLikelyhood?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" FilterProperty="Consequence.NAME" Property="CONSEQUENCE_ID" SortProperty="Consequence.NAME" Title="Risk Befor Control Consequence">
+                                                    <Template Context="data">
+                                                        @(data.Consequence?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="RISK_CONTRL_SCORE" Title="RISK CONTRL SCORE">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="CONTROLLINGHAZARDS" Title="Method of Controlling Hazards">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" FilterProperty="RiskLikelyhood1.NAME" Property="RISK_AFTER_LIKELYHOOD_ID" SortProperty="RiskLikelyhood1.NAME" Title="Risk After Control-LiklyHood">
+                                                    <Template Context="data">
+                                                        @(data.RiskLikelyhood1?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" FilterProperty="Consequence1.NAME" Property="AFTER_CONSEQUENCE_ID" SortProperty="Consequence1.NAME" Title="Risk After Control- Consequence">
+                                                    <Template Context="data">
+                                                        @(data.Consequence1?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Property="AFTER_RISK_CONTROL_SCORE" Title="AFTER RISK CONTROL SCORE">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" FilterProperty="ResposnsibleType.NAME" Property="RESPOSNSIBLE_TYPE_ID" SortProperty="ResposnsibleType.NAME" Title="Resposnsible">
+                                                    <Template Context="data">
+                                                        @(data.ResposnsibleType?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsTemplatestep" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Hazardous Materials</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsHazardousmaterialAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+
+
+                                        <RadzenGrid @ref="grid1" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsHazardousmaterials)" TItem="Clear.Risk.Models.ClearConnection.SwmsHazardousmaterial" RowSelect="@((args) =>Grid1RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsHazardousmaterial" Property="HAZARDOUSMATERIALID" Title="HAZARDOUSMATERIALID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsHazardousmaterial" FilterProperty="HazardMaterialValue.NAME" Property="HAZARD_MATERIAL_ID" SortProperty="HazardMaterialValue.NAME" Title="Hazard Material">
+                                                    <Template Context="data">
+                                                        @(data.HazardMaterialValue?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsHazardousmaterial" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                    <Template Context="clearCovidModelsClearConnectionSwmsHazardousmaterial">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsHazardousmaterialDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsHazardousmaterial))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+
+
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Licences & Permits</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsLicencespermitAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+                                        <RadzenGrid @ref="grid2" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsLicencespermits)" TItem="Clear.Risk.Models.ClearConnection.SwmsLicencespermit" RowSelect="@((args) =>Grid2RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsLicencespermit" Property="LPID" Title="LPID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsLicencespermit" FilterProperty="LicencePermit.NAME" Property="LICENCE_PERMIT_ID" SortProperty="LicencePermit.NAME" Title="Licence Permit">
+                                                    <Template Context="data">
+                                                        @(data.LicencePermit?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsLicencespermit" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                    <Template Context="clearCovidModelsClearConnectionSwmsLicencespermit">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsLicencespermitDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsLicencespermit))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Plant and Equipment</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsPlantequipmentAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+
+
+                                        <RadzenGrid @ref="grid3" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsPlantequipments)" TItem="Clear.Risk.Models.ClearConnection.SwmsPlantequipment" RowSelect="@((args) =>Grid3RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPlantequipment" Property="PEID" Title="PEID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPlantequipment" FilterProperty="PlantEquipment.NAME" Property="PLANT_EQUIPMENT_ID" SortProperty="PlantEquipment.NAME" Title="Plant Equipment">
+                                                    <Template Context="data">
+                                                        @(data.PlantEquipment?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPlantequipment" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                    <Template Context="clearCovidModelsClearConnectionSwmsPlantequipment">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsPlantequipmentDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsPlantequipment))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">PPE Required</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsPperequiredAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+
+                                            </div>
+                                        </div>
+
+                                        <RadzenGrid @ref="grid4" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsPperequireds)" TItem="Clear.Risk.Models.ClearConnection.SwmsPperequired" RowSelect="@((args) =>Grid4RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPperequired" Property="PPEID" Title="PPEID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPperequired" FilterProperty="Ppevalue.KEY_DISPLAY" Property="PPE_VALUE_ID" SortProperty="Ppevalue.KEY_DISPLAY" Title="PPE Values">
+                                                    <Template Context="data">
+                                                        @(data.Ppevalue?.KEY_DISPLAY)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsPperequired" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                    <Template Context="clearCovidModelsClearConnectionSwmsPperequired">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsPperequiredDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsPperequired))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+
+                                        <div class="card card-success">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Referenced Legislation</h4>
+                                                <RadzenButton Icon="add_circle_outline" style="margin-bottom: 10px;float:right" Text="Add" Click="@((args) =>SwmsReferencedlegislationAddButtonClick(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                                </RadzenButton>
+                                            </div>
+                                        </div>
+                                        <RadzenGrid @ref="grid5" AllowFiltering="true" AllowPaging="true" AllowSorting="true" Data="@(clearCovidModelsClearConnectionSwmsTemplate.SwmsReferencedlegislations)" TItem="Clear.Risk.Models.ClearConnection.SwmsReferencedlegislation" RowSelect="@((args) =>Grid5RowSelect(args, clearCovidModelsClearConnectionSwmsTemplate))">
+                                            <Columns>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsReferencedlegislation" Property="REFLID" Title="REFLID">
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsReferencedlegislation" FilterProperty="ReferencedLegislation.NAME" Property="REFERENCE_LEGISLATION_ID" SortProperty="ReferencedLegislation.NAME" Title="Referenced Legislation">
+                                                    <Template Context="data">
+                                                        @(data.ReferencedLegislation?.NAME)
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                                <RadzenGridColumn TItem="Clear.Risk.Models.ClearConnection.SwmsReferencedlegislation" Filterable="false" Sortable="false" TextAlign="TextAlign.Center" Width="70px">
+                                                    <Template Context="clearCovidModelsClearConnectionSwmsReferencedlegislation">
+                                                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="close" Size="ButtonSize.Small" Click="@((args) =>SwmsReferencedlegislationDeleteButtonClick(args, clearCovidModelsClearConnectionSwmsReferencedlegislation))" @onclick:stopPropagation="true">
+                                                        </RadzenButton>
+                                                    </Template>
+                                                </RadzenGridColumn>
+                                            </Columns>
+                                        </RadzenGrid>
+                                    </Template>
+                                </RadzenGrid>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ChildContent>
+        </RadzenContent>
+    </div>
+</section>
